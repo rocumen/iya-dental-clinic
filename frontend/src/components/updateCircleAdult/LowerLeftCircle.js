@@ -1,0 +1,139 @@
+import React from "react";
+import ACircle from "../circles/ACircle";
+import { Col, Row } from "react-bootstrap";
+
+const LowerLeftCircle = ({
+  handleFill,
+  fillColor,
+  color,
+  lowerLeft,
+  setFillColor,
+}) => {
+  return (
+    <Col
+      className="d-flex gap-2 justify-content-center my-2"
+      xs={12}
+      sm={12}
+      md={6}
+      lg={5}
+    >
+      <Row className="justify-content-center text-center">
+        <h6>Lower Left</h6>
+        <Col
+          className="d-flex gap-2 justify-content-center my-2"
+          xs={12}
+          sm={12}
+          md={6}
+          lg={5}
+        >
+          <Row>
+            <Col>
+              <h6>31</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle25}
+                circleIndex="circle25"
+                color={color}
+                defaultColor={lowerLeft?.twentyfive}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>32</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle26}
+                circleIndex="circle26"
+                color={color}
+                defaultColor={lowerLeft?.twentysix}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>33</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle27}
+                circleIndex="circle27"
+                color={color}
+                defaultColor={lowerLeft?.twentyseven}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>34</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle28}
+                circleIndex="circle28"
+                color={color}
+                defaultColor={lowerLeft?.twentyeight}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>35</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle29}
+                circleIndex="circle29"
+                color={color}
+                defaultColor={lowerLeft?.twentynine}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>36</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle30}
+                circleIndex="circle30"
+                color={color}
+                defaultColor={lowerLeft?.thirty}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>37</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle31}
+                circleIndex="circle31"
+                color={color}
+                defaultColor={lowerLeft?.thirtyone}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>38</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle32}
+                circleIndex="circle32"
+                color={color}
+                defaultColor={lowerLeft?.thirtytwo}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Col>
+  );
+};
+
+export default LowerLeftCircle;

@@ -1,0 +1,139 @@
+import React from "react";
+import ACircle from "../circles/ACircle";
+import { Col, Row } from "react-bootstrap";
+
+const UpperRightCircle = ({
+  handleFill,
+  fillColor,
+  color,
+  upperRight,
+  setFillColor,
+}) => {
+  return (
+    <Col
+      className="d-flex gap-2 justify-content-center my-2"
+      xs={12}
+      sm={12}
+      md={6}
+      lg={5}
+    >
+      <Row className="justify-content-center text-center">
+        <h6>Upper Right</h6>
+        <Col
+          className="d-flex gap-2 justify-content-center my-2"
+          xs={12}
+          sm={12}
+          md={6}
+          lg={5}
+        >
+          <Row>
+            <Col>
+              <h6>18</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle1}
+                circleIndex="circle1"
+                color={color}
+                defaultColor={upperRight?.one}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>17</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle2}
+                circleIndex="circle2"
+                color={color}
+                defaultColor={upperRight?.two}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>16</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle3}
+                circleIndex="circle3"
+                color={color}
+                defaultColor={upperRight?.three}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>15</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle4}
+                circleIndex="circle4"
+                color={color}
+                defaultColor={upperRight?.four}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>14</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle5}
+                circleIndex="circle5"
+                color={color}
+                defaultColor={upperRight?.five}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>13</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle6}
+                circleIndex="circle6"
+                color={color}
+                defaultColor={upperRight?.six}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>12</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle7}
+                circleIndex="circle7"
+                color={color}
+                defaultColor={upperRight?.seven}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>11</h6>
+              <ACircle
+                handleFill={handleFill}
+                fillColor={fillColor.circle8}
+                circleIndex="circle8"
+                color={color}
+                defaultColor={upperRight?.eight}
+                setFillColor={setFillColor}
+              />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Col>
+  );
+};
+
+export default UpperRightCircle;
