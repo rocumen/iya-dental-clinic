@@ -15,7 +15,6 @@ const App = () => {
   useEffect(() => {
     const expirationTime = localStorage.getItem("expirationTime");
 
-    console.log(expirationTime);
     if (expirationTime) {
       const currentTime = new Date().getTime();
 

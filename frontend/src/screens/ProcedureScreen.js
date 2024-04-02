@@ -154,6 +154,10 @@ const ProcedureScreen = () => {
       // Assuming toothNumbers and procedureExplanation are pushed into procedureArray
       // const procedureArray = [{ toothNumbers, procedureExplanation }];
 
+      if (isSaving) return; // If already saving, return to avoid multiple clicks
+
+      setIsSaving(true); // Set isSaving to true when the button is clicked
+
       await createProcedure({
         patientId,
         procedureType,
@@ -170,6 +174,7 @@ const ProcedureScreen = () => {
 
       setSubmitted(true);
       toast.success("Procedure Saved");
+      setIsSaving(false);
       refetch();
       navigate("/");
     } catch (error) {
@@ -481,7 +486,7 @@ const ProcedureScreen = () => {
               className="btn btn-primary mx-auto"
               disabled={!procedureSignature.url}
             >
-              Save
+              {isSaving ? "Saving..." : "Save"}
             </Button>
           </Col>
         </Row>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navbar, Nav, Container, Image } from "react-bootstrap";
+import { Navbar, Nav, Container, Image, NavDropdown } from "react-bootstrap";
 
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ import LogoutConfirmationDialog from "./LogoutConfirmationDialog"; // Import the
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [logoutApiCall] = useLogoutMutation();
@@ -47,10 +48,17 @@ const Header = () => {
                   <LinkContainer to="/">
                     <Nav.Link>Home</Nav.Link>
                   </LinkContainer>
-                  <Nav.Link onClick={() => setShowLogoutConfirmation(true)}>
-                    Logout
-                  </Nav.Link>{" "}
-                  {/* Open the dialog when clicking on Logout */}
+                  <NavDropdown title="Account" id="basic-nav-dropdown">
+                    <LinkContainer to={`/changePassword/${userInfo._id}`}>
+                      <NavDropdown.Item>Change Password</NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item
+                      onClick={() => setShowLogoutConfirmation(true)}
+                    >
+                      Logout
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </Nav>
               </Navbar.Collapse>
             </>

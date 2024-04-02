@@ -22,7 +22,6 @@ const LoginScreen = () => {
   //const { search } = useLocation();
   //const searchParams = new URLSearchParams(search);
   //const redirect = searchParams.get("redirect") || "/";
-  const redirect = "/";
 
   // useEffect(() => {
   //   if (userInfo) {
@@ -35,7 +34,7 @@ const LoginScreen = () => {
     try {
       const response = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...response }));
-      navigate(redirect);
+      navigate("/");
     } catch (error) {
       toast.error(error?.data?.message || error.error);
     }

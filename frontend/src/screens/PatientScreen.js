@@ -497,7 +497,7 @@ const PatientScreen = () => {
           </Table>
         </Col>
       </Row>
-      <Row>
+      <Row className="d-flex gap-4 gap-sm-5">
         <Col sm={5} md={4} lg={2}>
           <h4>Patient Signature</h4>
           {patient?.consentSignature.url ? (
@@ -532,7 +532,7 @@ const PatientScreen = () => {
         </Col>
       </Row>
 
-      <Row>
+      <Row className="my-2">
         <Col>
           <PDFDownloadLink
             document={<MyDocument patient={patient} />}
@@ -548,13 +548,13 @@ const PatientScreen = () => {
           </PDFDownloadLink>
         </Col>
       </Row>
-      <Row>
+      {/* <Row>
         <Col>
           <PDFViewer>
             <MyDocument patient={patient} />
           </PDFViewer>
         </Col>
-      </Row>
+      </Row> */}
     </>
   );
 };

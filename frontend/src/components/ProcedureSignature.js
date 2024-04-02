@@ -11,6 +11,7 @@ const ProcedureSignature = ({ setProcedureSignature, procedureSignature }) => {
     useUploadProcedureSignatureMutation();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const signatureRef = useRef();
 
   const openModal = () => {
@@ -26,8 +27,9 @@ const ProcedureSignature = ({ setProcedureSignature, procedureSignature }) => {
   };
 
   const handleUpload = async () => {
-    console.log("Hello");
+    if (isSaving) return;
 
+    setIsSaving(true);
     // Get the signature data URL from the canvas
     const signatureData = signatureRef.current.toDataURL();
 
@@ -45,8 +47,7 @@ const ProcedureSignature = ({ setProcedureSignature, procedureSignature }) => {
       const { data } = await uploadProcedureSignature(formData); // unwrap()
 
       toast.success(data.message);
-      console.log(data.procedureSignature);
-
+      setIsSaving(false);
       setProcedureSignature(data.procedureSignature); // Assuming your backend returns the signature image details
       // refetch();
     } catch (error) {
@@ -104,8 +105,12 @@ const ProcedureSignature = ({ setProcedureSignature, procedureSignature }) => {
               Clear
             </Button>
 
-            <Button variant="primary" onClick={handleUpload}>
-              Save
+            <Button
+              disabled={isSaving}
+              variant="primary"
+              onClick={handleUpload}
+            >
+              {isSaving ? "Saving..." : "Save"}
             </Button>
           </Modal.Footer>
         </Modal>
