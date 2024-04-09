@@ -117,4 +117,35 @@ const changePassword = asyncHandler(async (req, res) => {
   });
 });
 
-export { authUser, registerUser, logoutUser, getUserById, changePassword };
+const resetPassword = asyncHandler(async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  // Find the user by email
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  // Hash the new password before saving it
+  user.password = newPassword;
+
+  // Save the updated user
+  const updatedUser = await user.save();
+
+  res.status(200).json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+  });
+});
+
+export {
+  authUser,
+  registerUser,
+  logoutUser,
+  getUserById,
+  changePassword,
+  resetPassword,
+};

@@ -41,56 +41,53 @@ const LoginScreen = () => {
   };
 
   return (
-    <FormContainer>
-      <Form onSubmit={submitHandler} className="col-8 mx-auto">
-        <h1>Sign In</h1>
-        {/* Email */}
-        <Form.Group controlId="email" className="my-3">
-          <Form.Label>Email Address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+    <>
+      <FormContainer>
+        <Form onSubmit={submitHandler} className="col-8 mx-auto">
+          <h1>Sign In</h1>
+          {/* Email */}
+          <Form.Group controlId="email" className="my-3">
+            <Form.Label>Email Address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
 
-        {/* Password */}
-        <Form.Group controlId="password" className="my-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+          {/* Password */}
+          <Form.Group controlId="password" className="my-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
 
-        {/* Submit Button */}
-        <div className="text-center">
-          <Button
-            type="submit"
-            variant="primary"
-            className="mt-2"
-            disabled={isLoading}
-          >
-            Sign In
-          </Button>
+          {/* Submit Button */}
+          <div className="text-center">
+            <Button
+              type="submit"
+              variant="primary"
+              className="mt-2"
+              disabled={isLoading}
+            >
+              Sign In
+            </Button>
+          </div>
+
+          {isLoading && <Loader />}
+        </Form>
+        <div className="text-center mt-4">
+          <p>
+            Forgot password? <Link to={`/resetPassword`}>click here</Link>
+          </p>
         </div>
-
-        {isLoading && <Loader />}
-      </Form>
-
-      {/* If not Registered yet */}
-      {/* <Row className="py-3 col-8 mx-auto">
-        <Col>
-          New Customer?{" "}
-          <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
-            Register
-          </Link>
-        </Col>
-      </Row> */}
-    </FormContainer>
+      </FormContainer>
+    </>
   );
 };
 

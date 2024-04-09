@@ -35,12 +35,15 @@ import AdultDentalChart from "./screens/AdultDentalChart.js";
 import UpdateAdultDentalChart from "./screens/UpdateAdultDentalChart.js";
 
 import ChangePasswordScreen from "./screens/ChangePasswordScreen.js";
+import ResetPasswordScreen from "./screens/ResetPasswordScreen.js";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/register" element={<RegisterScreen />} />
       <Route path="/login" element={<LoginScreen />} />
+      <Route path="resetPassword" element={<ResetPasswordScreen />} />
+
       <Route path="" element={<AdminRoute />}>
         <Route path="/changePassword/:id" element={<ChangePasswordScreen />} />
         <Route index={true} path="/" element={<PatientList />} />
