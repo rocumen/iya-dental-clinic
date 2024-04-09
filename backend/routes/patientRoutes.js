@@ -20,7 +20,7 @@ import { protect, admin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/", getAllPatients);
+router.get("/", protect, admin, getAllPatients);
 router.post("/createPatient", protect, admin, createPatientInfo);
 router.put("/updatePatient/:id", protect, admin, updatePatient);
 
@@ -35,18 +35,30 @@ router.get(
   getAllProceduresById
 );
 
-router.get("/allProcedures", getAllPatientsProcedure);
+router.get("/allProcedures", protect, admin, getAllPatientsProcedure);
 
-router.post("/dentalChartKids/:id", createCircleKids);
-router.put("/dentalChartKids/update/:id", updateCircleKids);
-router.get("/dentalChartKids/:patientId/get/:dentalChartId", getCircleKids);
+router.post("/dentalChartKids/:id", protect, admin, createCircleKids);
+router.put("/dentalChartKids/update/:id", protect, admin, updateCircleKids);
+router.get(
+  "/dentalChartKids/:patientId/get/:dentalChartId",
+  protect,
+  admin,
+  getCircleKids
+);
 
-router.post("/dentalChartAdult/:id", createCircleAdult);
-router.put("/dentalChartAdult/update/:id", updateCircleAdult);
-router.get("/dentalChartAdult/:patientId/get/:dentalChartId", getCircleAdult);
+router.post("/dentalChartAdult/:id", protect, admin, createCircleAdult);
+router.put("/dentalChartAdult/update/:id", protect, admin, updateCircleAdult);
+router.get(
+  "/dentalChartAdult/:patientId/get/:dentalChartId",
+  protect,
+  admin,
+  getCircleAdult
+);
 
 router.put(
   "/changeStatus/:patientId/procedure/:procedureId",
+  protect,
+  admin,
   changeProcedureStatus
 );
 
