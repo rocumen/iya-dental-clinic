@@ -15,6 +15,7 @@ import {
   updateCircleAdult,
   getCircleAdult,
   changeProcedureStatus,
+  deletePatient,
 } from "../controller/patientController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 
@@ -61,5 +62,7 @@ router.put(
   admin,
   changeProcedureStatus
 );
+
+router.delete("/deletePatient/:id", protect, admin, deletePatient);
 
 export default router;

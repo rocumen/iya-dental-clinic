@@ -146,6 +146,12 @@ export const patientsApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    deletePatient: builder.mutation({
+      query: ({ patientId }) => ({
+        url: `${PATIENTS_URL}/deletePatient/${patientId}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -170,4 +176,5 @@ export const {
   useUpdateDentalChartAdultMutation,
   useGetDentalChartAdultQuery,
   useChangeProcedureStatusMutation,
+  useDeletePatientMutation,
 } = patientsApiSlice;

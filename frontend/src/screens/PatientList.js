@@ -12,6 +12,7 @@ import IncomingAppointments from "../components/IncomingAppointments.js";
 import {
   useGetAllPatientsQuery,
   useCreatePatientMutation,
+  useDeletePatientMutation,
 } from "../slices/patientsApiSlice.js";
 
 import ProcedureListModal from "../components/ProcedureListModal.js";
@@ -27,6 +28,8 @@ const PatientList = () => {
     pageNumber,
     keyword,
   });
+
+  const [deletePatient] = useDeletePatientMutation();
   const [createPatient] = useCreatePatientMutation();
 
   const [showModal, setShowModal] = useState(false);
@@ -59,6 +62,16 @@ const PatientList = () => {
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
+  const deleteHandler = async (patientId) => {
+    try {
+      await deletePatient({
+        patientId,
+      });
+      refetch();
+    } catch (error) {
+      console.error("Error deleting patient:", error);
+    }
+  };
   return (
     <>
       <Row>
@@ -219,6 +232,16 @@ const PatientList = () => {
                             Adult Chart
                           </Button>
                         </LinkContainer>
+                      )}
+
+                      {!patient?.firstName && !patient?.lastName && (
+                        <Button
+                          variant="danger"
+                          className="btn-sm "
+                          onClick={() => deleteHandler(patient?._id)}
+                        >
+                          Delete
+                        </Button>
                       )}
                     </div>
                   </td>

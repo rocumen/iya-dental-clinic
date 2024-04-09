@@ -793,6 +793,16 @@ const changeProcedureStatus = asyncHandler(async (req, res) => {
   }
 });
 
+const deletePatient = asyncHandler(async (req, res) => {
+  const patient = await Patient.findByIdAndDelete(req.params.id);
+
+  if (!patient) {
+    return res.status(404).json({ message: "Patient not found" });
+  }
+
+  res.json({ message: "Patient deleted successfully" });
+});
+
 export {
   createPatientInfo,
   updatePatient,
@@ -808,4 +818,5 @@ export {
   updateCircleAdult,
   getCircleAdult,
   changeProcedureStatus,
+  deletePatient,
 };
