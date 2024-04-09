@@ -247,3 +247,13 @@ hr {
   overflow: hidden;
   rotate: 42deg;
 }
+
+.small-image {
+  max-width: 100px; /* Set the maximum width of the image */
+  max-height: 100px; /* Set the maximum height of the image */
+}
+
+.log {
+  max-width: 50px; /* Set the maximum width of the image */
+  max-height: 50px; /* Set the maximum height of the image */
+}

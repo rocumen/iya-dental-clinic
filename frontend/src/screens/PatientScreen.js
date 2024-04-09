@@ -9,6 +9,7 @@ import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import MyDocument from "../components/PDFFile.js";
 
 import InformedConsentAgreement from "../components/InformedConsentAgreement.js";
+import dentalImage from "../assets/dentalimage.jpg";
 
 const PatientScreen = () => {
   const { id: patientId } = useParams();
@@ -35,6 +36,11 @@ const PatientScreen = () => {
 
   return (
     <>
+      <Row>
+        <Col className="mb-2 d-flex justify-content-center">
+          <Image src={dentalImage} alt="image" fluid className="small-image" />
+        </Col>
+      </Row>
       <Link>
         <GoBack />
       </Link>
@@ -542,7 +548,7 @@ const PatientScreen = () => {
               loading ? (
                 <button>Loading document</button>
               ) : (
-                <button>Download</button>
+                <button disabled>Download</button>
               )
             }
           </PDFDownloadLink>

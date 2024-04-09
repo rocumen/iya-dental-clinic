@@ -5,7 +5,7 @@ import {
   useGetPatientByIdQuery,
 } from "../slices/patientsApiSlice.js";
 import { useParams } from "react-router-dom";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Image } from "react-bootstrap";
 
 import StatusLower from "../components/Dental Chart/StatusLower.js";
 import StatusUpper from "../components/Dental Chart/StatusUpper.js";
@@ -18,6 +18,8 @@ import Legend from "../components/Dental Chart/Legend.js";
 import { useForm } from "react-hook-form";
 
 import { toast } from "react-toastify";
+
+import dentalImage from "../assets/dentalimage.jpg";
 
 const UpdateDentalChartKids = () => {
   const { patientId, dentalChartId } = useParams();
@@ -436,6 +438,12 @@ const UpdateDentalChartKids = () => {
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
       {isLoading && <h5>Loading</h5>}
+
+      <Row>
+        <Col className="mb-2 d-flex justify-content-center">
+          <Image src={dentalImage} alt="image" fluid className="small-image" />
+        </Col>
+      </Row>
       <Row className="my-3">
         <Col>
           <h1 className="text-center">Update Child Dental Record Chart</h1>

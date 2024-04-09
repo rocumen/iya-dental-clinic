@@ -88,7 +88,7 @@ const ProcedureListModal = ({ patient, refetch }) => {
               <tr>
                 <th>DATE</th>
                 <th>PROCEDURE TYPE</th>
-                <th>DENTIST/S</th>
+                {/* <th>DENTIST/S</th> */}
                 <th>NEXT APPOINTMENT</th>
                 <th>STATUS</th>
                 <th></th>
@@ -105,9 +105,9 @@ const ProcedureListModal = ({ patient, refetch }) => {
                   <td className="text-center">
                     {procedure.procedureType ? procedure.procedureType : "-"}
                   </td>
-                  <td className="text-center">
+                  {/* <td className="text-center">
                     {procedure.dentists ? procedure.dentists : "-"}
-                  </td>
+                  </td> */}
                   <td className="text-center">
                     {procedure.nextAppointment
                       ? formatDate(procedure.nextAppointment)

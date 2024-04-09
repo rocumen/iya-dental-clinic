@@ -10,6 +10,8 @@ import Message from "../components/Message.js";
 import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 
+import dentalImage from "../assets/dentalimage.jpg";
+
 const ProcedureDetails = () => {
   const { patientId, procedureId } = useParams();
   const [showModal, setShowModal] = useState(false);
@@ -67,6 +69,11 @@ const ProcedureDetails = () => {
     <>
       {isLoading && <Loader />}
       {error && <Message />}
+      <Row>
+        <Col className="mb-2 d-flex justify-content-center">
+          <Image src={dentalImage} alt="image" fluid className="small-image" />
+        </Col>
+      </Row>
       <Row>
         <Col md={6}>
           <Table striped bordered hover responsive className="table-sm">

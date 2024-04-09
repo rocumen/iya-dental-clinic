@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Image } from "react-bootstrap";
 import Legend from "../components/Dental Chart/Legend.js";
 //Upper Right Circles
 import ACircle1 from "../components/AdultCircles/UpperRight/ACircle1.js";
@@ -41,6 +41,8 @@ import ACircle32 from "../components/AdultCircles/LowerLeft/ACircle32.js";
 import StatusLower from "../components/AdultCircles/status/StatusLower.js";
 
 import StatusUpper from "../components/AdultCircles/status/StatusUpper.js";
+
+import dentalImage from "../assets/dentalimage.jpg";
 
 import {
   useCreateDentalChartAdultMutation,
@@ -289,6 +291,11 @@ const AdultDentalChart = () => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Row>
+        <Col className="mb-2 d-flex justify-content-center">
+          <Image src={dentalImage} alt="image" fluid className="small-image" />
+        </Col>
+      </Row>
       <Row className="my-3">
         <Col>
           <h1 className="text-center">Adult Dental Record Chart</h1>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Container, Image, NavDropdown } from "react-bootstrap";
 
-import logo from "../assets/logo.png";
+import logo from "../assets/log.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
@@ -35,8 +35,8 @@ const Header = () => {
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
-              <Image src={logo} alt="Proshop" />
-              Dental Clinic
+              <Image src={logo} alt="logo" fluid className="log mx-1" />
+              Ocumen-S-Dental Clinic
             </Navbar.Brand>
           </LinkContainer>
 

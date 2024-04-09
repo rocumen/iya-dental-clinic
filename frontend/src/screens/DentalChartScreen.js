@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Image } from "react-bootstrap";
 //Upper Right Circles
 import KCircle1 from "../components/circles/upperRight/KCircle1.js";
 import KCircle2 from "../components/circles/upperRight/KCircle2.js";
@@ -28,6 +28,8 @@ import KCircle20 from "../components/circles/lowerLeft/KCircle20.js";
 import StatusLower from "../components/Dental Chart/StatusLower.js";
 import StatusUpper from "../components/Dental Chart/StatusUpper.js";
 import Legend from "../components/Dental Chart/Legend.js";
+
+import dentalImage from "../assets/dentalimage.jpg";
 
 import {
   useCreateDentalChartKidsMutation,
@@ -239,6 +241,11 @@ const DentalChartScreen = () => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Row>
+        <Col className="mb-2 d-flex justify-content-center">
+          <Image src={dentalImage} alt="image" fluid className="small-image" />
+        </Col>
+      </Row>
       <Row className="my-3">
         <Col>
           <h1 className="text-center">Child Dental Record Chart</h1>

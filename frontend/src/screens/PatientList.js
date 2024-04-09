@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
-import { Button, Table, Row, Col, Modal } from "react-bootstrap";
+import { Button, Table, Row, Col, Modal, Image } from "react-bootstrap";
 import { FaPlus, FaEdit } from "react-icons/fa";
 import Message from "../components/Message.js";
 import Loader from "../components/Loader.js";
@@ -16,6 +16,8 @@ import {
 
 import ProcedureListModal from "../components/ProcedureListModal.js";
 import SearchBox from "../components/SearchBox.js";
+
+import dentalImage from "../assets/dentalimage.jpg";
 
 const PatientList = () => {
   const navigate = useNavigate();
@@ -60,8 +62,13 @@ const PatientList = () => {
   return (
     <>
       <Row>
-        <Col className="me-5">
-          <h1>Patient Records</h1>
+        <Col className="mb-2 d-flex justify-content-center">
+          <Image src={dentalImage} alt="image" fluid className="small-image" />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <h2>Patient Records</h2>
         </Col>
       </Row>
       <Row className="align-items-center mb-3">

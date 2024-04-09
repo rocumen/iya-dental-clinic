@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { Form, Button, Row, Col, Table } from "react-bootstrap";
+import { Form, Button, Row, Col, Table, Image } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import GoBack from "../components/GoBack.js";
@@ -12,6 +12,8 @@ import {
   useGetPatientByIdQuery,
   useUploadRxMutation,
 } from "../slices/patientsApiSlice.js";
+
+import dentalImage from "../assets/dentalimage.jpg";
 
 const ProcedureScreen = () => {
   const { id: patientId } = useParams();
@@ -232,6 +234,11 @@ const ProcedureScreen = () => {
 
   return (
     <>
+      <Row>
+        <Col className="mb-2 d-flex justify-content-center">
+          <Image src={dentalImage} alt="image" fluid className="small-image" />
+        </Col>
+      </Row>
       <GoBack />
       {isLoading && <Loader />}
       <h1>Treatment Record</h1>
