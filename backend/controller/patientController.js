@@ -236,6 +236,8 @@ const createProcedure = asyncHandler(async (req, res) => {
     nextAppointment,
     rx,
     procedureSignature,
+    // installment,
+    // installmentBalance,
   } = req.body;
 
   const patient = await Patient.findById(req.params.id);
@@ -269,6 +271,9 @@ const createProcedure = asyncHandler(async (req, res) => {
       nextAppointment,
       rx,
       procedureSignature,
+      // installment,
+      // installmentProcedure: installment === true ? procedureType : "",
+      // installmentBalance: installment === true ? installmentBalance : 0,
     };
 
     patient.procedure.push(newProcedure);

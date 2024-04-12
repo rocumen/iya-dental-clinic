@@ -36,7 +36,7 @@ const Header = () => {
           <LinkContainer to="/">
             <Navbar.Brand>
               <Image src={logo} alt="logo" fluid className="log mx-1" />
-              Ocumen-S-Dental Clinic
+              Ocumen S. Dental Clinic
             </Navbar.Brand>
           </LinkContainer>
 

@@ -142,9 +142,12 @@ const procedureSchema = mongoose.Schema({
   },
 
   dentists: String,
-  amountCharged: Number,
+  // amountCharged: Number,
   totalAmountCharged: Number,
   amountPaid: Number,
+  installment: Boolean, // true = installment, false = cash
+  installmentProcedure: String,
+  installmentBalance: Number,
   balance: Number,
   previousBalance: Number,
   nextAppointment: Date,

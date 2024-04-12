@@ -33,6 +33,9 @@ const ProcedureScreen = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [procedureType, setProcedureType] = useState("");
   const [procedureDate, setProcedureDate] = useState("");
+  const [installment, setInstallment] = useState(false);
+  const [installmentProcedure, setInstallmentProcedure] = useState("");
+  const [installmentBalance, setInstallmentBalance] = useState(null);
 
   const [procedureArray, setProcedureArray] = useState([
     { toothNumbers: null, procedureExplanation: "", amountCharged: null },
@@ -231,7 +234,38 @@ const ProcedureScreen = () => {
         selectionStart + 1;
     }
   };
+  const procedureOptions = [
+    "CONSULTATION",
+    "RESTORATION",
+    "PITS AND FISSURE SEALANTS",
+    "TOOTH EXTRACTION",
+    "ORAL PROPHYLAXIS",
+    "ROOT CANAL TREATMENT",
+    "ORAL SURGERY",
+    "TEETH WHITENING",
+    "PROSTODONTIC TREATMENT",
+    "ORTHODONTICS",
+    "COSMETIC DENTISTRY",
+    "TMJD TREATMENT",
+    "PERIODONTICS",
+    "DENTAL IMPLANT",
+  ];
+  const handleProcedureTypeChange = (e) => {
+    setProcedureType(e.target.value);
+  };
 
+  /*
+  useEffect(() => {
+    const searchTerm = procedureType;
+    for (let i = patient?.procedure.length - 1; i >= 0; i--) {
+      if (patient?.procedure[i] === searchTerm) {
+        console.log(`Found "${searchTerm}" at index ${i} from the back.`);
+        break; // Stop searching once found
+      }
+    }
+    console.log(searchTerm);
+  }, [procedureType]);
+  */
   return (
     <>
       <Row>
@@ -282,7 +316,7 @@ const ProcedureScreen = () => {
             </Table>
           </Col>
         </Row>
-        <Row>
+        {/* <Row>
           <Col md={3}>
             <Form.Group controlId="procedureType" className="my-2">
               <Form.Label>Procedure Type:</Form.Label>
@@ -293,6 +327,25 @@ const ProcedureScreen = () => {
                 max="99" //
                 onChange={(e) => setProcedureType(e.target.value)}
               ></Form.Control>
+            </Form.Group>
+          </Col>
+        </Row> */}
+        <Row>
+          <Col md={3}>
+            <Form.Group controlId="procedureType" className="my-2">
+              <Form.Label>Procedure Type:</Form.Label>
+              <Form.Select
+                value={procedureType}
+                onChange={handleProcedureTypeChange}
+                placeholder="Select procedure type"
+              >
+                <option value="">Select Procedure Type</option>
+                {procedureOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>
@@ -376,6 +429,32 @@ const ProcedureScreen = () => {
           <Button onClick={handleAddField}>Add new Procedure</Button>
         </div>
 
+        {/* Installment type */}
+        {/* Cash = false
+        installment = true */}
+        {/* <Row>
+          <Col md={3} lg={2}>
+            <Form.Group controlId="installment" className="my-2">
+              <Form.Label>Payment Type:</Form.Label>
+              <div className="d-flex gap-3">
+                <Form.Check
+                  type="radio"
+                  id="installmentTrue"
+                  label="Installment"
+                  checked={installment === true}
+                  onChange={() => setInstallment(true)}
+                />
+                <Form.Check
+                  type="radio"
+                  id="installmentFalse"
+                  label="Cash"
+                  checked={installment === false}
+                  onChange={() => setInstallment(false)}
+                />
+              </div>
+            </Form.Group>
+          </Col>
+        </Row> */}
         <Row>
           <Col md={3} lg={2}>
             <Form.Group controlId="dentists" className="my-2">
@@ -404,6 +483,7 @@ const ProcedureScreen = () => {
             )}
           </Col>
         </Row>
+
         <Row>
           <Col md={2}>
             <Form.Group controlId="amountPaid" className="my-2">
