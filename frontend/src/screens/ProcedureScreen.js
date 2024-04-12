@@ -34,8 +34,6 @@ const ProcedureScreen = () => {
   const [procedureType, setProcedureType] = useState("");
   const [procedureDate, setProcedureDate] = useState("");
   const [installment, setInstallment] = useState(false);
-  const [installmentProcedure, setInstallmentProcedure] = useState("");
-  const [installmentBalance, setInstallmentBalance] = useState(null);
 
   const [procedureArray, setProcedureArray] = useState([
     { toothNumbers: null, procedureExplanation: "", amountCharged: null },
@@ -46,6 +44,7 @@ const ProcedureScreen = () => {
   const [totalAmountCharged, setTotalAmountCharged] = useState(null);
   const [amountPaid, setAmountPaid] = useState(null);
   const [balance, setBalance] = useState(null);
+  const [previousBalance, setPreviousBalance] = useState(null);
   const [nextAppointment, setNextAppointment] = useState("");
   const [rx, setRx] = useState([{ url: "", id: "" }]);
   const [procedureSignature, setProcedureSignature] = useState({
@@ -53,11 +52,6 @@ const ProcedureScreen = () => {
     id: "",
   });
   const [submitted, setSubmitted] = useState(false);
-
-  const lastBalance =
-    patient?.procedure?.length > 0
-      ? patient.procedure[patient.procedure.length - 1].balance
-      : null;
 
   useEffect(() => {
     // setProcedureType(patient.procedureType);
@@ -78,6 +72,7 @@ const ProcedureScreen = () => {
     setTotalAmountCharged(totalAmountCharged);
     setAmountPaid(amountPaid);
     setBalance(balance);
+    setPreviousBalance(previousBalance);
     setNextAppointment(nextAppointment);
     setRx(rx);
     setProcedureSignature(procedureSignature);
@@ -92,6 +87,7 @@ const ProcedureScreen = () => {
     nextAppointment,
     rx,
     procedureSignature,
+    previousBalance,
   ]);
 
   // const handleFileUpload = async (e) => {
@@ -111,11 +107,35 @@ const ProcedureScreen = () => {
   //   }
   // };
 
+  // Find the first procedure with the matching type
+  const matchingProcedure = patient?.procedure
+    ?.slice()
+    .reverse()
+    .find((p) => p.procedureType === procedureType);
+
+  // Extract the balance of the matching procedure, or return null if no matching procedure is found
+  const pp = matchingProcedure ? matchingProcedure.balance : null;
+
+  useEffect(() => {
+    setPreviousBalance(pp);
+  }, [pp]); // This will update the state whenever pp changes
+
+  // const lastBalance =
+  //   patient?.procedure?.length > 0
+  //     ? patient.procedure[patient.procedure.length - 1].balance
+  //     : null;
+  //const lastBalance = patient?.procedure?.length > 0 ? pp : null;
+
+  const handleTotalBalance =
+    totalAmountCharged + pp - amountPaid === 0
+      ? "Fully paid"
+      : (totalAmountCharged + pp - amountPaid).toString();
+
   useEffect(() => {
     if (totalAmountCharged !== null && amountPaid !== null) {
-      setBalance(totalAmountCharged + lastBalance - amountPaid);
+      setBalance(totalAmountCharged + pp - amountPaid);
     }
-  }, [totalAmountCharged, amountPaid, lastBalance]);
+  }, [totalAmountCharged, amountPaid, pp]);
 
   const handleFileUpload = async (e) => {
     const fileInput = document.getElementById("fileInput");
@@ -175,6 +195,8 @@ const ProcedureScreen = () => {
         nextAppointment,
         rx,
         procedureSignature,
+        installment,
+        previousBalance,
       }).unwrap();
 
       setSubmitted(true);
@@ -432,7 +454,7 @@ const ProcedureScreen = () => {
         {/* Installment type */}
         {/* Cash = false
         installment = true */}
-        {/* <Row>
+        <Row>
           <Col md={3} lg={2}>
             <Form.Group controlId="installment" className="my-2">
               <Form.Label>Payment Type:</Form.Label>
@@ -454,7 +476,7 @@ const ProcedureScreen = () => {
               </div>
             </Form.Group>
           </Col>
-        </Row> */}
+        </Row>
         <Row>
           <Col md={3} lg={2}>
             <Form.Group controlId="dentists" className="my-2">
@@ -474,11 +496,7 @@ const ProcedureScreen = () => {
                 <Form.Label>
                   <strong>Previous Balance:</strong>
                 </Form.Label>
-                <Form.Control
-                  type="number"
-                  value={lastBalance ? lastBalance : 0}
-                  readOnly
-                />
+                <Form.Control type="number" value={pp ? pp : 0} readOnly />
               </Form.Group>
             )}
           </Col>
@@ -513,11 +531,12 @@ const ProcedureScreen = () => {
               <Form.Label>Total Balance:</Form.Label>
               <Form.Control
                 type="text" // Change type to text for displaying "Fully paid"
-                value={
-                  totalAmountCharged + lastBalance - amountPaid === 0
-                    ? "Fully paid"
-                    : totalAmountCharged + lastBalance - amountPaid
-                }
+                // value={
+                //   totalAmountCharged + lastBalance - amountPaid === 0
+                //     ? "Fully paid"
+                //     : totalAmountCharged + lastBalance - amountPaid
+                // }
+                value={handleTotalBalance}
                 readOnly
               />
             </Form.Group>

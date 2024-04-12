@@ -146,8 +146,6 @@ const procedureSchema = mongoose.Schema({
   totalAmountCharged: Number,
   amountPaid: Number,
   installment: Boolean, // true = installment, false = cash
-  installmentProcedure: String,
-  installmentBalance: Number,
   balance: Number,
   previousBalance: Number,
   nextAppointment: Date,

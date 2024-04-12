@@ -236,18 +236,18 @@ const createProcedure = asyncHandler(async (req, res) => {
     nextAppointment,
     rx,
     procedureSignature,
-    // installment,
-    // installmentBalance,
+    installment,
+    previousBalance,
   } = req.body;
 
   const patient = await Patient.findById(req.params.id);
 
   if (patient) {
-    let previousBalance = 0;
-    if (patient.procedure.length > 0) {
-      // Get the previous balance from the last procedure
-      previousBalance = patient.procedure[patient.procedure.length - 1].balance;
-    }
+    // let previousBalance = 0;
+    // if (patient.procedure.length > 0) {
+    //   // Get the previous balance from the last procedure
+    //   previousBalance = patient.procedure[patient.procedure.length - 1].balance;
+    // }
 
     console.log(patient.procedure.length);
 
@@ -264,16 +264,14 @@ const createProcedure = asyncHandler(async (req, res) => {
       totalAmountCharged,
       amountPaid,
       balance,
-      previousBalance:
-        patient.procedure.length > 0
-          ? patient.procedure[patient.procedure.length - 1].balance
-          : 0,
+      // previousBalance:
+      //   patient.procedure.length > 0
+      //     ? patient.procedure[patient.procedure.length - 1].balance
+      //     : 0,
+      previousBalance,
       nextAppointment,
       rx,
       procedureSignature,
-      // installment,
-      // installmentProcedure: installment === true ? procedureType : "",
-      // installmentBalance: installment === true ? installmentBalance : 0,
     };
 
     patient.procedure.push(newProcedure);

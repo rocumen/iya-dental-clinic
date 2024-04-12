@@ -48,8 +48,13 @@ const ProcedureDetails = () => {
     const options = { month: "long", day: "numeric", year: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
+  console.log(procedure);
+  const lastBalance = procedure?.map((p) => p.previousBalance);
+  // const lastBalance =
+  //   procedure.previousBalance &&
+  //   procedure.previousBalance[procedure.previousBalance.length - 1];
 
-  const lastBalance = procedure?.map((a) => a.previousBalance);
+  console.log(lastBalance);
 
   const totalAmountCharged = procedure?.map(
     (amount) => amount.totalAmountCharged
@@ -87,6 +92,12 @@ const ProcedureDetails = () => {
                     <td className="col-6 text-center">
                       {formatDate(p.procedureDate || "-")}
                     </td>
+                  </tr>
+                  <tr>
+                    <td className="col-4 text-center">
+                      <strong>Procedure Type:</strong>
+                    </td>
+                    <td className="col-6 text-center">{p.procedureType}</td>
                   </tr>
                   <tr>
                     <td className="col-4 text-center">
