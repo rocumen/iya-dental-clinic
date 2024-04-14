@@ -28,7 +28,7 @@ const LowerLeftCircle = ({
         >
           <Row>
             <Col>
-              <h6>61</h6>
+              <h6>71</h6>
               <KCircle
                 handleFill={handleFill}
                 fillColor={fillColor.circle16}
@@ -41,7 +41,7 @@ const LowerLeftCircle = ({
           </Row>
           <Row>
             <Col>
-              <h6>62</h6>
+              <h6>72</h6>
               <KCircle
                 handleFill={handleFill}
                 fillColor={fillColor.circle17}
@@ -54,7 +54,7 @@ const LowerLeftCircle = ({
           </Row>
           <Row>
             <Col>
-              <h6>63</h6>
+              <h6>73</h6>
               <KCircle
                 handleFill={handleFill}
                 fillColor={fillColor.circle18}
@@ -67,7 +67,7 @@ const LowerLeftCircle = ({
           </Row>
           <Row>
             <Col>
-              <h6>64</h6>
+              <h6>74</h6>
               <KCircle
                 handleFill={handleFill}
                 fillColor={fillColor.circle19}
@@ -80,7 +80,7 @@ const LowerLeftCircle = ({
           </Row>
           <Row>
             <Col>
-              <h6>65</h6>
+              <h6>75</h6>
               <KCircle
                 handleFill={handleFill}
                 fillColor={fillColor.circle20}
