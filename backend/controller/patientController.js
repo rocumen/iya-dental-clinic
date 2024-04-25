@@ -337,7 +337,7 @@ const getAllPatientsProcedure = asyncHandler(async (req, res) => {
 
     // Sort appointments by descending order of nextAppointment dates
     appointments.sort(
-      (a, b) => new Date(b.nextAppointment) - new Date(a.nextAppointment)
+      (a, b) => new Date(a.nextAppointment) - new Date(b.nextAppointment)
     );
 
     res.json(appointments);
