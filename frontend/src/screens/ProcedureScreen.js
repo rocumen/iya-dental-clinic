@@ -46,6 +46,7 @@ const ProcedureScreen = () => {
   const [balance, setBalance] = useState(null);
   const [previousBalance, setPreviousBalance] = useState(null);
   const [nextAppointment, setNextAppointment] = useState("");
+  const [appointmentTime, setAppointmentTime] = useState("");
   const [rx, setRx] = useState([{ url: "", id: "" }]);
   const [procedureSignature, setProcedureSignature] = useState({
     url: "",
@@ -74,6 +75,7 @@ const ProcedureScreen = () => {
     setBalance(balance);
     setPreviousBalance(previousBalance);
     setNextAppointment(nextAppointment);
+    setAppointmentTime(appointmentTime);
     setRx(rx);
     setProcedureSignature(procedureSignature);
   }, [
@@ -88,6 +90,7 @@ const ProcedureScreen = () => {
     rx,
     procedureSignature,
     previousBalance,
+    appointmentTime,
   ]);
 
   // const handleFileUpload = async (e) => {
@@ -197,6 +200,7 @@ const ProcedureScreen = () => {
         procedureSignature,
         installment,
         previousBalance,
+        appointmentTime,
       }).unwrap();
 
       setSubmitted(true);
@@ -274,6 +278,25 @@ const ProcedureScreen = () => {
   ];
   const handleProcedureTypeChange = (e) => {
     setProcedureType(e.target.value);
+  };
+
+  const handleTimeChange = (e) => {
+    // Splitting the time string to separate hours and minutes
+    const [hours, minutes] = e.target.value.split(":");
+
+    // Checking if the selected time is in the afternoon
+    const isPM = parseInt(hours) >= 12;
+
+    // Converting hours to 12-hour format
+    const twelveHourFormat = parseInt(hours) % 12 || 12;
+
+    // Combining hours, minutes, and AM/PM
+    const formattedTime = `${twelveHourFormat}:${minutes} ${
+      isPM ? "PM" : "AM"
+    }`;
+
+    // Setting the formatted time to state
+    setAppointmentTime(formattedTime);
   };
 
   /*
@@ -572,6 +595,15 @@ const ProcedureScreen = () => {
               {!nextAppointment && (
                 <div className="invalid-feedback">Date is required</div>
               )}
+            </Form.Group>
+          </Col>
+          <Col md={2}>
+            <Form.Group controlId="appointmentTime" className="my-2">
+              <Form.Label>Time of Appointment:</Form.Label>
+              <Form.Control
+                type="time"
+                onChange={handleTimeChange}
+              ></Form.Control>
             </Form.Group>
           </Col>
         </Row>

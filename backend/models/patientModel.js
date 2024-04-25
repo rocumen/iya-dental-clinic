@@ -149,6 +149,7 @@ const procedureSchema = mongoose.Schema({
   balance: Number,
   previousBalance: Number,
   nextAppointment: Date,
+  appointmentTime: String,
 
   rx: [
     {

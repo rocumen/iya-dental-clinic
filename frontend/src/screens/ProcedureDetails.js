@@ -225,7 +225,8 @@ const ProcedureDetails = () => {
                   <tr>
                     <td className="text-center">Next Appointment:</td>
                     <td className="text-center">
-                      {p.nextAppointment ? formatDate(p.nextAppointment) : "-"}
+                      {p.nextAppointment ? formatDate(p.nextAppointment) : "-"}{" "}
+                      | {p.appointmentTime ? p.appointmentTime : "-"}
                     </td>
                   </tr>
                 </React.Fragment>
