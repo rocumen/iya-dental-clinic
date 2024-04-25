@@ -103,7 +103,8 @@ const IncomingAppointments = ({ patient }) => {
           <tr>
             <td className="text-center">{patient.patientName || "-"}</td>
             <td className="text-center">
-              {formatDate(patient.nextAppointment) || "-"}
+              {formatDate(patient.nextAppointment) || "-"} |{" "}
+              {patient.appointmentTime ? patient.appointmentTime : " - "}
             </td>
             <td>
               <div className="text-center">

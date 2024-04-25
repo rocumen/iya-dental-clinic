@@ -325,6 +325,7 @@ const getAllPatientsProcedure = asyncHandler(async (req, res) => {
         console.log(procedure);
         allAppointments.push({
           nextAppointment: procedure.nextAppointment,
+          appointmentTime: procedure.appointmentTime,
           patientName: `${patient.lastName}, ${patient.firstName}`,
           status: procedure.status,
           procedureId: procedure._id,
