@@ -7,7 +7,7 @@ import {
 } from "../slices/patientsApiSlice.js";
 import { useParams } from "react-router-dom";
 
-const IncomingAppointments = ({ patient }) => {
+const IncomingAppointments = () => {
   const { pageNumber, keyword } = useParams();
 
   const { data, refetch: incomingAppointmentsRefetch } =
@@ -24,6 +24,31 @@ const IncomingAppointments = ({ patient }) => {
   const [loadingStates, setLoadingStates] = useState({});
   const [selectedProcedureId, setSelectedProcedureId] = useState(null);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(12); // Adjust this value as needed
+  const [totalPages, setTotalPages] = useState(
+    Math.ceil(
+      filteredData?.length
+        ? filteredData?.length / itemsPerPage
+        : data?.length / itemsPerPage
+    )
+  );
+
+  // const totalPages = Math.ceil(
+  //   filteredData?.length
+  //     ? filteredData?.length / itemsPerPage
+  //     : data?.length / itemsPerPage
+  // );
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
 
   const [changeProcedureStatus] = useChangeProcedureStatusMutation();
 
@@ -95,46 +120,37 @@ const IncomingAppointments = ({ patient }) => {
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
+  const renderPagination = () => (
+    <ul className="pagination d-flex justify-content-center">
+      {pageNumbers.map((number) => (
+        <li key={number} className={`page-item`}>
+          <button
+            onClick={() => paginate(number)}
+            className={`page-link ${
+              currentPage === number ? "bg-dark text-light" : "bg-light"
+            }`}
+          >
+            {number}
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+
   const renderTableBody = () => {
-    const displayData = filteredData.length ? filteredData : data;
-    return displayData?.map((patient, index) => (
-      <React.Fragment key={index}>
-        {patient.nextAppointment && patient.status ? (
-          <tr>
-            <td className="text-center">{patient.patientName || "-"}</td>
-            <td className="text-center">
-              {formatDate(patient.nextAppointment) || "-"} |{" "}
-              {patient.appointmentTime ? patient.appointmentTime : " - "}
-            </td>
-            <td>
-              <div className="text-center">
-                {" "}
-                <Button
-                  size="sm"
-                  style={{
-                    backgroundColor: patient.status ? "blue" : "green",
-                  }}
-                  onClick={() =>
-                    openConfirmationModal(
-                      patient.procedureId,
-                      patient.patientId
-                    )
-                  }
-                  disabled={loadingStates[patient.procedureId]}
-                >
-                  {loadingStates[patient.procedureId]
-                    ? "Updating"
-                    : patient.status
-                    ? "On going"
-                    : "Done"}
-                </Button>
-              </div>
-            </td>
-          </tr>
-        ) : null}
-      </React.Fragment>
-    ));
+    let displayData = filteredData.length ? filteredData : data;
+    displayData = displayData?.filter(
+      (item) => item.status && item.nextAppointment
+    );
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = displayData?.slice(indexOfFirstItem, indexOfLastItem);
+
+    return currentItems;
   };
+
+  console.log(renderTableBody());
 
   return (
     <div>
@@ -142,7 +158,13 @@ const IncomingAppointments = ({ patient }) => {
         <Button
           variant="primary"
           className="btn-md mx-1 "
-          onClick={() => setModalIsOpen(true)}
+          onClick={() => {
+            setModalIsOpen(true);
+
+            let displayData = filteredData.length ? filteredData : data;
+            displayData = displayData?.filter((item) => item.status);
+            setTotalPages(Math.ceil(displayData?.length / itemsPerPage));
+          }}
         >
           Appointments
         </Button>
@@ -166,8 +188,53 @@ const IncomingAppointments = ({ patient }) => {
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody>{renderTableBody()}</tbody>
+            <tbody>
+              {renderTableBody()?.map((patient, index) => (
+                <React.Fragment key={index}>
+                  {patient.nextAppointment && patient.status ? (
+                    <tr>
+                      <td className="text-center">
+                        {patient.patientName || "-"}
+                      </td>
+                      <td className="text-center">
+                        {formatDate(patient.nextAppointment) || "-"} |{" "}
+                        {patient.appointmentTime
+                          ? patient.appointmentTime
+                          : " - "}
+                      </td>
+                      <td>
+                        <div className="text-center">
+                          {" "}
+                          <Button
+                            size="sm"
+                            style={{
+                              backgroundColor: patient.status
+                                ? "blue"
+                                : "green",
+                            }}
+                            onClick={() =>
+                              openConfirmationModal(
+                                patient.procedureId,
+                                patient.patientId
+                              )
+                            }
+                            disabled={loadingStates[patient.procedureId]}
+                          >
+                            {loadingStates[patient.procedureId]
+                              ? "Updating"
+                              : patient.status
+                              ? "On going"
+                              : "Done"}
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ) : null}
+                </React.Fragment>
+              ))}
+            </tbody>
           </Table>
+          {renderPagination()}
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => setModalIsOpen(false)}>Close</Button>

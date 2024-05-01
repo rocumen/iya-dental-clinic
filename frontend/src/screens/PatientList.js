@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
-import { Button, Table, Row, Col, Modal, Image } from "react-bootstrap";
+import { Button, Table, Row, Col, Modal, Image, Form } from "react-bootstrap";
 import { FaPlus, FaEdit } from "react-icons/fa";
 import Message from "../components/Message.js";
 import Loader from "../components/Loader.js";
@@ -13,6 +13,7 @@ import {
   useGetAllPatientsQuery,
   useCreatePatientMutation,
   useDeletePatientMutation,
+  useSortAllPatientsByLastNameQuery,
 } from "../slices/patientsApiSlice.js";
 
 import ProcedureListModal from "../components/ProcedureListModal.js";
@@ -29,10 +30,28 @@ const PatientList = () => {
     keyword,
   });
 
+  const { data: sortedByLastName } = useSortAllPatientsByLastNameQuery({
+    pageNumber,
+    keyword,
+  });
+
   const [deletePatient] = useDeletePatientMutation();
   const [createPatient] = useCreatePatientMutation();
 
   const [showModal, setShowModal] = useState(false);
+  const [sortBy, setSortBy] = useState("lastUpdate");
+
+  const handleSortChange = (e) => {
+    const selectedSortOption = e.target.value;
+    setSortBy(selectedSortOption);
+    if (selectedSortOption === "lastUpdate") {
+      // Trigger the existing query for sorting by last update
+      refetch();
+    } else if (selectedSortOption === "lastName") {
+      // Trigger the new query for sorting by last name
+      refetch({ sortBy: "lastName" });
+    }
+  };
 
   const createPatientHandler = async () => {
     setShowModal(false);
@@ -72,6 +91,7 @@ const PatientList = () => {
       console.error("Error deleting patient:", error);
     }
   };
+
   return (
     <>
       <Row>
@@ -84,10 +104,27 @@ const PatientList = () => {
           <h2>Patient Records</h2>
         </Col>
       </Row>
+      <Row className="my-2">
+        <Col md={5} sm={4} lg={2}>
+          <Form.Group as={Col} controlId="formSortBy">
+            <Form.Label>Sort By:</Form.Label>
+            <Form.Control
+              as="select"
+              value={sortBy}
+              onChange={handleSortChange}
+            >
+              <option value="">Select Sorting Option</option>
+              <option value="lastUpdate">Sort by Last Update</option>
+              <option value="lastName">Sort by Last Name</option>
+            </Form.Control>
+          </Form.Group>
+        </Col>
+      </Row>
       <Row className="align-items-center mb-3">
         <Col className="ms-auto">
           <SearchBox />
         </Col>
+
         <Col className="d-flex justify-content-end gap-1">
           {/* Modal incoming Appointment */}
           <IncomingAppointments patient={data?.patients} />
@@ -132,121 +169,253 @@ const PatientList = () => {
               </tr>
             </thead>
             <tbody>
-              {data?.patients?.map((patient) => (
-                <tr key={patient._id}>
-                  <td className="justify-content-center align-item-center">
-                    <LinkContainer to={`/patients/onePatient/${patient._id}`}>
-                      <div className="text-center my-3">
-                        <Button variant="light" className="btn-sm mx-1 border">
-                          View
-                        </Button>
-                      </div>
-                    </LinkContainer>
-                  </td>
-                  <td>
-                    <div className="text-center py-1 my-3">
-                      {patient.lastName}, {patient.firstName}
-                    </div>
-                  </td>
-                  <td>
-                    <div className="text-center py-1 my-3">
-                      {/* Access the dentists value from the latest procedure */}
-                      {patient.procedure.length > 0 &&
-                        patient.procedure[patient.procedure.length - 1]
-                          .procedureType}
-                    </div>
-                  </td>
-
-                  <td>
-                    <div className="text-center py-1 my-3">
-                      {patient?.procedure?.length > 0
-                        ? formatDate(
-                            patient.procedure[patient.procedure.length - 1]
-                              .procedureDate
-                          )
-                        : "-"}
-                    </div>
-                  </td>
-
-                  <td>
-                    <div className="d-flex flex-sm-row flex-column justify-content-center align-item-end mt-3">
-                      <div>
-                        <ProcedureListModal
-                          patient={patient}
-                          refetch={refetch}
-                        />
-                      </div>
-                      <LinkContainer
-                        to={`/patients/createProcedure/${patient._id}`}
-                      >
-                        <div>
-                          <Button
-                            variant="primary"
-                            className="btn-sm mx-1 d-flex align-items-center"
-                          >
-                            Procedure
-                            <FaPlus />
-                          </Button>
+              {sortBy === "lastUpdate" ? (
+                <>
+                  {data?.patients?.map((patient) => (
+                    <tr key={patient._id}>
+                      <td className="justify-content-center align-item-center">
+                        <LinkContainer
+                          to={`/patients/onePatient/${patient._id}`}
+                        >
+                          <div className="text-center my-3">
+                            <Button
+                              variant="light"
+                              className="btn-sm mx-1 border"
+                            >
+                              View
+                            </Button>
+                          </div>
+                        </LinkContainer>
+                      </td>
+                      <td>
+                        <div className="text-center py-1 my-3">
+                          {patient.lastName}, {patient.firstName}
                         </div>
-                      </LinkContainer>
-                    </div>
-                  </td>
+                      </td>
+                      <td>
+                        <div className="text-center py-1 my-3">
+                          {/* Access the dentists value from the latest procedure */}
+                          {patient.procedure.length > 0 &&
+                            patient.procedure[patient.procedure.length - 1]
+                              .procedureType}
+                        </div>
+                      </td>
 
-                  <td className="text-center">
-                    {/* Edit and delete buttons */}
-                    <div className="justify-content-center d-flex flex-column mx-3">
-                      {patient?.dentalChartKids?._id ? (
-                        <LinkContainer
-                          to={`/patients/dentalChartKids/${patient._id}/update/${patient?.dentalChartKids?._id}`}
-                        >
-                          <Button variant="primary" className="btn-sm my-1">
-                            <FaEdit />
-                            Child Chart
-                          </Button>
-                        </LinkContainer>
-                      ) : (
-                        <LinkContainer
-                          to={`/patients/dentalChartKids/${patient._id}`}
-                        >
-                          <Button variant="primary" className="btn-sm my-1">
-                            <FaPlus />
-                            Child Chart
-                          </Button>
-                        </LinkContainer>
-                      )}
-                      {patient?.dentalChartAdult?._id ? (
-                        <LinkContainer
-                          to={`/patients/dentalChartAdult/${patient._id}/update/${patient?.dentalChartAdult?._id}`}
-                        >
-                          <Button variant="primary" className="btn-sm my-1">
-                            <FaEdit />
-                            Adult Chart
-                          </Button>
-                        </LinkContainer>
-                      ) : (
-                        <LinkContainer
-                          to={`/patients/dentalChartAdult/${patient._id}`}
-                        >
-                          <Button variant="primary" className="btn-sm my-1">
-                            <FaPlus />
-                            Adult Chart
-                          </Button>
-                        </LinkContainer>
-                      )}
+                      <td>
+                        <div className="text-center py-1 my-3">
+                          {patient?.procedure?.length > 0
+                            ? formatDate(
+                                patient.procedure[patient.procedure.length - 1]
+                                  .procedureDate
+                              )
+                            : "-"}
+                        </div>
+                      </td>
 
-                      {!patient?.firstName && !patient?.lastName && (
-                        <Button
-                          variant="danger"
-                          className="btn-sm "
-                          onClick={() => deleteHandler(patient?._id)}
+                      <td>
+                        <div className="d-flex flex-sm-row flex-column justify-content-center align-item-end mt-3">
+                          <div>
+                            <ProcedureListModal
+                              patient={patient}
+                              refetch={refetch}
+                            />
+                          </div>
+                          <LinkContainer
+                            to={`/patients/createProcedure/${patient._id}`}
+                          >
+                            <div>
+                              <Button
+                                variant="primary"
+                                className="btn-sm mx-1 d-flex align-items-center"
+                              >
+                                Procedure
+                                <FaPlus />
+                              </Button>
+                            </div>
+                          </LinkContainer>
+                        </div>
+                      </td>
+
+                      <td className="text-center">
+                        {/* Edit and delete buttons */}
+                        <div className="justify-content-center d-flex flex-column mx-3">
+                          {patient?.dentalChartKids?._id ? (
+                            <LinkContainer
+                              to={`/patients/dentalChartKids/${patient._id}/update/${patient?.dentalChartKids?._id}`}
+                            >
+                              <Button variant="primary" className="btn-sm my-1">
+                                <FaEdit />
+                                Child Chart
+                              </Button>
+                            </LinkContainer>
+                          ) : (
+                            <LinkContainer
+                              to={`/patients/dentalChartKids/${patient._id}`}
+                            >
+                              <Button variant="primary" className="btn-sm my-1">
+                                <FaPlus />
+                                Child Chart
+                              </Button>
+                            </LinkContainer>
+                          )}
+                          {patient?.dentalChartAdult?._id ? (
+                            <LinkContainer
+                              to={`/patients/dentalChartAdult/${patient._id}/update/${patient?.dentalChartAdult?._id}`}
+                            >
+                              <Button variant="primary" className="btn-sm my-1">
+                                <FaEdit />
+                                Adult Chart
+                              </Button>
+                            </LinkContainer>
+                          ) : (
+                            <LinkContainer
+                              to={`/patients/dentalChartAdult/${patient._id}`}
+                            >
+                              <Button variant="primary" className="btn-sm my-1">
+                                <FaPlus />
+                                Adult Chart
+                              </Button>
+                            </LinkContainer>
+                          )}
+
+                          {!patient?.firstName && !patient?.lastName && (
+                            <Button
+                              variant="danger"
+                              className="btn-sm "
+                              onClick={() => deleteHandler(patient?._id)}
+                            >
+                              Delete
+                            </Button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              ) : (
+                <>
+                  {sortedByLastName?.patients?.map((patient) => (
+                    <tr key={patient._id}>
+                      <td className="justify-content-center align-item-center">
+                        <LinkContainer
+                          to={`/patients/onePatient/${patient._id}`}
                         >
-                          Delete
-                        </Button>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                          <div className="text-center my-3">
+                            <Button
+                              variant="light"
+                              className="btn-sm mx-1 border"
+                            >
+                              View
+                            </Button>
+                          </div>
+                        </LinkContainer>
+                      </td>
+                      <td>
+                        <div className="text-center py-1 my-3">
+                          {patient.lastName}, {patient.firstName}
+                        </div>
+                      </td>
+                      <td>
+                        <div className="text-center py-1 my-3">
+                          {/* Access the dentists value from the latest procedure */}
+                          {patient.procedure.length > 0 &&
+                            patient.procedure[patient.procedure.length - 1]
+                              .procedureType}
+                        </div>
+                      </td>
+
+                      <td>
+                        <div className="text-center py-1 my-3">
+                          {patient?.procedure?.length > 0
+                            ? formatDate(
+                                patient.procedure[patient.procedure.length - 1]
+                                  .procedureDate
+                              )
+                            : "-"}
+                        </div>
+                      </td>
+
+                      <td>
+                        <div className="d-flex flex-sm-row flex-column justify-content-center align-item-end mt-3">
+                          <div>
+                            <ProcedureListModal
+                              patient={patient}
+                              refetch={refetch}
+                            />
+                          </div>
+                          <LinkContainer
+                            to={`/patients/createProcedure/${patient._id}`}
+                          >
+                            <div>
+                              <Button
+                                variant="primary"
+                                className="btn-sm mx-1 d-flex align-items-center"
+                              >
+                                Procedure
+                                <FaPlus />
+                              </Button>
+                            </div>
+                          </LinkContainer>
+                        </div>
+                      </td>
+
+                      <td className="text-center">
+                        {/* Edit and delete buttons */}
+                        <div className="justify-content-center d-flex flex-column mx-3">
+                          {patient?.dentalChartKids?._id ? (
+                            <LinkContainer
+                              to={`/patients/dentalChartKids/${patient._id}/update/${patient?.dentalChartKids?._id}`}
+                            >
+                              <Button variant="primary" className="btn-sm my-1">
+                                <FaEdit />
+                                Child Chart
+                              </Button>
+                            </LinkContainer>
+                          ) : (
+                            <LinkContainer
+                              to={`/patients/dentalChartKids/${patient._id}`}
+                            >
+                              <Button variant="primary" className="btn-sm my-1">
+                                <FaPlus />
+                                Child Chart
+                              </Button>
+                            </LinkContainer>
+                          )}
+                          {patient?.dentalChartAdult?._id ? (
+                            <LinkContainer
+                              to={`/patients/dentalChartAdult/${patient._id}/update/${patient?.dentalChartAdult?._id}`}
+                            >
+                              <Button variant="primary" className="btn-sm my-1">
+                                <FaEdit />
+                                Adult Chart
+                              </Button>
+                            </LinkContainer>
+                          ) : (
+                            <LinkContainer
+                              to={`/patients/dentalChartAdult/${patient._id}`}
+                            >
+                              <Button variant="primary" className="btn-sm my-1">
+                                <FaPlus />
+                                Adult Chart
+                              </Button>
+                            </LinkContainer>
+                          )}
+
+                          {!patient?.firstName && !patient?.lastName && (
+                            <Button
+                              variant="danger"
+                              className="btn-sm "
+                              onClick={() => deleteHandler(patient?._id)}
+                            >
+                              Delete
+                            </Button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              )}
             </tbody>
           </Table>
 

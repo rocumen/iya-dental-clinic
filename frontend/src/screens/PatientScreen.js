@@ -1,10 +1,11 @@
 import React from "react";
 import GoBack from "../components/GoBack.js";
-import { useParams } from "react-router-dom";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 
 import { useGetPatientByIdQuery } from "../slices/patientsApiSlice.js";
 import { Link } from "react-router-dom";
-import { Table, Row, Col, Image, Tab } from "react-bootstrap";
+import { Table, Row, Col, Image, Button } from "react-bootstrap";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import MyDocument from "../components/PDFFile.js";
 
@@ -13,6 +14,7 @@ import dentalImage from "../assets/dentalimage.jpg";
 
 const PatientScreen = () => {
   const { id: patientId } = useParams();
+  const navigate = useNavigate();
 
   const { data: patient, isLoading, error } = useGetPatientByIdQuery(patientId);
 
@@ -34,6 +36,9 @@ const PatientScreen = () => {
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
+  const navigateHandler = () => {
+    navigate("/");
+  };
   return (
     <>
       <Row>
@@ -42,8 +47,17 @@ const PatientScreen = () => {
         </Col>
       </Row>
       <Link>
-        <GoBack />
+        <Button
+          onClick={navigateHandler}
+          variant="dark"
+          bordered
+          className="text-light my-2"
+          size="md"
+        >
+          <FaArrowLeft /> Go Back
+        </Button>
       </Link>
+
       <h3>Patient Information Record</h3>
 
       {/* First Row */}

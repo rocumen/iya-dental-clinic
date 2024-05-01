@@ -320,7 +320,9 @@ const ProcedureScreen = () => {
       </Row>
       <GoBack />
       {isLoading && <Loader />}
-      <h1>Treatment Record</h1>
+      <div className="text-center">
+        <h1>Treatment Record</h1>
+      </div>
       <Form onSubmit={submitHandler}>
         <Row className="justify-content-end">
           <Col md={2}>

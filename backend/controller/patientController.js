@@ -151,21 +151,25 @@ const updatePatient = asyncHandler(async (req, res) => {
 
   const patient = await Patient.findById(req.params.id);
 
+  // Capitalize the first letter of each word in the name fields
+  const capitalizeFirstLetter = (str) => {
+    return str.replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
   if (patient) {
-    patient.firstName = firstName;
-    patient.middleName = middleName;
-    patient.lastName = lastName;
-    patient.nickName = nickName;
-    patient.gender = gender;
+    patient.firstName = capitalizeFirstLetter(firstName);
+    patient.middleName = capitalizeFirstLetter(middleName);
+    patient.lastName = capitalizeFirstLetter(lastName);
+    patient.nickName = capitalizeFirstLetter(nickName);
+    patient.gender = capitalizeFirstLetter(gender);
     patient.contactNumber = contactNumber;
-    patient.email = email;
+    patient.email = capitalizeFirstLetter(email);
     patient.birthday = birthday;
     patient.age = age;
-    patient.religion = religion;
-    // patient = image;
-    patient.address = address;
-    patient.occupation = occupation;
-    patient.dentalInsurance = dentalInsurance;
+    patient.religion = capitalizeFirstLetter(religion);
+    patient.address = capitalizeFirstLetter(address);
+    patient.occupation = capitalizeFirstLetter(occupation);
+    patient.dentalInsurance = capitalizeFirstLetter(dentalInsurance);
     patient.effectiveDate = effectiveDate;
     patient.bloodType = bloodType;
     patient.bloodPressure = bloodPressure;
@@ -383,6 +387,29 @@ const getAllPatients = asyncHandler(async (req, res) => {
   // } else {
   //   res.json(patients);
   // }
+  res.json({ patients, page, pages: Math.ceil(count / pageSize) });
+});
+
+const getAllPatientsSortedByLastName = asyncHandler(async (req, res) => {
+  const pageSize = process.env.PAGINATION_LIMIT;
+  const page = Number(req.query.pageNumber) || 1;
+  // PAGINATION_LIMIT=2
+
+  const keyword = req.query.keyword
+    ? {
+        $or: [
+          { firstName: { $regex: req.query.keyword, $options: "i" } },
+          { lastName: { $regex: req.query.keyword, $options: "i" } },
+        ],
+      }
+    : {};
+
+  const count = await Patient.countDocuments({ ...keyword });
+  const patients = await Patient.find({ ...keyword })
+    .sort({ lastName: 1 }) // Sort by last name in ascending order
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
   res.json({ patients, page, pages: Math.ceil(count / pageSize) });
 });
 
@@ -824,4 +851,5 @@ export {
   getCircleAdult,
   changeProcedureStatus,
   deletePatient,
+  getAllPatientsSortedByLastName,
 };

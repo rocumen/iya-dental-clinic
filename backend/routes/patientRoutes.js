@@ -16,6 +16,7 @@ import {
   getCircleAdult,
   changeProcedureStatus,
   deletePatient,
+  getAllPatientsSortedByLastName,
 } from "../controller/patientController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 
@@ -62,6 +63,8 @@ router.put(
   admin,
   changeProcedureStatus
 );
+
+router.get("/sortPatient", getAllPatientsSortedByLastName);
 
 router.delete("/deletePatient/:id", protect, admin, deletePatient);
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Row, Col, Button, Image } from "react-bootstrap";
 import Legend from "../components/Dental Chart/Legend.js";
+import { FaArrowLeft } from "react-icons/fa";
 //Upper Right Circles
 import ACircle1 from "../components/AdultCircles/UpperRight/ACircle1.js";
 import ACircle2 from "../components/AdultCircles/UpperRight/ACircle2.js";
@@ -289,494 +291,525 @@ const AdultDentalChart = () => {
       console.log(error);
     }
   };
+
+  const navigateHandler = () => {
+    navigate("/");
+  };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Row>
-        <Col className="mb-2 d-flex justify-content-center">
-          <Image src={dentalImage} alt="image" fluid className="small-image" />
-        </Col>
-      </Row>
-      <Row className="my-3">
-        <Col>
-          <h1 className="text-center">Adult Dental Record Chart</h1>
-        </Col>
-      </Row>
-      <Row className="my-3">
-        <Col>INTRAORAL EXAMINATION</Col>
-        <Col>Name: {patient?.lastName}</Col>
-        <Col>Age: 12</Col>
-        <Col>Gender: M</Col>
-        <Col>Date</Col>
-      </Row>
-      {/* Status Upper */}
-      <StatusUpper register={register} />
-      {/* Color Selector */}
-      <Row>
-        <Col className="d-flex my-3 text-center justify-content-center">
-          <div className="mx-2 circleRed" onClick={() => setColor("#ed0202")}>
-            {/* Red */}
-          </div>
-          <div className="mx-2 circleBlue" onClick={() => setColor("#1c00f0")}>
-            {/* Blue */}
-          </div>
-          <div className="mx-2 circleBlack" onClick={() => setColor("#000000")}>
-            {/* Black */}
-          </div>
-          <div className="mx-2 circleClear" onClick={() => setColor("#D3D3D3")}>
-            {/* Clear */}
-          </div>
-        </Col>
-      </Row>
-      {/* Circles 1-5 */}
-      <Row className="justify-content-between text-center">
-        <Col
-          className="d-flex gap-2 justify-content-center my-2"
-          xs={12}
-          sm={12}
-          md={6}
-          lg={5}
-        >
-          <Row className="justify-content-center text-center">
-            <h6>Upper Right</h6>
-            <Col
-              className="d-flex gap-2 justify-content-center my-2"
-              xs={12}
-              sm={12}
-              md={6}
-              lg={5}
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Row>
+          <Col className="mb-2 d-flex justify-content-center">
+            <Image
+              src={dentalImage}
+              alt="image"
+              fluid
+              className="small-image"
+            />
+          </Col>
+        </Row>
+        <Link>
+          <Button
+            onClick={navigateHandler}
+            variant="dark"
+            bordered
+            className="text-light my-2"
+            size="md"
+          >
+            <FaArrowLeft /> Go Back
+          </Button>
+        </Link>
+        <Row className="my-3">
+          <Col>
+            <h1 className="text-center">Adult Dental Record Chart</h1>
+          </Col>
+        </Row>
+        <Row className="my-3">
+          <Col>INTRAORAL EXAMINATION</Col>
+          <Col>Name: {patient?.lastName}</Col>
+          <Col>Age: 12</Col>
+          <Col>Gender: M</Col>
+          <Col>Date</Col>
+        </Row>
+        {/* Status Upper */}
+        <StatusUpper register={register} />
+        {/* Color Selector */}
+        <Row>
+          <Col className="d-flex my-3 text-center justify-content-center">
+            <div className="mx-2 circleRed" onClick={() => setColor("#ed0202")}>
+              {/* Red */}
+            </div>
+            <div
+              className="mx-2 circleBlue"
+              onClick={() => setColor("#1c00f0")}
             >
-              <Row>
-                <Col>
-                  <h6>18</h6>
-                  <ACircle1
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle1}
-                    circleIndex="circle1"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-
-              <Row>
-                <Col>
-                  <h6>17</h6>
-                  <ACircle2
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle2}
-                    circleIndex="circle2"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-
-              <Row>
-                <Col>
-                  <h6>16</h6>
-                  <ACircle3
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle3}
-                    circleIndex="circle3"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>15</h6>
-                  <ACircle4
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle4}
-                    circleIndex="circle4"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>14</h6>
-                  <ACircle5
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle5}
-                    circleIndex="circle5"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>13</h6>
-                  <ACircle6
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle6}
-                    circleIndex="circle6"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>12</h6>
-                  <ACircle7
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle7}
-                    circleIndex="circle7"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>11</h6>
-                  <ACircle8
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle8}
-                    circleIndex="circle8"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Col>
-
-        <Col
-          className="d-flex gap-2 justify-content-center my-2"
-          xs={12}
-          sm={12}
-          md={6}
-          lg={5}
-        >
-          <Row className="justify-content-center text-center">
-            <h6>Upper Left</h6>
-            <Col
-              className="d-flex gap-2 justify-content-center my-2"
-              xs={12}
-              sm={12}
-              md={6}
-              lg={5}
+              {/* Blue */}
+            </div>
+            <div
+              className="mx-2 circleBlack"
+              onClick={() => setColor("#000000")}
             >
-              <Row>
-                <Col>
-                  <h6>21</h6>
-                  <ACircle9
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle9}
-                    circleIndex="circle9"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>22</h6>
-                  <ACircle10
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle10}
-                    circleIndex="circle10"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>23</h6>
-                  <ACircle11
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle11}
-                    circleIndex="circle11"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-
-              <Row>
-                <Col>
-                  <h6>24</h6>
-                  <ACircle12
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle12}
-                    circleIndex="circle12"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>25</h6>
-                  <ACircle13
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle13}
-                    circleIndex="circle13"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>26</h6>
-                  <ACircle14
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle14}
-                    circleIndex="circle14"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>27</h6>
-                  <ACircle15
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle15}
-                    circleIndex="circle15"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>28</h6>
-                  <ACircle16
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle16}
-                    circleIndex="circle16"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-      <hr></hr>
-      <Row className="justify-content-between text-center">
-        <Col
-          className="d-flex gap-2 justify-content-center my-2"
-          xs={12}
-          sm={12}
-          md={6}
-          lg={5}
-        >
-          <Row className="justify-content-center text-center">
-            <h6>Lower Right</h6>
-            <Col
-              className="d-flex gap-2 justify-content-center my-2"
-              xs={12}
-              sm={12}
-              md={6}
-              lg={5}
+              {/* Black */}
+            </div>
+            <div
+              className="mx-2 circleClear"
+              onClick={() => setColor("#D3D3D3")}
             >
-              <Row>
-                <Col>
-                  <h6>48</h6>
-                  <ACircle17
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle17}
-                    circleIndex="circle17"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>47</h6>
-                  <ACircle18
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle18}
-                    circleIndex="circle18"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>46</h6>
-                  <ACircle19
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle19}
-                    circleIndex="circle19"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>45</h6>
-                  <ACircle20
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle20}
-                    circleIndex="circle20"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>44</h6>
-                  <ACircle21
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle21}
-                    circleIndex="circle21"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>43</h6>
-                  <ACircle22
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle22}
-                    circleIndex="circle22"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>42</h6>
-                  <ACircle23
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle23}
-                    circleIndex="circle23"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>41</h6>
-                  <ACircle24
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle24}
-                    circleIndex="circle24"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Col>
+              {/* Clear */}
+            </div>
+          </Col>
+        </Row>
+        {/* Circles 1-5 */}
+        <Row className="justify-content-between text-center">
+          <Col
+            className="d-flex gap-2 justify-content-center my-2"
+            xs={12}
+            sm={12}
+            md={6}
+            lg={5}
+          >
+            <Row className="justify-content-center text-center">
+              <h6>Upper Right</h6>
+              <Col
+                className="d-flex gap-2 justify-content-center my-2"
+                xs={12}
+                sm={12}
+                md={6}
+                lg={5}
+              >
+                <Row>
+                  <Col>
+                    <h6>18</h6>
+                    <ACircle1
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle1}
+                      circleIndex="circle1"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
 
-        <Col
-          className="d-flex gap-2 justify-content-center my-2"
-          xs={12}
-          sm={12}
-          md={6}
-          lg={5}
-        >
-          <Row className="justify-content-center text-center">
-            <h6>Lower Left</h6>
-            <Col
-              className="d-flex gap-2 justify-content-center my-2"
-              xs={12}
-              sm={12}
-              md={6}
-              lg={5}
-            >
-              <Row>
-                <Col>
-                  <h6>31</h6>
-                  <ACircle25
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle25}
-                    circleIndex="circle25"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>32</h6>
-                  <ACircle26
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle26}
-                    circleIndex="circle26"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>33</h6>
-                  <ACircle27
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle27}
-                    circleIndex="circle27"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>34</h6>
-                  <ACircle28
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle28}
-                    circleIndex="circle28"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>35</h6>
-                  <ACircle29
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle29}
-                    circleIndex="circle29"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>36</h6>
-                  <ACircle30
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle30}
-                    circleIndex="circle30"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>37</h6>
-                  <ACircle31
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle31}
-                    circleIndex="circle31"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>38</h6>
-                  <ACircle32
-                    handleFill={handleFill}
-                    fillColor={fillColor.circle32}
-                    circleIndex="circle32"
-                    color={color}
-                  />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+                <Row>
+                  <Col>
+                    <h6>17</h6>
+                    <ACircle2
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle2}
+                      circleIndex="circle2"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
 
-      <StatusLower register={register} />
-      <Legend register={register} />
-      <Row>
-        <Col>
-          <div className="text-center">
-            <Button type="submit">Submit</Button>
-          </div>
-        </Col>
-      </Row>
-    </form>
+                <Row>
+                  <Col>
+                    <h6>16</h6>
+                    <ACircle3
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle3}
+                      circleIndex="circle3"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>15</h6>
+                    <ACircle4
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle4}
+                      circleIndex="circle4"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>14</h6>
+                    <ACircle5
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle5}
+                      circleIndex="circle5"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>13</h6>
+                    <ACircle6
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle6}
+                      circleIndex="circle6"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>12</h6>
+                    <ACircle7
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle7}
+                      circleIndex="circle7"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>11</h6>
+                    <ACircle8
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle8}
+                      circleIndex="circle8"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Col>
+
+          <Col
+            className="d-flex gap-2 justify-content-center my-2"
+            xs={12}
+            sm={12}
+            md={6}
+            lg={5}
+          >
+            <Row className="justify-content-center text-center">
+              <h6>Upper Left</h6>
+              <Col
+                className="d-flex gap-2 justify-content-center my-2"
+                xs={12}
+                sm={12}
+                md={6}
+                lg={5}
+              >
+                <Row>
+                  <Col>
+                    <h6>21</h6>
+                    <ACircle9
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle9}
+                      circleIndex="circle9"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>22</h6>
+                    <ACircle10
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle10}
+                      circleIndex="circle10"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>23</h6>
+                    <ACircle11
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle11}
+                      circleIndex="circle11"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <h6>24</h6>
+                    <ACircle12
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle12}
+                      circleIndex="circle12"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>25</h6>
+                    <ACircle13
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle13}
+                      circleIndex="circle13"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>26</h6>
+                    <ACircle14
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle14}
+                      circleIndex="circle14"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>27</h6>
+                    <ACircle15
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle15}
+                      circleIndex="circle15"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>28</h6>
+                    <ACircle16
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle16}
+                      circleIndex="circle16"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+        <hr></hr>
+        <Row className="justify-content-between text-center">
+          <Col
+            className="d-flex gap-2 justify-content-center my-2"
+            xs={12}
+            sm={12}
+            md={6}
+            lg={5}
+          >
+            <Row className="justify-content-center text-center">
+              <h6>Lower Right</h6>
+              <Col
+                className="d-flex gap-2 justify-content-center my-2"
+                xs={12}
+                sm={12}
+                md={6}
+                lg={5}
+              >
+                <Row>
+                  <Col>
+                    <h6>48</h6>
+                    <ACircle17
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle17}
+                      circleIndex="circle17"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>47</h6>
+                    <ACircle18
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle18}
+                      circleIndex="circle18"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>46</h6>
+                    <ACircle19
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle19}
+                      circleIndex="circle19"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>45</h6>
+                    <ACircle20
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle20}
+                      circleIndex="circle20"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>44</h6>
+                    <ACircle21
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle21}
+                      circleIndex="circle21"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>43</h6>
+                    <ACircle22
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle22}
+                      circleIndex="circle22"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>42</h6>
+                    <ACircle23
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle23}
+                      circleIndex="circle23"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>41</h6>
+                    <ACircle24
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle24}
+                      circleIndex="circle24"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Col>
+
+          <Col
+            className="d-flex gap-2 justify-content-center my-2"
+            xs={12}
+            sm={12}
+            md={6}
+            lg={5}
+          >
+            <Row className="justify-content-center text-center">
+              <h6>Lower Left</h6>
+              <Col
+                className="d-flex gap-2 justify-content-center my-2"
+                xs={12}
+                sm={12}
+                md={6}
+                lg={5}
+              >
+                <Row>
+                  <Col>
+                    <h6>31</h6>
+                    <ACircle25
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle25}
+                      circleIndex="circle25"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>32</h6>
+                    <ACircle26
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle26}
+                      circleIndex="circle26"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>33</h6>
+                    <ACircle27
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle27}
+                      circleIndex="circle27"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>34</h6>
+                    <ACircle28
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle28}
+                      circleIndex="circle28"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>35</h6>
+                    <ACircle29
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle29}
+                      circleIndex="circle29"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>36</h6>
+                    <ACircle30
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle30}
+                      circleIndex="circle30"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>37</h6>
+                    <ACircle31
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle31}
+                      circleIndex="circle31"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h6>38</h6>
+                    <ACircle32
+                      handleFill={handleFill}
+                      fillColor={fillColor.circle32}
+                      circleIndex="circle32"
+                      color={color}
+                    />
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+
+        <StatusLower register={register} />
+        <Legend register={register} />
+        <Row>
+          <Col>
+            <div className="text-center">
+              <Button type="submit">Submit</Button>
+            </div>
+          </Col>
+        </Row>
+      </form>
+    </>
   );
 };
 

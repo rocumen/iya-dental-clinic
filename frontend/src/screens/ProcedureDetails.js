@@ -11,6 +11,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import dentalImage from "../assets/dentalimage.jpg";
+import GoBack from "../components/GoBack.js";
 
 const ProcedureDetails = () => {
   const { patientId, procedureId } = useParams();
@@ -48,13 +49,11 @@ const ProcedureDetails = () => {
     const options = { month: "long", day: "numeric", year: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
-  console.log(procedure);
+
   const lastBalance = procedure?.map((p) => p.previousBalance);
   // const lastBalance =
   //   procedure.previousBalance &&
   //   procedure.previousBalance[procedure.previousBalance.length - 1];
-
-  console.log(lastBalance);
 
   const totalAmountCharged = procedure?.map(
     (amount) => amount.totalAmountCharged
@@ -77,6 +76,11 @@ const ProcedureDetails = () => {
       <Row>
         <Col className="mb-2 d-flex justify-content-center">
           <Image src={dentalImage} alt="image" fluid className="small-image" />
+        </Col>
+      </Row>
+      <Row className="my-3">
+        <Col>
+          <GoBack />
         </Col>
       </Row>
       <Row>

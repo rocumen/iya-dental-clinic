@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { Button } from "react-bootstrap";
 
 const GoBackButton = () => {
   const navigate = useNavigate();
@@ -10,9 +11,9 @@ const GoBackButton = () => {
   };
 
   return (
-    <button className="btn btn-light my-3" onClick={goBackHandler}>
+    <Button variant="dark" className="text-light" onClick={goBackHandler}>
       <FaArrowLeft /> Go Back
-    </button>
+    </Button>
   );
 };
 

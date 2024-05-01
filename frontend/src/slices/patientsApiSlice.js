@@ -11,6 +11,14 @@ export const patientsApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
       providesTags: ["Patients"],
     }),
+    sortAllPatientsByLastName: builder.query({
+      query: ({ pageNumber, keyword }) => ({
+        url: `${PATIENTS_URL}/sortPatient`,
+        params: { pageNumber, keyword },
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ["Patients"],
+    }),
     getPatientById: builder.query({
       query: (patientId) => ({
         url: `${PATIENTS_URL}/onePatient/${patientId}`,
@@ -177,4 +185,5 @@ export const {
   useGetDentalChartAdultQuery,
   useChangeProcedureStatusMutation,
   useDeletePatientMutation,
+  useSortAllPatientsByLastNameQuery,
 } = patientsApiSlice;

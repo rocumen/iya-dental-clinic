@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 import dentalImage from "../assets/dentalimage.jpg";
+import GoBack from "../components/GoBack.js";
 
 const UpdateDentalChartKids = () => {
   const { patientId, dentalChartId } = useParams();
@@ -436,94 +437,115 @@ const UpdateDentalChartKids = () => {
     }
   };
   return (
-    <form onSubmit={handleSubmit(submitHandler)}>
-      {isLoading && <h5>Loading</h5>}
+    <>
+      <form onSubmit={handleSubmit(submitHandler)}>
+        {isLoading && <h5>Loading</h5>}
 
-      <Row>
-        <Col className="mb-2 d-flex justify-content-center">
-          <Image src={dentalImage} alt="image" fluid className="small-image" />
-        </Col>
-      </Row>
-      <Row className="my-3">
-        <Col>
-          <h1 className="text-center">Update Child Dental Record Chart</h1>
-        </Col>
-      </Row>
-      <Row className="my-3">
-        <Col>INTRAORAL EXAMINATION</Col>
-        <Col>
-          <strong>Name:</strong> {patient?.lastName}, {patient?.firstName}
-        </Col>
-        <Col>Age: {patient?.age}</Col>
-        <Col>Gender: {patient?.gender}</Col>
-        <Col>Date</Col>
-      </Row>
-      {/* Status Upper */}
-      <StatusUpper register={register} data={data} />
-      {/* Color Selector */}
-      <Row>
-        <Col className="d-flex my-3 text-center justify-content-center">
-          <div className="mx-2 circleRed" onClick={() => setColor("#ed0202")}>
-            {/* Red */}
-          </div>
-          <div className="mx-2 circleBlue" onClick={() => setColor("#1c00f0")}>
-            {/* Blue */}
-          </div>
-          <div className="mx-2 circleBlack" onClick={() => setColor("#000000")}>
-            {/* Black */}
-          </div>
-          <div className="mx-2 circleClear" onClick={() => setColor("#D3D3D3")}>
-            {/* Clear */}
-          </div>
-        </Col>
-      </Row>
-      {/* Circles 1-5 */}
-      <Row className="justify-content-between text-center">
-        <UpperRightCircle
-          upperRight={data?.upperRightCircle}
-          handleFill={handleFill}
-          fillColor={fillColor}
-          color={color}
-          setFillColor={setFillColor}
-        />
+        <Row>
+          <Col className="mb-2 d-flex justify-content-center">
+            <Image
+              src={dentalImage}
+              alt="image"
+              fluid
+              className="small-image"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <GoBack />
+          </Col>
+        </Row>
+        <Row className="my-3">
+          <Col>
+            <h1 className="text-center">Update Child Dental Record Chart</h1>
+          </Col>
+        </Row>
+        <Row className="my-3">
+          <Col>INTRAORAL EXAMINATION</Col>
+          <Col>
+            <strong>Name:</strong> {patient?.lastName}, {patient?.firstName}
+          </Col>
+          <Col>Age: {patient?.age}</Col>
+          <Col>Gender: {patient?.gender}</Col>
+          <Col>Date</Col>
+        </Row>
+        {/* Status Upper */}
+        <StatusUpper register={register} data={data} />
+        {/* Color Selector */}
+        <Row>
+          <Col className="d-flex my-3 text-center justify-content-center">
+            <div className="mx-2 circleRed" onClick={() => setColor("#ed0202")}>
+              {/* Red */}
+            </div>
+            <div
+              className="mx-2 circleBlue"
+              onClick={() => setColor("#1c00f0")}
+            >
+              {/* Blue */}
+            </div>
+            <div
+              className="mx-2 circleBlack"
+              onClick={() => setColor("#000000")}
+            >
+              {/* Black */}
+            </div>
+            <div
+              className="mx-2 circleClear"
+              onClick={() => setColor("#D3D3D3")}
+            >
+              {/* Clear */}
+            </div>
+          </Col>
+        </Row>
+        {/* Circles 1-5 */}
+        <Row className="justify-content-between text-center">
+          <UpperRightCircle
+            upperRight={data?.upperRightCircle}
+            handleFill={handleFill}
+            fillColor={fillColor}
+            color={color}
+            setFillColor={setFillColor}
+          />
 
-        <UpperLeftCircle
-          upperLeft={data?.upperLeftCircle}
-          handleFill={handleFill}
-          fillColor={fillColor}
-          color={color}
-          setFillColor={setFillColor}
-        />
-      </Row>
-      <hr></hr>
-      <Row className="justify-content-between text-center">
-        <LowerRightCircle
-          lowerRight={data?.lowerRightCircle}
-          handleFill={handleFill}
-          fillColor={fillColor}
-          color={color}
-          setFillColor={setFillColor}
-        />
+          <UpperLeftCircle
+            upperLeft={data?.upperLeftCircle}
+            handleFill={handleFill}
+            fillColor={fillColor}
+            color={color}
+            setFillColor={setFillColor}
+          />
+        </Row>
+        <hr></hr>
+        <Row className="justify-content-between text-center">
+          <LowerRightCircle
+            lowerRight={data?.lowerRightCircle}
+            handleFill={handleFill}
+            fillColor={fillColor}
+            color={color}
+            setFillColor={setFillColor}
+          />
 
-        <LowerLeftCircle
-          lowerLeft={data?.lowerLeftCircle}
-          handleFill={handleFill}
-          fillColor={fillColor}
-          color={color}
-          setFillColor={setFillColor}
-        />
-      </Row>
+          <LowerLeftCircle
+            lowerLeft={data?.lowerLeftCircle}
+            handleFill={handleFill}
+            fillColor={fillColor}
+            color={color}
+            setFillColor={setFillColor}
+          />
+        </Row>
 
-      <StatusLower register={register} />
-      <Legend register={register} />
-      <Row>
-        <Col>
-          <div className="text-center">
-            <Button type="submit">Save</Button>
-          </div>
-        </Col>
-      </Row>
-    </form>
+        <StatusLower register={register} />
+        <Legend register={register} />
+        <Row>
+          <Col>
+            <div className="text-center">
+              <Button type="submit">Save</Button>
+            </div>
+          </Col>
+        </Row>
+      </form>
+    </>
   );
 };
 
