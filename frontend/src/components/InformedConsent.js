@@ -65,7 +65,7 @@ const InformedConsent = (props) => {
       </Button>
       {consentSignature.url ? (
         <>
-          <Modal show={modalIsOpen} onHide={closeModal}>
+          <Modal centered show={modalIsOpen} onHide={closeModal}>
             <Modal.Header closeButton>
               <Modal.Title>Patient Signature</Modal.Title>
             </Modal.Header>
@@ -89,7 +89,7 @@ const InformedConsent = (props) => {
         </>
       ) : (
         <>
-          <Modal show={modalIsOpen} onHide={closeModal}>
+          <Modal centered show={modalIsOpen} onHide={closeModal}>
             <Modal.Header closeButton>
               <Modal.Title>Sign Here</Modal.Title>
             </Modal.Header>

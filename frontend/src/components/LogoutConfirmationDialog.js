@@ -3,11 +3,13 @@ import { Modal, Button } from "react-bootstrap";
 
 const LogoutConfirmationDialog = ({ show, onHide, onConfirm }) => {
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal centered show={show} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>Confirm Logout</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Are you sure you want to logout?</Modal.Body>
+      <Modal.Body className="text-center">
+        Are you sure you want to logout?
+      </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
           Cancel

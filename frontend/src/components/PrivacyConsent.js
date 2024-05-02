@@ -70,7 +70,7 @@ const PrivacyConsent = ({
         Sign Data Privacy
       </Button>
 
-      <Modal show={modalIsOpen} onHide={closeModal}>
+      <Modal centered show={modalIsOpen} onHide={closeModal}>
         <Modal.Header closeButton>
           <Modal.Title>Sign Here</Modal.Title>
         </Modal.Header>

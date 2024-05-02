@@ -73,12 +73,12 @@ const ProcedureListModal = ({ patient, refetch }) => {
   return (
     <div>
       <div>
-        <Button variant="primary" className="btn-sm mx-1" onClick={openModal}>
+        <Button variant="primary" className="btn-sm" onClick={openModal}>
           History
         </Button>
       </div>
 
-      <Modal show={modalIsOpen} onHide={closeModal} size="lg">
+      <Modal centered show={modalIsOpen} onHide={closeModal} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Procedure History</Modal.Title>
         </Modal.Header>

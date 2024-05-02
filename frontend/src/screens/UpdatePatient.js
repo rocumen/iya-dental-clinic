@@ -1,10 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import GoBack from "../components/GoBack.js";
 import { toast } from "react-toastify";
+import dentalImage from "../assets/dentalimage.jpg";
 
 import {
   useGetPatientByIdQuery,
@@ -282,9 +283,14 @@ const CreatePatient = () => {
 
   return (
     <>
-      <GoBack className="btn btn-light my-3" />
+      <Row>
+        <Col className="mb-2 d-flex justify-content-center">
+          <Image src={dentalImage} alt="image" fluid className="small-image" />
+        </Col>
+      </Row>
+      <GoBack className="btn btn-light" />
 
-      <h1>New Patient</h1>
+      <h1 className="my-3">New Patient</h1>
       {isLoading && <Loader />}
       {/* Patient Info---------------------------- */}
       <PopModal

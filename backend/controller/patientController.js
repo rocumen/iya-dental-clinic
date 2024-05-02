@@ -153,6 +153,7 @@ const updatePatient = asyncHandler(async (req, res) => {
 
   // Capitalize the first letter of each word in the name fields
   const capitalizeFirstLetter = (str) => {
+    if (!str) return str; // Return the string as is if it's undefined or null
     return str.replace(/\b\w/g, (char) => char.toUpperCase());
   };
 

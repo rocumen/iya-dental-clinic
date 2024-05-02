@@ -157,7 +157,6 @@ const IncomingAppointments = () => {
       <div className="text-end">
         <Button
           variant="primary"
-          className="btn-md mx-1 "
           onClick={() => {
             setModalIsOpen(true);
 
@@ -169,7 +168,12 @@ const IncomingAppointments = () => {
           Appointments
         </Button>
       </div>
-      <Modal size="lg" show={modalIsOpen} onHide={() => setModalIsOpen(false)}>
+      <Modal
+        centered
+        size="lg"
+        show={modalIsOpen}
+        onHide={() => setModalIsOpen(false)}
+      >
         <Modal.Header>
           <Modal.Title>Incoming Appointments</Modal.Title>
           <Form.Control
@@ -183,9 +187,10 @@ const IncomingAppointments = () => {
           <Table striped bordered hover responsive className="table-sm">
             <thead>
               <tr>
-                <th>Patient Name</th>
-                <th>Appointments</th>
-                <th>Status</th>
+                <th className="col-4">Patient Name</th>
+                <th className="col-3">Appointments</th>
+                <th className="col-2">Time</th>
+                <th className="col-3">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -197,7 +202,9 @@ const IncomingAppointments = () => {
                         {patient.patientName || "-"}
                       </td>
                       <td className="text-center">
-                        {formatDate(patient.nextAppointment) || "-"} |{" "}
+                        {formatDate(patient.nextAppointment) || "-"}
+                      </td>
+                      <td className="text-center">
                         {patient.appointmentTime
                           ? patient.appointmentTime
                           : " - "}
@@ -242,17 +249,24 @@ const IncomingAppointments = () => {
       </Modal>
 
       {/* Confirmation Modal */}
-      <Modal show={confirmationModalOpen} onHide={closeConfirmationModal}>
+      <Modal
+        centered
+        show={confirmationModalOpen}
+        onHide={closeConfirmationModal}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Confirm Status Update</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to update the status?</Modal.Body>
+        <Modal.Body backgroundColor="dark">
+          Are you sure you want to update the status?
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={closeConfirmationModal}>
             Cancel
           </Button>
           <Button
-            variant="primary"
+            className="text-white"
+            variant="danger"
             onClick={() =>
               handleStatusUpdate(selectedProcedureId, selectedPatientId)
             }

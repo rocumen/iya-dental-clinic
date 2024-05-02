@@ -64,7 +64,7 @@ const DentistSignature = (props) => {
       </Button>
       {dentistSignature.url ? (
         <>
-          <Modal show={modalIsOpen} onHide={closeModal}>
+          <Modal centered show={modalIsOpen} onHide={closeModal}>
             <Modal.Header closeButton>
               <Modal.Title>Dentist Signature</Modal.Title>
             </Modal.Header>
@@ -88,7 +88,7 @@ const DentistSignature = (props) => {
         </>
       ) : (
         <>
-          <Modal show={modalIsOpen} onHide={closeModal}>
+          <Modal centered show={modalIsOpen} onHide={closeModal}>
             <Modal.Header closeButton>
               <Modal.Title>Sign Here</Modal.Title>
             </Modal.Header>

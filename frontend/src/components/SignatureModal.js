@@ -65,7 +65,7 @@ const SignatureModal = ({ setSignatureImage, signatureImage }) => {
       </Button>
       {signatureImage.url ? (
         <>
-          <Modal show={modalIsOpen} onHide={closeModal}>
+          <Modal centered show={modalIsOpen} onHide={closeModal}>
             <Modal.Header closeButton>
               <Modal.Title>Signature</Modal.Title>
             </Modal.Header>
@@ -89,7 +89,7 @@ const SignatureModal = ({ setSignatureImage, signatureImage }) => {
           </Modal>
         </>
       ) : (
-        <Modal show={modalIsOpen} onHide={closeModal}>
+        <Modal centered show={modalIsOpen} onHide={closeModal}>
           <Modal.Header closeButton>
             <Modal.Title>Sign Here</Modal.Title>
           </Modal.Header>

@@ -804,7 +804,7 @@ const AdultDentalChart = () => {
         <Row>
           <Col>
             <div className="text-center">
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Save</Button>
             </div>
           </Col>
         </Row>

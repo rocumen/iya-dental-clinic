@@ -380,19 +380,19 @@ const PatientScreen = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td>is Pregnant</td>
+                    <td>Pregnant</td>
                     <td className="col-7 text-center">
                       {history.isPregnant ? "Yes" : "No"}
                     </td>
                   </tr>
                   <tr>
-                    <td>is Nursing</td>
+                    <td>Nursing</td>
                     <td className="col-7 text-center">
                       {history.isNursing ? "Yes" : "No"}
                     </td>
                   </tr>
                   <tr>
-                    <td>isTakingPills</td>
+                    <td>Taking Pills</td>
                     <td className="col-7 text-center">
                       {history.isTakingPills ? "Yes" : "No"}
                     </td>
