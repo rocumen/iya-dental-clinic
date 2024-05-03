@@ -64,7 +64,7 @@ router.put(
   changeProcedureStatus
 );
 
-router.get("/sortPatient", getAllPatientsSortedByLastName);
+router.get("/sortPatient", protect, admin, getAllPatientsSortedByLastName);
 
 router.delete("/deletePatient/:id", protect, admin, deletePatient);
 
