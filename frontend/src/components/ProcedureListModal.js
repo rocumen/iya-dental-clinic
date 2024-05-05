@@ -87,7 +87,7 @@ const ProcedureListModal = ({ patient, refetch }) => {
             <thead>
               <tr>
                 <th>DATE</th>
-                <th>PROCEDURE TYPE</th>
+                <th className="d-none d-sm-table-cell">PROCEDURE TYPE</th>
                 {/* <th>DENTIST/S</th> */}
                 <th>NEXT APPOINTMENT</th>
                 <th>STATUS</th>
