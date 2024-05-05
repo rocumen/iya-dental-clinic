@@ -44,7 +44,6 @@ const LoginScreen = () => {
     <>
       <FormContainer>
         <Form onSubmit={submitHandler} className="col-8 mx-auto">
-          <h1>Test</h1>
           <h1>Sign In</h1>
           {/* Email */}
           <Form.Group controlId="email" className="my-3">
