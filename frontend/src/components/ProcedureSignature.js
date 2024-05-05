@@ -58,7 +58,7 @@ const ProcedureSignature = ({ setProcedureSignature, procedureSignature }) => {
   };
   return (
     <>
-      <Button variant="light" className="btn-sm" onClick={openModal}>
+      <Button variant="dark" className="btn-sm text-light" onClick={openModal}>
         Patient Signature
       </Button>
       {procedureSignature.url ? (
@@ -84,7 +84,7 @@ const ProcedureSignature = ({ setProcedureSignature, procedureSignature }) => {
           </Modal>
         </>
       ) : (
-        <Modal show={modalIsOpen} onHide={closeModal}>
+        <Modal centered show={modalIsOpen} onHide={closeModal}>
           <Modal.Header closeButton>
             <Modal.Title>Sign Here</Modal.Title>
           </Modal.Header>

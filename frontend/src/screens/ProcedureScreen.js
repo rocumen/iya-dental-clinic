@@ -503,7 +503,7 @@ const ProcedureScreen = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={3} lg={2}>
+          <Col md={4}>
             <Form.Group controlId="dentists" className="my-2">
               <Form.Label>Dentist/s:</Form.Label>
               <Form.Control
@@ -515,7 +515,7 @@ const ProcedureScreen = () => {
             </Form.Group>
           </Col>
 
-          <Col md={4} lg={2}>
+          <Col md={4}>
             {patient?.procedure?.length > 0 && (
               <Form.Group controlId="balance" className="my-2">
                 <Form.Label>
@@ -528,7 +528,7 @@ const ProcedureScreen = () => {
         </Row>
 
         <Row>
-          <Col md={2}>
+          <Col md={3}>
             <Form.Group controlId="amountPaid" className="my-2">
               <Form.Label>Amount Paid:</Form.Label>
               <Form.Control
@@ -539,7 +539,7 @@ const ProcedureScreen = () => {
               ></Form.Control>
             </Form.Group>
           </Col>
-          <Col md={4} lg={2}>
+          <Col md={4}>
             <Form.Group controlId="totalAmountCharged" className="my-2">
               <Form.Label>Total Amount Charged:</Form.Label>
               <Form.Control
@@ -551,7 +551,7 @@ const ProcedureScreen = () => {
             </Form.Group>
           </Col>
 
-          <Col md={2}>
+          <Col md={3}>
             <Form.Group controlId="amountPaid" className="my-2">
               <Form.Label>Total Balance:</Form.Label>
               <Form.Control
@@ -579,6 +579,8 @@ const ProcedureScreen = () => {
               ></Form.Control>
             </Form.Group>
           </Col>
+        </Row>
+        <Row>
           <Col>
             <Button disabled={isSaving} onClick={handleFileUpload}>
               {isSaving ? "Uploading..." : "Upload"}
@@ -586,7 +588,7 @@ const ProcedureScreen = () => {
           </Col>
         </Row>
         <Row className="justify-content-start">
-          <Col md={2}>
+          <Col md={3}>
             <Form.Group controlId="nextAppointment" className="my-2">
               <Form.Label>Next Appointment:</Form.Label>
               <Form.Control
@@ -599,7 +601,7 @@ const ProcedureScreen = () => {
               )}
             </Form.Group>
           </Col>
-          <Col md={2}>
+          <Col md={3}>
             <Form.Group controlId="appointmentTime" className="my-2">
               <Form.Label>Time of Appointment:</Form.Label>
               <Form.Control
