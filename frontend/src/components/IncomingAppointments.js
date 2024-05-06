@@ -150,8 +150,6 @@ const IncomingAppointments = () => {
     return currentItems;
   };
 
-  console.log(renderTableBody());
-
   return (
     <div>
       <div className="text-end">
@@ -215,9 +213,12 @@ const IncomingAppointments = () => {
                           <Button
                             size="sm"
                             style={{
-                              backgroundColor: patient.status
-                                ? "blue"
-                                : "green",
+                              backgroundColor:
+                                new Date(patient.nextAppointment) < Date.now()
+                                  ? "red"
+                                  : patient.status
+                                  ? "blue"
+                                  : "green",
                             }}
                             onClick={() =>
                               openConfirmationModal(

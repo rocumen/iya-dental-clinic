@@ -50,7 +50,6 @@ const PatientScreen = () => {
         <Button
           onClick={navigateHandler}
           variant="dark"
-          bordered
           className="text-light my-2"
           size="md"
         >

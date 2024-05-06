@@ -47,7 +47,8 @@ const ProcedureScreen = () => {
   const [previousBalance, setPreviousBalance] = useState(null);
   const [nextAppointment, setNextAppointment] = useState("");
   const [appointmentTime, setAppointmentTime] = useState("");
-  const [rx, setRx] = useState([{ url: "", id: "" }]);
+  // const [rx, setRx] = useState([{ url: "", id: "" }]);
+  const [rx, setRx] = useState([]);
   const [procedureSignature, setProcedureSignature] = useState({
     url: "",
     id: "",
@@ -55,16 +56,6 @@ const ProcedureScreen = () => {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    // setProcedureType(patient.procedureType);
-    // setProcedureDate(patient.procedureDate);
-    // setDentists(patient.dentists);
-    // setAmountCharged(patient.amountCharged);
-    // setTotalAmountCharged(patient.totalAmountCharged);
-    // setAmountPaid(patient.amountPaid);
-    // setBalance(patient.balance);
-    // setNextAppointment(patient.nextAppointment);
-    // setRx(patient.rx);
-    // setProcedureSignature(patient.procedureSignature);
     setProcedureArray(procedureArray);
     setProcedureType(procedureType);
     setProcedureDate(procedureDate);
@@ -110,6 +101,8 @@ const ProcedureScreen = () => {
   //   }
   // };
 
+  console.log(rx);
+
   // Find the first procedure with the matching type
   const matchingProcedure = patient?.procedure
     ?.slice()
@@ -149,16 +142,26 @@ const ProcedureScreen = () => {
       return;
     }
 
+    if (files.length > 3) {
+      toast.error("You can only upload 3 Images per Procedure");
+      return;
+    }
+
+    const allowedMimeTypes = ["image/jpeg", "image/png", "image/gif"];
+
+    for (const file of files) {
+      if (!allowedMimeTypes.includes(file.type)) {
+        toast.error("Only images (JPEG, PNG, GIF) are allowed to upload");
+        return;
+      }
+    }
+
     if (isSaving) return; // If already saving, return to avoid multiple clicks
 
     setIsSaving(true); // Set isSaving to true when the button is clicked
 
     const formData = new FormData();
 
-    // Append each selected file to the FormData object
-    // for (let i = 0; i < e.target.files.length; i++) {
-    //   formData.append("rx", e.target.files[i]);
-    // }
     for (let i = 0; i < files.length; i++) {
       formData.append("rx", files[i]);
     }
@@ -168,7 +171,6 @@ const ProcedureScreen = () => {
       toast.success(data.message);
       console.log(data.rxs); // Assuming rxs is the array of prescription objects returned by the backend
 
-      // Assuming setRx is a function to update the state of your prescriptions
       setIsSaving(false);
       setRx(data.rxs);
     } catch (error) {
@@ -233,8 +235,6 @@ const ProcedureScreen = () => {
     );
     setTotalAmountCharged(total);
   }, [procedureArray]);
-
-  // console.log(procedureArray);
 
   const textareaRef = useRef(null);
 
@@ -570,6 +570,7 @@ const ProcedureScreen = () => {
         <Row className="justify-content-start my-2">
           {/* {loadingRx && <Loader />} */}
           <Col md={3}>
+            <p className="text-danger">Maximum of 3 Images</p>
             <Form.Group>
               <Form.Control
                 id="fileInput"
@@ -582,7 +583,10 @@ const ProcedureScreen = () => {
         </Row>
         <Row>
           <Col>
-            <Button disabled={isSaving} onClick={handleFileUpload}>
+            <Button
+              disabled={isSaving || rx.length > 0}
+              onClick={handleFileUpload}
+            >
               {isSaving ? "Uploading..." : "Upload"}
             </Button>
           </Col>

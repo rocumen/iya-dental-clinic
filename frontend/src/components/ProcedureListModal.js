@@ -70,6 +70,14 @@ const ProcedureListModal = ({ patient, refetch }) => {
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
+  const sortedProcedures = patient.procedure.slice().sort((a, b) => {
+    if (a.nextAppointment && b.nextAppointment) {
+      return new Date(b.nextAppointment) - new Date(a.nextAppointment);
+    } else {
+      return 0;
+    }
+  });
+
   return (
     <div>
       <div>
@@ -95,7 +103,7 @@ const ProcedureListModal = ({ patient, refetch }) => {
               </tr>
             </thead>
             <tbody>
-              {patient.procedure.map((procedure, index) => (
+              {sortedProcedures?.map((procedure, index) => (
                 <tr key={index}>
                   <td className="text-center">
                     {procedure.procedureDate
@@ -111,6 +119,7 @@ const ProcedureListModal = ({ patient, refetch }) => {
                       ? formatDate(procedure.nextAppointment)
                       : "-"}
                   </td>
+
                   <td className="text-center">
                     <Button
                       size="sm"
