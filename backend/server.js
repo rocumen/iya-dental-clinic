@@ -14,7 +14,7 @@ import patientRoutes from "./routes/patientRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 
 cloudinary.config({
   cloud_name: "dyihuedqk",
