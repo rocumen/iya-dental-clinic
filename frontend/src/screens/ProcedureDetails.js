@@ -99,6 +99,22 @@ const ProcedureDetails = () => {
                   </tr>
                   <tr>
                     <td className="col-4 text-center">
+                      <strong>Procedure Time Start:</strong>
+                    </td>
+                    <td className="col-6 text-center">
+                      {p.procedureStart || "-"}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="col-4 text-center">
+                      <strong>Procedure Time End:</strong>
+                    </td>
+                    <td className="col-6 text-center">
+                      {p.procedureEnd || "-"}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="col-4 text-center">
                       <strong>Procedure Type:</strong>
                     </td>
                     <td className="col-6 text-center">{p.procedureType}</td>

@@ -53,6 +53,8 @@ const ProcedureScreen = () => {
     url: "",
     id: "",
   });
+  const [procedureStart, setProcedureStart] = useState("");
+  const [procedureEnd, setProcedureEnd] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -69,6 +71,8 @@ const ProcedureScreen = () => {
     setAppointmentTime(appointmentTime);
     setRx(rx);
     setProcedureSignature(procedureSignature);
+    setProcedureStart(procedureStart);
+    setProcedureEnd(procedureEnd);
   }, [
     procedureArray,
     procedureType,
@@ -82,6 +86,8 @@ const ProcedureScreen = () => {
     procedureSignature,
     previousBalance,
     appointmentTime,
+    procedureStart,
+    procedureEnd,
   ]);
 
   // const handleFileUpload = async (e) => {
@@ -101,8 +107,6 @@ const ProcedureScreen = () => {
   //   }
   // };
 
-  console.log(rx);
-
   // Find the first procedure with the matching type
   const matchingProcedure = patient?.procedure
     ?.slice()
@@ -115,12 +119,6 @@ const ProcedureScreen = () => {
   useEffect(() => {
     setPreviousBalance(pp);
   }, [pp]); // This will update the state whenever pp changes
-
-  // const lastBalance =
-  //   patient?.procedure?.length > 0
-  //     ? patient.procedure[patient.procedure.length - 1].balance
-  //     : null;
-  //const lastBalance = patient?.procedure?.length > 0 ? pp : null;
 
   const handleTotalBalance =
     totalAmountCharged + pp - amountPaid === 0
@@ -181,9 +179,6 @@ const ProcedureScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      // Assuming toothNumbers and procedureExplanation are pushed into procedureArray
-      // const procedureArray = [{ toothNumbers, procedureExplanation }];
-
       if (isSaving) return; // If already saving, return to avoid multiple clicks
 
       setIsSaving(true); // Set isSaving to true when the button is clicked
@@ -203,6 +198,8 @@ const ProcedureScreen = () => {
         installment,
         previousBalance,
         appointmentTime,
+        procedureStart,
+        procedureEnd,
       }).unwrap();
 
       setSubmitted(true);
@@ -297,6 +294,44 @@ const ProcedureScreen = () => {
 
     // Setting the formatted time to state
     setAppointmentTime(formattedTime);
+  };
+
+  const handleTimeStart = (e) => {
+    // Splitting the time string to separate hours and minutes
+    const [hours, minutes] = e.target.value.split(":");
+
+    // Checking if the selected time is in the afternoon
+    const isPM = parseInt(hours) >= 12;
+
+    // Converting hours to 12-hour format
+    const twelveHourFormat = parseInt(hours) % 12 || 12;
+
+    // Combining hours, minutes, and AM/PM
+    const formattedTime = `${twelveHourFormat}:${minutes} ${
+      isPM ? "PM" : "AM"
+    }`;
+
+    // Setting the formatted time to state
+    setProcedureStart(formattedTime);
+  };
+
+  const handleTimeEnd = (e) => {
+    // Splitting the time string to separate hours and minutes
+    const [hours, minutes] = e.target.value.split(":");
+
+    // Checking if the selected time is in the afternoon
+    const isPM = parseInt(hours) >= 12;
+
+    // Converting hours to 12-hour format
+    const twelveHourFormat = parseInt(hours) % 12 || 12;
+
+    // Combining hours, minutes, and AM/PM
+    const formattedTime = `${twelveHourFormat}:${minutes} ${
+      isPM ? "PM" : "AM"
+    }`;
+
+    // Setting the formatted time to state
+    setProcedureEnd(formattedTime);
   };
 
   /*
@@ -555,12 +590,7 @@ const ProcedureScreen = () => {
             <Form.Group controlId="amountPaid" className="my-2">
               <Form.Label>Total Balance:</Form.Label>
               <Form.Control
-                type="text" // Change type to text for displaying "Fully paid"
-                // value={
-                //   totalAmountCharged + lastBalance - amountPaid === 0
-                //     ? "Fully paid"
-                //     : totalAmountCharged + lastBalance - amountPaid
-                // }
+                type="text" // Change type to text for displaying
                 value={handleTotalBalance}
                 readOnly
               />
@@ -589,6 +619,26 @@ const ProcedureScreen = () => {
             >
               {isSaving ? "Uploading..." : "Upload"}
             </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={3}>
+            <Form.Group controlId="procedureStart" className="my-2">
+              <Form.Label>Time Start of Procedure:</Form.Label>
+              <Form.Control
+                type="time"
+                onChange={handleTimeChange}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col md={3}>
+            <Form.Group controlId="procedureEnd" className="my-2">
+              <Form.Label>Time End of Procedure:</Form.Label>
+              <Form.Control
+                type="time"
+                onChange={handleTimeChange}
+              ></Form.Control>
+            </Form.Group>
           </Col>
         </Row>
         <Row className="justify-content-start">

@@ -243,19 +243,13 @@ const createProcedure = asyncHandler(async (req, res) => {
     procedureSignature,
     previousBalance,
     appointmentTime,
+    procedureStart,
+    procedureEnd,
   } = req.body;
 
   const patient = await Patient.findById(req.params.id);
 
   if (patient) {
-    // let previousBalance = 0;
-    // if (patient.procedure.length > 0) {
-    //   // Get the previous balance from the last procedure
-    //   previousBalance = patient.procedure[patient.procedure.length - 1].balance;
-    // }
-
-    console.log(patient.procedure.length);
-
     // Calculate balance for the new procedure
     const balance = previousBalance + totalAmountCharged - amountPaid;
 
@@ -269,15 +263,13 @@ const createProcedure = asyncHandler(async (req, res) => {
       totalAmountCharged,
       amountPaid,
       balance,
-      // previousBalance:
-      //   patient.procedure.length > 0
-      //     ? patient.procedure[patient.procedure.length - 1].balance
-      //     : 0,
       previousBalance,
       nextAppointment,
       rx,
       procedureSignature,
       appointmentTime,
+      procedureStart,
+      procedureEnd,
     };
 
     patient.procedure.push(newProcedure);
@@ -358,7 +350,6 @@ const getAllPatientsProcedure = asyncHandler(async (req, res) => {
 const getAllPatients = asyncHandler(async (req, res) => {
   const pageSize = process.env.PAGINATION_LIMIT;
   const page = Number(req.query.pageNumber) || 1;
-  // PAGINATION_LIMIT=2
 
   const keyword = req.query.keyword
     ? {
@@ -369,25 +360,17 @@ const getAllPatients = asyncHandler(async (req, res) => {
       }
     : {};
 
-  // .sort({ updatedAt: -1 })
-
-  // const keyword = req.query.keyword
-  //   ? { firstName: { $regex: req.query.keyword, $options: "i" } }
-  //   : {};
-
   const count = await Patient.countDocuments({ ...keyword });
   const patients = await Patient.find({ ...keyword })
     .sort({ updatedAt: -1 })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
 
-  // if (patients.length < 1) {
-  //   res.status(404);
-  //   console.log("No patient");
-  //   throw new Error("Patient not found");
-  // } else {
-  //   res.json(patients);
-  // }
+  // Reverse the order of procedures for each patient
+  patients.forEach((patient) => {
+    patient.procedure.reverse();
+  });
+
   res.json({ patients, page, pages: Math.ceil(count / pageSize) });
 });
 

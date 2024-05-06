@@ -165,6 +165,8 @@ const procedureSchema = mongoose.Schema({
     url: String,
     id: String,
   },
+  procedureStart: String,
+  procedureEnd: String,
 });
 
 const dentalChartKidSchema = mongoose.Schema({
