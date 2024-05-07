@@ -627,17 +627,14 @@ const ProcedureScreen = () => {
               <Form.Label>Time Start of Procedure:</Form.Label>
               <Form.Control
                 type="time"
-                onChange={handleTimeChange}
+                onChange={handleTimeStart}
               ></Form.Control>
             </Form.Group>
           </Col>
           <Col md={3}>
             <Form.Group controlId="procedureEnd" className="my-2">
               <Form.Label>Time End of Procedure:</Form.Label>
-              <Form.Control
-                type="time"
-                onChange={handleTimeChange}
-              ></Form.Control>
+              <Form.Control type="time" onChange={handleTimeEnd}></Form.Control>
             </Form.Group>
           </Col>
         </Row>
