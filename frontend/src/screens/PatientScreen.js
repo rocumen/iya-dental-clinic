@@ -1,5 +1,7 @@
 import React from "react";
 import GoBack from "../components/GoBack.js";
+import Loader from "../components/Loader.js";
+import Message from "../components/Message.js";
 import { useParams, Navigate, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
@@ -18,15 +20,15 @@ const PatientScreen = () => {
 
   const { data: patient, isLoading, error } = useGetPatientByIdQuery(patientId);
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  // if (isLoading) {
+  //   return <p>Loading...</p>;
+  // }
 
   if (error) {
     return <p>Error: {error.message}</p>;
   }
   if (!patient) {
-    return <p>There are no Patient Record</p>;
+    return <Loader />;
   }
 
   const { forMinors, dentalHistory, medicalHistory } = patient;
@@ -41,6 +43,8 @@ const PatientScreen = () => {
   };
   return (
     <>
+      {isLoading && <Loader />}
+
       <Row>
         <Col className="mb-2 d-flex justify-content-center">
           <Image src={dentalImage} alt="image" fluid className="small-image" />

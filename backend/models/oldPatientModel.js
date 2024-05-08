@@ -801,7 +801,7 @@ const dentalChartAdultSchema = mongoose.Schema({
   },
 });
 
-const patientSchema = new mongoose.Schema(
+const oldPatientSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -925,6 +925,6 @@ const patientSchema = new mongoose.Schema(
   }
 );
 
-const Patient = mongoose.model("Patient", patientSchema);
+const OldPatient = mongoose.model("OldPatient", oldPatientSchema);
 
-export default Patient;
+export default OldPatient;

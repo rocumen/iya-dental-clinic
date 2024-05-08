@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Button, Image } from "react-bootstrap";
 import GoBack from "../components/GoBack.js";
+import Loader from "../components/Loader.js";
 //Upper Right Circles
 import KCircle1 from "../components/circles/upperRight/KCircle1.js";
 import KCircle2 from "../components/circles/upperRight/KCircle2.js";
@@ -242,6 +243,7 @@ const DentalChartScreen = () => {
   };
   return (
     <>
+      {isLoading && <Loader />}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Row>
           <Col className="mb-2 d-flex justify-content-center">
@@ -264,12 +266,23 @@ const DentalChartScreen = () => {
           </Col>
         </Row>
         <Row className="my-3">
-          <Col>INTRAORAL EXAMINATION</Col>
-          <Col>Name: {patient?.lastName}</Col>
-          <Col>Age: 12</Col>
-          <Col>Gender: M</Col>
-          <Col>Date</Col>
+          <Col>
+            <strong>INTRAORAL EXAMINATION</strong>
+          </Col>
+          <Col>
+            <strong>Name: </strong>
+            {patient?.lastName}, {patient?.firstName}
+          </Col>
+          <Col>
+            <strong>Age: </strong>
+            {patient?.age}
+          </Col>
+          <Col>
+            <strong>Gender:</strong> {patient?.gender}
+          </Col>
+          {/* <Col>Date</Col> */}
         </Row>
+        <hr style={{ height: "1px" }} />
         {/* Status Upper */}
         <StatusUpper register={register} />
         {/* Color Selector */}
@@ -452,7 +465,7 @@ const DentalChartScreen = () => {
             </Row>
           </Col>
         </Row>
-        <hr></hr>
+        <hr style={{ height: "3px" }} />
         <Row className="justify-content-between text-center">
           <Col
             className="d-flex gap-2 justify-content-center my-2"
@@ -607,6 +620,7 @@ const DentalChartScreen = () => {
         </Row>
 
         <StatusLower register={register} />
+        <hr className="my-5" style={{ height: "1px" }} />
         <Legend register={register} />
         <Row>
           <Col>

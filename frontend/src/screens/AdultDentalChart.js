@@ -312,7 +312,6 @@ const AdultDentalChart = () => {
           <Button
             onClick={navigateHandler}
             variant="dark"
-            bordered
             className="text-light my-2"
             size="md"
           >
@@ -325,12 +324,21 @@ const AdultDentalChart = () => {
           </Col>
         </Row>
         <Row className="my-3">
-          <Col>INTRAORAL EXAMINATION</Col>
-          <Col>Name: {patient?.lastName}</Col>
-          <Col>Age: 12</Col>
-          <Col>Gender: M</Col>
-          <Col>Date</Col>
+          <Col>
+            <strong>INTRAORAL EXAMINATION:</strong>
+          </Col>
+          <Col>
+            <strong>Name:</strong> {patient?.lastName}, {patient?.firstName}
+          </Col>
+          <Col>
+            <strong>Age:</strong> {patient?.age}
+          </Col>
+          <Col>
+            <strong>Gender:</strong> {patient?.gender}
+          </Col>
+          {/* <Col>{Date.now()}</Col> */}
         </Row>
+        <hr style={{ height: "1px" }} />
         {/* Status Upper */}
         <StatusUpper register={register} />
         {/* Color Selector */}
@@ -580,7 +588,7 @@ const AdultDentalChart = () => {
             </Row>
           </Col>
         </Row>
-        <hr></hr>
+        <hr style={{ height: "2px" }} />
         <Row className="justify-content-between text-center">
           <Col
             className="d-flex gap-2 justify-content-center my-2"
@@ -800,6 +808,7 @@ const AdultDentalChart = () => {
         </Row>
 
         <StatusLower register={register} />
+        <hr className="my-5" style={{ height: "1px" }} />
         <Legend register={register} />
         <Row>
           <Col>

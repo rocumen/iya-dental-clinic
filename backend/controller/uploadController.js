@@ -1,7 +1,5 @@
 import cloudinary from "cloudinary";
 import asyncHandler from "../middleware/asyncHandler.js";
-// import { v2 as cloudinary } from "cloudinary";
-import Patient from "../models/patientModel.js";
 import sharp from "sharp";
 
 // SIGNATURE IMAGE
