@@ -40,8 +40,6 @@ const PatientInfo = (props) => {
     //
   } = props;
 
-  console.log(birthday);
-
   return (
     <>
       <Row className="justify-content-center">

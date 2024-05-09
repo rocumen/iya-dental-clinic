@@ -90,8 +90,6 @@ const AdultDentalChart = () => {
     return circles;
   });
 
-  // console.log(patient);
-
   const handleFill = (circleIndex, section, color) => {
     setFillColor((prevState) => ({
       ...prevState,

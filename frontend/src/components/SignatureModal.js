@@ -40,14 +40,12 @@ const SignatureModal = ({ setSignatureImage, signatureImage }) => {
     const formData = new FormData();
     formData.append("signatureImage", signatureBlob);
 
-    // console.log(formData.get("signatureImage"));
-
     try {
       // Upload the signature image to the server
       const { data } = await uploadSignature(formData); // unwrap()
 
       toast.success(data.message);
-      console.log(data.signatureImage);
+
       setIsSaving(false);
       setSignatureImage(data.signatureImage);
       // refetch();

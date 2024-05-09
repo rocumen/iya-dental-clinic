@@ -292,7 +292,7 @@ const getAllProceduresById = asyncHandler(async (req, res) => {
     throw new Error("Patient not found");
   }
 
-  console.log(patientId, procedureId);
+
 
   // const procedureId = req.query.procedureId; // Assuming you pass the procedure ID as a query parameter
 
@@ -319,7 +319,7 @@ const getAllPatientsProcedure = asyncHandler(async (req, res) => {
     // Extract nextAppointment and patientName from all patients' procedures
     const appointments = patients.reduce((allAppointments, patient) => {
       patient.procedure.forEach((procedure) => {
-        console.log(procedure);
+       
         allAppointments.push({
           nextAppointment: procedure.nextAppointment,
           appointmentTime: procedure.appointmentTime,
@@ -485,7 +485,7 @@ const updateCircleKids = asyncHandler(async (req, res) => {
     tmd,
   } = req.body;
 
-  console.log(xrayTaken);
+
 
   const patient = await Patient.findById(req.params.id);
 
@@ -574,7 +574,7 @@ const updateCircleKids = asyncHandler(async (req, res) => {
 const getCircleKids = asyncHandler(async (req, res) => {
   const { patientId } = req.params;
 
-  // console.log(patientId);
+
   const patient = await Patient.findById(patientId);
 
   if (!patient) {
@@ -759,7 +759,7 @@ const getCircleAdult = asyncHandler(async (req, res) => {
 const changeProcedureStatus = asyncHandler(async (req, res) => {
   const { patientId, procedureId } = req.body;
 
-  console.log(patientId, procedureId);
+
 
   try {
     const patient = await Patient.findById(patientId);
@@ -773,7 +773,7 @@ const changeProcedureStatus = asyncHandler(async (req, res) => {
       (procedure) => procedure._id.toString() === procedureId
     );
 
-    // console.log(procedureIndexToUpdate);
+ 
 
     if (procedureIndexToUpdate === -1) {
       res.status(404);
@@ -787,9 +787,9 @@ const changeProcedureStatus = asyncHandler(async (req, res) => {
     //   { new: true }
     // );
 
-    console.log(patient.procedure[0].status);
+ 
 
-    // console.log(patient.procedure[procedureIndexToUpdate].status);
+
 
     // const updated = patient.procedure[procedureIndexToUpdate].status = !patient.procedure[procedureIndexToUpdate].status;
     patient.procedure[procedureIndexToUpdate].status =

@@ -167,7 +167,6 @@ const ProcedureScreen = () => {
     try {
       const { data } = await uploadRx(formData); // Update function name
       toast.success(data.message);
-      console.log(data.rxs); // Assuming rxs is the array of prescription objects returned by the backend
 
       setIsSaving(false);
       setRx(data.rxs);

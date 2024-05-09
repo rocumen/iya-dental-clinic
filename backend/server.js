@@ -13,6 +13,7 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import patientRoutes from "./routes/patientRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import cors from "cors";
 
 const port = process.env.PORT || 5000;
 
@@ -26,6 +27,7 @@ connectDB(); // Connect to MongoDB
 
 const app = express();
 // Body parser middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

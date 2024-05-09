@@ -131,7 +131,6 @@ const UpdateDentalChartKids = () => {
     }
   }, [data, setValue]);
 
-  // console.log(data);
   const [updateDentalChartKids] = useUpdateDentalChartKidsMutation();
 
   const [color, setColor] = useState("#D3D3D3"); // Default color is gray

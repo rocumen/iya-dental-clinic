@@ -192,7 +192,6 @@ const rx = async (req, res) => {
   try {
     const files = req.files;
 
-    console.log(files);
     if (!files || files.length === 0) {
       return res.status(400).send({ message: "No files uploaded" });
     }

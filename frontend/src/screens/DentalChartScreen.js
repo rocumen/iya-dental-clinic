@@ -52,10 +52,6 @@ const DentalChartScreen = () => {
 
   const { register, handleSubmit } = useForm();
 
-  // const statusFormSubmit = (values) => {
-  //   console.log(values);
-  // };
-
   const [fillColor, setFillColor] = useState(() => {
     const circles = {};
     const positions = [
@@ -74,8 +70,6 @@ const DentalChartScreen = () => {
     }
     return circles;
   });
-
-  // console.log(patient);
 
   const handleFill = (circleIndex, section, color) => {
     setFillColor((prevState) => ({

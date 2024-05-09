@@ -46,8 +46,6 @@ const PrivacyConsent = ({
     const formData = new FormData();
     formData.append("dataPrivacySignature", signatureBlob);
 
-    // console.log(formData.get("signatureImage"));
-
     try {
       // Upload the signature image to the server
       const { data } = await uploadDataPrivacySignature(formData); // unwrap()
