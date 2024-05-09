@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cloudinary from "cloudinary";
+import cors from "cors";
 
 dotenv.config();
 import connectDB from "./config/db.js";
@@ -13,7 +14,6 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import patientRoutes from "./routes/patientRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
-import cors from "cors";
 
 const port = process.env.PORT || 5000;
 
@@ -54,21 +54,6 @@ if (process.env.NODE_ENV === "production") {
     res.send("API is running....");
   });
 }
-// const __dirname = path.dirname("");
-// const buildPath = path.join(__dirname, "../frontend/build");
-
-// app.use(express.static(buildPath));
-
-// app.get("/*", function (req, res) {
-//   res.sendFile(
-//     path.join(__dirname, "../frontend/build/index.html"),
-//     function (err) {
-//       if (err) {
-//         res.status(500).send(err);
-//       }
-//     }
-//   );
-// });
 
 app.use(notFound);
 app.use(errorHandler);
