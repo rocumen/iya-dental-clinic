@@ -56,6 +56,8 @@ const ProcedureScreen = () => {
   });
   const [procedureStart, setProcedureStart] = useState("");
   const [procedureEnd, setProcedureEnd] = useState("");
+  const [antibiotic, setAntibiotic] = useState("");
+  const [painReliever, setPainReliever] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -75,6 +77,8 @@ const ProcedureScreen = () => {
     setProcedureSignature(procedureSignature);
     setProcedureStart(procedureStart);
     setProcedureEnd(procedureEnd);
+    setAntibiotic(antibiotic);
+    setPainReliever(painReliever);
   }, [
     procedureArray,
     procedureType,
@@ -90,6 +94,9 @@ const ProcedureScreen = () => {
     appointmentTime,
     procedureStart,
     procedureEnd,
+    painReliever,
+    antibiotic,
+    customProcedureType,
   ]);
 
   // const handleFileUpload = async (e) => {
@@ -205,6 +212,8 @@ const ProcedureScreen = () => {
         appointmentTime,
         procedureStart,
         procedureEnd,
+        antibiotic,
+        painReliever,
       }).unwrap();
 
       setSubmitted(true);
@@ -285,7 +294,83 @@ const ProcedureScreen = () => {
     setCustomProcedureType(event.target.value);
   };
 
-  const rxAntibiotics = {};
+  const rxPainRelievers = [
+    {
+      name: "Paracetamol 500mg",
+      quantity: "#16tab",
+      instructions: "Sig: Take 1tab every 4hrs or as needed for pain",
+    },
+    {
+      name: "Mefenamic Acid 500mg",
+      quantity: "#12caps",
+      instructions: "Sig: Take 1cap every 6hrs or as needed for pain",
+    },
+    {
+      name: "Ibuprofen 200mg",
+      quantity: "#12tabs",
+      instructions: "Sig: Take 1tab every 6hrs or as needed for pain",
+    },
+    {
+      name: "Naproxen Sodium 550mg",
+      quantity: "#6tabs",
+      instructions: "Sig: Take 1tab every 12hrs or as needed for pain",
+    },
+    {
+      name: "Etoricoxib 120mg",
+      quantity: "#5tabs",
+      instructions: "Sig: Take 1tab once daily or as needed for pain",
+    },
+    {
+      name: "Celecoxib 200mg",
+      quantity: "#6caps",
+      instructions: "Sig: Take 1cap every 12hrs or as needed for pain",
+    },
+    {
+      name: "Tramadol/Paracetamol 37.5mg/325",
+      quantity: "#6tabs",
+      instructions: "Sig: Take 1tab every 6hrs or as needed for pain",
+    },
+  ];
+
+  const handlePainRelieverChange = (e) => {
+    setPainReliever(e.target.value);
+  };
+
+  const rxAntibiotics = [
+    {
+      name: "Amoxicillin 250mg",
+      quantity: "#21caps",
+      instructions: "Sig: Take 1cap every 8hrs for 7days",
+    },
+    {
+      name: "Amoxicillin 500mg",
+      quantity: "#21caps",
+      instructions: "Sig: Take 1cap every 8hrs for 7days",
+    },
+    {
+      name: "Clindamycin 300mg",
+      quantity: "#28caps",
+      instructions: "Sig: Take 1cap every 6hrs for 7days",
+    },
+    {
+      name: "Cefalexin 500mg",
+      quantity: "#21caps",
+      instructions: "Sig: Take 1cap every 8hrs for 7days",
+    },
+    {
+      name: "Azithromycin 500mg",
+      quantity: "#3tab",
+      instructions: "Sig: Take once daily for 3days",
+    },
+    {
+      name: "Co-Amoxiclav 500mg/125mg",
+      quantity: "#21caps",
+      instructions: "Sig: Take 1caps every 8hrs for 7days",
+    },
+  ];
+  const handleAntibioticChange = (e) => {
+    setAntibiotic(e.target.value);
+  };
 
   const handleTimeChange = (e) => {
     // Splitting the time string to separate hours and minutes
@@ -646,7 +731,7 @@ const ProcedureScreen = () => {
               </div>
               <div className="col-6 mb-2">
                 <Form.Group controlId="procedureStart">
-                  <Form.Label>Time Start of Procedure:</Form.Label>
+                  <Form.Label>Time Start:</Form.Label>
                   <Form.Control
                     type="time"
                     onChange={handleTimeStart}
@@ -655,7 +740,7 @@ const ProcedureScreen = () => {
               </div>
               <div className="col-6 mb-2">
                 <Form.Group controlId="procedureEnd">
-                  <Form.Label>Time End of Procedure:</Form.Label>
+                  <Form.Label>Time End:</Form.Label>
                   <Form.Control
                     type="time"
                     onChange={handleTimeEnd}
@@ -694,22 +779,28 @@ const ProcedureScreen = () => {
                   <h4>Rx</h4>
                   <span>Antibiotics:</span>
                 </Form.Label>
-                <Form.Select>
-                  <option value="">Amox</option>
-                  <option value="">Amox</option>
-                  <option value="">Amox</option>
+                <Form.Select onChange={handleAntibioticChange}>
+                  <option value="">Select Antibiotic</option>
+                  {rxAntibiotics.map((antibiotic, index) => (
+                    <option key={index} value={antibiotic.name}>
+                      {antibiotic.name}
+                    </option>
+                  ))}
                 </Form.Select>
               </Form.Group>
             </div>
-            <div>
+            <div className="mb-2">
               <Form.Group controlId="procedureEnd">
                 <Form.Label>
                   <span>Pain Reliever:</span>
                 </Form.Label>
-                <Form.Select>
-                  <option value="">Amox</option>
-                  <option value="">Amox</option>
-                  <option value="">Amox</option>
+                <Form.Select onChange={handlePainRelieverChange}>
+                  <option value="">Select Pain Reliever</option>
+                  {rxPainRelievers.map((painReliever, index) => (
+                    <option key={index} value={painReliever.name}>
+                      {painReliever.name}
+                    </option>
+                  ))}
                 </Form.Select>
               </Form.Group>
             </div>

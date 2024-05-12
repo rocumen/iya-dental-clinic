@@ -312,6 +312,31 @@ const ProcedureDetails = () => {
           </Modal>
         </Col>
       </Row>
+      <Row>
+        <h4>Rx</h4>
+        <Col md={4}>
+          {procedure?.map((p, index) => (
+            <React.Fragment key={index}>
+              <Table striped bordered hover responsive className="table-sm">
+                <tbody>
+                  <tr>
+                    <td className="text-center">
+                      <strong>Antibiotic:</strong>
+                    </td>
+                    <td className="text-center">{p.antibiotic || "-"}</td>
+                  </tr>
+                  <tr>
+                    <td className="text-center">
+                      <strong>Pain Reliever:</strong>
+                    </td>
+                    <td className="text-center">{p.painReliever || "-"}</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </React.Fragment>
+          ))}
+        </Col>
+      </Row>
 
       <Row className="my-3">
         <h3>Patient Signature</h3>

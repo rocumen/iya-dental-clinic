@@ -245,7 +245,7 @@ const createProcedure = asyncHandler(async (req, res) => {
     appointmentTime,
     procedureStart,
     procedureEnd,
-    antibiotics,
+    antibiotic,
     painReliever,
   } = req.body;
 
@@ -272,7 +272,7 @@ const createProcedure = asyncHandler(async (req, res) => {
       appointmentTime,
       procedureStart,
       procedureEnd,
-      antibiotics,
+      antibiotic,
       painReliever,
     };
 
