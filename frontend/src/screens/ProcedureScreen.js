@@ -32,6 +32,7 @@ const ProcedureScreen = () => {
 
   const [isSaving, setIsSaving] = useState(false);
   const [procedureType, setProcedureType] = useState("");
+  const [customProcedureType, setCustomProcedureType] = useState("");
   const [procedureDate, setProcedureDate] = useState("");
   const [installment, setInstallment] = useState(false);
 
@@ -60,6 +61,7 @@ const ProcedureScreen = () => {
   useEffect(() => {
     setProcedureArray(procedureArray);
     setProcedureType(procedureType);
+    setCustomProcedureType(customProcedureType);
     setProcedureDate(procedureDate);
     setDentists(dentists);
 
@@ -182,9 +184,13 @@ const ProcedureScreen = () => {
 
       setIsSaving(true); // Set isSaving to true when the button is clicked
 
+      // Determine the procedure type based on whether a custom type is provided or not
+      const selectedProcedureType =
+        procedureType === "" ? customProcedureType : procedureType;
+
       await createProcedure({
         patientId,
-        procedureType,
+        procedureType: selectedProcedureType, // Use the selected procedure type
         procedureDate,
         procedureArray, // Pass the procedureArray containing toothNumbers and procedureExplanation
         dentists,
@@ -275,6 +281,11 @@ const ProcedureScreen = () => {
   const handleProcedureTypeChange = (e) => {
     setProcedureType(e.target.value);
   };
+  const handleCustomProcedureTypeChange = (event) => {
+    setCustomProcedureType(event.target.value);
+  };
+
+  const rxAntibiotics = {};
 
   const handleTimeChange = (e) => {
     // Splitting the time string to separate hours and minutes
@@ -412,21 +423,32 @@ const ProcedureScreen = () => {
           </Col>
         </Row> */}
         <Row>
-          <Col md={3}>
+          <Col md={5}>
             <Form.Group controlId="procedureType" className="my-2">
               <Form.Label>Procedure Type:</Form.Label>
-              <Form.Select
-                value={procedureType}
-                onChange={handleProcedureTypeChange}
-                placeholder="Select procedure type"
-              >
-                <option value="">Select Procedure Type</option>
-                {procedureOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </Form.Select>
+              <div className="d-flex">
+                <Form.Select
+                  value={procedureType}
+                  onChange={handleProcedureTypeChange}
+                  placeholder="Select procedure type"
+                  style={{ flex: 1, marginRight: 10 }} // Adjust styles as needed
+                >
+                  <option value="">Select Procedure Type</option>
+                  {procedureOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </Form.Select>
+                <Form.Control
+                  type="text"
+                  value={customProcedureType} // State variable for custom input
+                  onChange={handleCustomProcedureTypeChange} // Handler for custom input
+                  placeholder="Other (specify)"
+                  disabled={procedureType !== ""} // Disable if a selection is made
+                  style={{ flex: 1 }} // Adjust styles as needed
+                />
+              </div>
             </Form.Group>
           </Col>
         </Row>
@@ -610,57 +632,90 @@ const ProcedureScreen = () => {
             </Form.Group>
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <Button
-              disabled={isSaving || rx.length > 0}
-              onClick={handleFileUpload}
-            >
-              {isSaving ? "Uploading..." : "Upload"}
-            </Button>
+
+        <Row className="my-2">
+          <Col md={6}>
+            <div className="row">
+              <div className="col-12 my-1">
+                <Button
+                  disabled={isSaving || rx.length > 0}
+                  onClick={handleFileUpload}
+                >
+                  {isSaving ? "Uploading..." : "Upload"}
+                </Button>
+              </div>
+              <div className="col-6 mb-2">
+                <Form.Group controlId="procedureStart">
+                  <Form.Label>Time Start of Procedure:</Form.Label>
+                  <Form.Control
+                    type="time"
+                    onChange={handleTimeStart}
+                  ></Form.Control>
+                </Form.Group>
+              </div>
+              <div className="col-6 mb-2">
+                <Form.Group controlId="procedureEnd">
+                  <Form.Label>Time End of Procedure:</Form.Label>
+                  <Form.Control
+                    type="time"
+                    onChange={handleTimeEnd}
+                  ></Form.Control>
+                </Form.Group>
+              </div>
+              <div className="col-6 mb-2">
+                <Form.Group controlId="nextAppointment">
+                  <Form.Label>Next Appointment:</Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={nextAppointment || ""}
+                    onChange={(e) => setNextAppointment(e.target.value)}
+                  />
+                  {!nextAppointment && (
+                    <div className="invalid-feedback">Date is required</div>
+                  )}
+                </Form.Group>
+              </div>
+              <div className="col-6 mb-2">
+                <Form.Group controlId="appointmentTime">
+                  <Form.Label>Time of Appointment:</Form.Label>
+                  <Form.Control
+                    type="time"
+                    onChange={handleTimeChange}
+                  ></Form.Control>
+                </Form.Group>
+              </div>
+            </div>
+          </Col>
+
+          <Col md={4} className="mx-auto my-2">
+            <div className="mb-2">
+              <Form.Group controlId="procedureEnd">
+                <Form.Label>
+                  <h4>Rx</h4>
+                  <span>Antibiotics:</span>
+                </Form.Label>
+                <Form.Select>
+                  <option value="">Amox</option>
+                  <option value="">Amox</option>
+                  <option value="">Amox</option>
+                </Form.Select>
+              </Form.Group>
+            </div>
+            <div>
+              <Form.Group controlId="procedureEnd">
+                <Form.Label>
+                  <span>Pain Reliever:</span>
+                </Form.Label>
+                <Form.Select>
+                  <option value="">Amox</option>
+                  <option value="">Amox</option>
+                  <option value="">Amox</option>
+                </Form.Select>
+              </Form.Group>
+            </div>
           </Col>
         </Row>
-        <Row>
-          <Col md={3}>
-            <Form.Group controlId="procedureStart" className="my-2">
-              <Form.Label>Time Start of Procedure:</Form.Label>
-              <Form.Control
-                type="time"
-                onChange={handleTimeStart}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-          <Col md={3}>
-            <Form.Group controlId="procedureEnd" className="my-2">
-              <Form.Label>Time End of Procedure:</Form.Label>
-              <Form.Control type="time" onChange={handleTimeEnd}></Form.Control>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className="justify-content-start">
-          <Col md={3}>
-            <Form.Group controlId="nextAppointment" className="my-2">
-              <Form.Label>Next Appointment:</Form.Label>
-              <Form.Control
-                type="date"
-                value={nextAppointment || ""}
-                onChange={(e) => setNextAppointment(e.target.value)}
-              />
-              {!nextAppointment && (
-                <div className="invalid-feedback">Date is required</div>
-              )}
-            </Form.Group>
-          </Col>
-          <Col md={3}>
-            <Form.Group controlId="appointmentTime" className="my-2">
-              <Form.Label>Time of Appointment:</Form.Label>
-              <Form.Control
-                type="time"
-                onChange={handleTimeChange}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-        </Row>
+
         <Row className="justify-content-start my-1">
           <Col>
             <ProcedureSignature

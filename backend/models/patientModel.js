@@ -150,7 +150,8 @@ const procedureSchema = mongoose.Schema({
   previousBalance: Number,
   nextAppointment: Date,
   appointmentTime: String,
-
+  antibiotics: String,
+  painReliever: String,
   rx: [
     {
       url: {

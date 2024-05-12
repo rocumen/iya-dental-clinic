@@ -245,6 +245,8 @@ const createProcedure = asyncHandler(async (req, res) => {
     appointmentTime,
     procedureStart,
     procedureEnd,
+    antibiotics,
+    painReliever,
   } = req.body;
 
   const patient = await Patient.findById(req.params.id);
@@ -270,6 +272,8 @@ const createProcedure = asyncHandler(async (req, res) => {
       appointmentTime,
       procedureStart,
       procedureEnd,
+      antibiotics,
+      painReliever,
     };
 
     patient.procedure.push(newProcedure);
@@ -291,8 +295,6 @@ const getAllProceduresById = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Patient not found");
   }
-
-
 
   // const procedureId = req.query.procedureId; // Assuming you pass the procedure ID as a query parameter
 
@@ -319,7 +321,6 @@ const getAllPatientsProcedure = asyncHandler(async (req, res) => {
     // Extract nextAppointment and patientName from all patients' procedures
     const appointments = patients.reduce((allAppointments, patient) => {
       patient.procedure.forEach((procedure) => {
-       
         allAppointments.push({
           nextAppointment: procedure.nextAppointment,
           appointmentTime: procedure.appointmentTime,
@@ -485,8 +486,6 @@ const updateCircleKids = asyncHandler(async (req, res) => {
     tmd,
   } = req.body;
 
-
-
   const patient = await Patient.findById(req.params.id);
 
   if (!patient) {
@@ -573,7 +572,6 @@ const updateCircleKids = asyncHandler(async (req, res) => {
 
 const getCircleKids = asyncHandler(async (req, res) => {
   const { patientId } = req.params;
-
 
   const patient = await Patient.findById(patientId);
 
@@ -759,8 +757,6 @@ const getCircleAdult = asyncHandler(async (req, res) => {
 const changeProcedureStatus = asyncHandler(async (req, res) => {
   const { patientId, procedureId } = req.body;
 
-
-
   try {
     const patient = await Patient.findById(patientId);
 
@@ -773,8 +769,6 @@ const changeProcedureStatus = asyncHandler(async (req, res) => {
       (procedure) => procedure._id.toString() === procedureId
     );
 
- 
-
     if (procedureIndexToUpdate === -1) {
       res.status(404);
       throw new Error("Procedure not found for the given ID");
@@ -786,10 +780,6 @@ const changeProcedureStatus = asyncHandler(async (req, res) => {
     //   { $set: { [`procedure.${procedureIndexToUpdate}.status`]: true } },
     //   { new: true }
     // );
-
- 
-
-
 
     // const updated = patient.procedure[procedureIndexToUpdate].status = !patient.procedure[procedureIndexToUpdate].status;
     patient.procedure[procedureIndexToUpdate].status =
