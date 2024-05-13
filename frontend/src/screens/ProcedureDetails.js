@@ -334,11 +334,11 @@ const ProcedureDetails = () => {
                         >
                           Rx
                         </p>
-                        <strong>
+                        {/* <strong>
                           <h5 className="my-1" style={{ marginBottom: "0" }}>
                             Antibiotic:
                           </h5>
-                        </strong>
+                        </strong> */}
                         <span>{p.antibiotic?.name || "-"}</span>
                         <span>{p.antibiotic?.quantity || "-"}</span>
                         <span>{p.antibiotic?.instructions || "-"}</span>
@@ -346,11 +346,11 @@ const ProcedureDetails = () => {
                     </tr>
                     <tr>
                       <td className="text-center d-flex flex-column">
-                        <strong>
+                        {/* <strong>
                           <h5 className="my-1" style={{ marginBottom: "0" }}>
                             Pain Reliever:
                           </h5>
-                        </strong>
+                        </strong> */}
                         <span>{p.painReliever?.name || "-"}</span>
                         <span>{p.painReliever?.quantity || "-"}</span>
                         <span>{p.painReliever?.instructions || "-"}</span>
