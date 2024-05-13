@@ -12,16 +12,19 @@ const DentistSignature = (props) => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false); // State to track whether the save button is clicked
+  const [isEditing, setIsEditing] = useState(false); // State to track whether the signature is being edited
   const signatureRef = useRef();
 
   const { dentistSignature, setDentistSignature } = props;
 
-  const openModal = () => {
+  const openModal = (edit = false) => {
     setModalIsOpen(true);
+    setIsEditing(edit);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
+    setIsEditing(false); // Reset editing state when modal is closed
   };
 
   const handleClear = () => {
@@ -48,21 +51,25 @@ const DentistSignature = (props) => {
       const { data } = await uploadDentistSignature(formData); // unwrap()
 
       toast.success(data.message);
+      setIsSaving(false); // Reset isSaving to false after uploading
       setDentistSignature(data.dentistSignature); // Assuming your backend returns the signature image details
     } catch (error) {
       console.log(error);
     }
 
-    setIsSaving(false); // Reset isSaving to false after uploading
     closeModal(); // Close the modal after saving
   };
 
   return (
     <>
-      <Button variant="dark" className="btn-md mx-2 btn-sm" onClick={openModal}>
+      <Button
+        variant="dark"
+        className="btn-md mx-2 btn-sm"
+        onClick={() => openModal()}
+      >
         Dentist Signature
       </Button>
-      {dentistSignature.url ? (
+      {dentistSignature.url && !isEditing ? (
         <>
           <Modal centered show={modalIsOpen} onHide={closeModal}>
             <Modal.Header closeButton>
@@ -84,6 +91,14 @@ const DentistSignature = (props) => {
                 </>
               )}
             </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={closeModal}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={() => openModal(true)}>
+                Edit
+              </Button>
+            </Modal.Footer>
           </Modal>
         </>
       ) : (

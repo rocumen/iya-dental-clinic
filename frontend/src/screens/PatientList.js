@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Button, Table, Row, Col, Modal, Image, Form } from "react-bootstrap";
 import { FaPlus, FaEdit } from "react-icons/fa";

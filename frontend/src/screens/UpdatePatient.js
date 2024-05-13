@@ -472,9 +472,13 @@ const CreatePatient = () => {
             <Button
               type="submit"
               className="btn btn-primary mx-auto"
-              disabled={!signatureImage.url && !isSaving}
+              disabled={
+                !signatureImage.url ||
+                !consentSignature.url ||
+                !dentistSignature.url ||
+                isSaving
+              }
             >
-              {/* Submit */}
               {isSaving ? "Saving..." : "Save"}
             </Button>
           </Col>

@@ -10,15 +10,18 @@ const SignatureModal = ({ setSignatureImage, signatureImage }) => {
   const [uploadSignature, { isLoading }] = useUploadSignatureMutation();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const signatureRef = useRef();
+  const [isEditing, setIsEditing] = useState(false); // State to track whether signature is being edited
   const [isSaving, setIsSaving] = useState(false); // State to track whether the save button is clicked
+  const signatureRef = useRef();
 
-  const openModal = () => {
+  const openModal = (edit = false) => {
     setModalIsOpen(true);
+    setIsEditing(edit);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
+    setIsEditing(false); // Reset editing state when modal is closed
   };
 
   const handleClear = () => {
@@ -45,10 +48,8 @@ const SignatureModal = ({ setSignatureImage, signatureImage }) => {
       const { data } = await uploadSignature(formData); // unwrap()
 
       toast.success(data.message);
-
       setIsSaving(false);
       setSignatureImage(data.signatureImage);
-      // refetch();
     } catch (error) {
       toast.error(error?.data?.message || error.error);
     }
@@ -58,32 +59,39 @@ const SignatureModal = ({ setSignatureImage, signatureImage }) => {
 
   return (
     <div>
-      <Button variant="dark" className="btn-md mx-2 btn-sm" onClick={openModal}>
+      <Button
+        variant="dark"
+        className="btn-md mx-2 btn-sm"
+        onClick={() => openModal()}
+      >
         Patient Signature
       </Button>
-      {signatureImage.url ? (
+      {signatureImage?.url && !isEditing ? (
         <>
           <Modal centered show={modalIsOpen} onHide={closeModal}>
             <Modal.Header closeButton>
-              <Modal.Title>Signature</Modal.Title>
+              <Modal.Title>Edit Signature</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               {isLoading && <Loader />}
-
-              {signatureImage?.url && (
-                <>
-                  <Image
-                    src={signatureImage?.url}
-                    alt="Signature"
-                    style={{
-                      width: 460,
-                      height: 200,
-                      border: "1px black solid",
-                    }}
-                  />
-                </>
-              )}
+              <Image
+                src={signatureImage?.url}
+                alt="Signature"
+                style={{
+                  width: 460,
+                  height: 200,
+                  border: "1px black solid",
+                }}
+              />
             </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={closeModal}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={() => openModal(true)}>
+                Edit
+              </Button>
+            </Modal.Footer>
           </Modal>
         </>
       ) : (

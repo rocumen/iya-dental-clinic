@@ -15,14 +15,17 @@ const InformedConsent = (props) => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isEditing, setIsEditing] = useState(false); // State to track whether the signature is being edited
   const signatureRef = useRef();
 
-  const openModal = () => {
+  const openModal = (edit = false) => {
     setModalIsOpen(true);
+    setIsEditing(edit);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
+    setIsEditing(false); // Reset editing state when modal is closed
   };
 
   const handleClear = () => {
@@ -49,42 +52,52 @@ const InformedConsent = (props) => {
       const { data } = await uploadConsentSignature(formData); // unwrap()
 
       toast.success(data.message);
+      setIsSaving(false);
       setConsentSignature(data.consentSignature); // Assuming your backend returns the signature image details
       //   refetch();
     } catch (error) {
       console.log(error);
     }
-    setIsSaving(false);
+
     closeModal();
   };
 
   return (
     <>
-      <Button variant="dark" className="btn-md btn-sm" onClick={openModal}>
+      <Button
+        variant="dark"
+        className="btn-md btn-sm"
+        onClick={() => openModal()}
+      >
         Patient Signature
       </Button>
-      {consentSignature.url ? (
+      {consentSignature.url && !isEditing ? (
         <>
           <Modal centered show={modalIsOpen} onHide={closeModal}>
             <Modal.Header closeButton>
-              <Modal.Title>Patient Signature</Modal.Title>
+              <Modal.Title>Edit Signature</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               {consentLoading && <Loader />}
-              {consentSignature?.url && (
-                <>
-                  <Image
-                    src={consentSignature?.url}
-                    alt={"consentSignature"}
-                    style={{
-                      width: 460,
-                      height: 200,
-                      border: "1px black solid",
-                    }}
-                  />
-                </>
-              )}
+
+              <Image
+                src={consentSignature?.url}
+                alt={"consentSignature"}
+                style={{
+                  width: 460,
+                  height: 200,
+                  border: "1px black solid",
+                }}
+              />
             </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={closeModal}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={() => openModal(true)}>
+                Edit
+              </Button>
+            </Modal.Footer>
           </Modal>
         </>
       ) : (

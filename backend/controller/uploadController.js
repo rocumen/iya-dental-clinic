@@ -154,7 +154,6 @@ const dataPrivacySignature = asyncHandler(async (req, res) => {
   }
 });
 
-/*
 const rx = async (req, res) => {
   try {
     const files = req.files; // Use req.files to get an array of uploaded files
@@ -187,7 +186,7 @@ const rx = async (req, res) => {
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
-*/
+/*
 const rx = async (req, res) => {
   try {
     const files = req.files;
@@ -234,6 +233,7 @@ const rx = async (req, res) => {
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
+*/
 // DATA PRIVACY SIGNATURE
 // @ /upload/dataPrivacySignature
 const procedureSignature = asyncHandler(async (req, res) => {

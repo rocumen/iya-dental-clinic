@@ -33,6 +33,8 @@ const PatientScreen = () => {
 
   const { forMinors, dentalHistory, medicalHistory } = patient;
 
+  console.log(medicalHistory?.map((i) => i.illnessOrDiseases));
+
   const formatDate = (dateString) => {
     const options = { month: "long", day: "numeric", year: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);
@@ -416,24 +418,40 @@ const PatientScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {medicalHistory.map((allergyObj, index) => (
+              {medicalHistory?.map((allergyObj, index) => (
                 <React.Fragment key={index}>
-                  {allergyObj.length > 0 ? (
+                  {allergyObj &&
+                  (allergyObj.allergies || allergyObj.otherAllergies) ? (
                     <>
-                      {allergyObj.allergies.map((allergy, subIndex) => (
-                        <tr key={subIndex}>
-                          <td className="text-center col-6">{allergy}</td>
-                        </tr>
-                      ))}
+                      {allergyObj.allergies &&
+                        allergyObj.allergies.length > 0 && (
+                          <>
+                            {allergyObj.allergies.map((allergy, subIndex) => (
+                              <tr key={`allergy-${subIndex}`}>
+                                <td className="text-center col-6">{allergy}</td>
+                              </tr>
+                            ))}
+                          </>
+                        )}
+                      {allergyObj.otherAllergies &&
+                        allergyObj.otherAllergies.length > 0 && (
+                          <>
+                            {allergyObj.otherAllergies.map(
+                              (otherAllergy, subIndex) => (
+                                <tr key={`otherAllergy-${subIndex}`}>
+                                  <td className="text-center col-6">
+                                    {otherAllergy}
+                                  </td>
+                                </tr>
+                              )
+                            )}
+                          </>
+                        )}
                     </>
                   ) : (
-                    <>
-                      <tr>
-                        <td className="text-center">
-                          Patient has No Allergies
-                        </td>
-                      </tr>
-                    </>
+                    <tr key={index}>
+                      <td className="text-center">Patient has No Allergies</td>
+                    </tr>
                   )}
                 </React.Fragment>
               ))}
@@ -450,24 +468,21 @@ const PatientScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {medicalHistory.map((illness, index) => (
+              {medicalHistory.map((entry, index) => (
                 <React.Fragment key={index}>
-                  {illness.length > 0 ? (
-                    <>
-                      {illness.illnessOrDiseases.map((i, subIndex) => (
-                        <tr key={subIndex}>
-                          <td className="text-center col-6">{i}</td>
-                        </tr>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      <tr>
-                        <td className="text-center col-6">
-                          Patient has no illnesses
-                        </td>
+                  {entry.illnessOrDiseases &&
+                  entry.illnessOrDiseases.length > 0 ? (
+                    entry.illnessOrDiseases.map((illness, subIndex) => (
+                      <tr key={subIndex}>
+                        <td className="text-center col-6">{illness}</td>
                       </tr>
-                    </>
+                    ))
+                  ) : (
+                    <tr key={index}>
+                      <td className="text-center col-6">
+                        Patient has no illnesses
+                      </td>
+                    </tr>
                   )}
                 </React.Fragment>
               ))}
