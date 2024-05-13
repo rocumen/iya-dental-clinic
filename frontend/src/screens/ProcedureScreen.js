@@ -56,8 +56,8 @@ const ProcedureScreen = () => {
   });
   const [procedureStart, setProcedureStart] = useState("");
   const [procedureEnd, setProcedureEnd] = useState("");
-  const [antibiotic, setAntibiotic] = useState("");
-  const [painReliever, setPainReliever] = useState("");
+  const [antibiotic, setAntibiotic] = useState(null);
+  const [painReliever, setPainReliever] = useState(null);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -333,7 +333,8 @@ const ProcedureScreen = () => {
   ];
 
   const handlePainRelieverChange = (e) => {
-    setPainReliever(e.target.value);
+    const selectedPainReliever = JSON.parse(e.target.value);
+    setPainReliever(selectedPainReliever);
   };
 
   const rxAntibiotics = [
@@ -369,7 +370,8 @@ const ProcedureScreen = () => {
     },
   ];
   const handleAntibioticChange = (e) => {
-    setAntibiotic(e.target.value);
+    const selectedAntibiotic = JSON.parse(e.target.value);
+    setAntibiotic(selectedAntibiotic);
   };
 
   const handleTimeChange = (e) => {
@@ -441,6 +443,8 @@ const ProcedureScreen = () => {
     console.log(searchTerm);
   }, [procedureType]);
   */
+
+  console.log(JSON.stringify(antibiotic));
   return (
     <>
       <Row>
@@ -774,7 +778,7 @@ const ProcedureScreen = () => {
 
           <Col md={4} className="mx-auto my-2">
             <div className="mb-2">
-              <Form.Group controlId="procedureEnd">
+              <Form.Group controlId="antibiotic">
                 <Form.Label>
                   <h4>Rx</h4>
                   <span>Antibiotics:</span>
@@ -782,7 +786,7 @@ const ProcedureScreen = () => {
                 <Form.Select onChange={handleAntibioticChange}>
                   <option value="">Select Antibiotic</option>
                   {rxAntibiotics.map((antibiotic, index) => (
-                    <option key={index} value={antibiotic.name}>
+                    <option key={index} value={JSON.stringify(antibiotic)}>
                       {antibiotic.name}
                     </option>
                   ))}
@@ -790,14 +794,14 @@ const ProcedureScreen = () => {
               </Form.Group>
             </div>
             <div className="mb-2">
-              <Form.Group controlId="procedureEnd">
+              <Form.Group controlId="painReliever">
                 <Form.Label>
                   <span>Pain Reliever:</span>
                 </Form.Label>
                 <Form.Select onChange={handlePainRelieverChange}>
                   <option value="">Select Pain Reliever</option>
                   {rxPainRelievers.map((painReliever, index) => (
-                    <option key={index} value={painReliever.name}>
+                    <option key={index} value={JSON.stringify(painReliever)}>
                       {painReliever.name}
                     </option>
                   ))}

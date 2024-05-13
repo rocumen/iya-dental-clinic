@@ -278,10 +278,16 @@ const ProcedureDetails = () => {
             <>
               <h6>There are no Chart</h6>
               <div className="d-flex gap-3">
-                <Button onClick={() => handleShowConfirmationModal("kid")}>
+                <Button
+                  size="sm"
+                  onClick={() => handleShowConfirmationModal("kid")}
+                >
                   Create Dental Chart for Kid
                 </Button>
-                <Button onClick={() => handleShowConfirmationModal("adult")}>
+                <Button
+                  size="sm"
+                  onClick={() => handleShowConfirmationModal("adult")}
+                >
                   Create Dental Chart for Adult
                 </Button>
               </div>
@@ -300,12 +306,13 @@ const ProcedureDetails = () => {
             </Modal.Body>
             <Modal.Footer>
               <Button
+                size="sm"
                 variant="secondary"
                 onClick={handleCloseConfirmationModal}
               >
                 Cancel
               </Button>
-              <Button variant="primary" onClick={handleCreateChart}>
+              <Button size="sm" variant="primary" onClick={handleCreateChart}>
                 Confirm
               </Button>
             </Modal.Footer>
@@ -313,28 +320,47 @@ const ProcedureDetails = () => {
         </Col>
       </Row>
       <Row>
-        <h4>Rx</h4>
         <Col md={4}>
-          {procedure?.map((p, index) => (
-            <React.Fragment key={index}>
-              <Table striped bordered hover responsive className="table-sm">
-                <tbody>
-                  <tr>
-                    <td className="text-center">
-                      <strong>Antibiotic:</strong>
-                    </td>
-                    <td className="text-center">{p.antibiotic || "-"}</td>
-                  </tr>
-                  <tr>
-                    <td className="text-center">
-                      <strong>Pain Reliever:</strong>
-                    </td>
-                    <td className="text-center">{p.painReliever || "-"}</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </React.Fragment>
-          ))}
+          {procedure?.map((p, index) =>
+            p.antibiotic || p.painReliever ? (
+              <React.Fragment key={index}>
+                <Table striped bordered hover responsive className="table-sm">
+                  <tbody>
+                    <tr>
+                      <td className="text-center d-flex flex-column">
+                        <p
+                          style={{ fontSize: "32px", marginBottom: "0" }}
+                          className="text-start"
+                        >
+                          Rx
+                        </p>
+                        <strong>
+                          <h5 className="my-1" style={{ marginBottom: "0" }}>
+                            Antibiotic:
+                          </h5>
+                        </strong>
+                        <span>{p.antibiotic?.name || "-"}</span>
+                        <span>{p.antibiotic?.quantity || "-"}</span>
+                        <span>{p.antibiotic?.instructions || "-"}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-center d-flex flex-column">
+                        <strong>
+                          <h5 className="my-1" style={{ marginBottom: "0" }}>
+                            Pain Reliever:
+                          </h5>
+                        </strong>
+                        <span>{p.painReliever?.name || "-"}</span>
+                        <span>{p.painReliever?.quantity || "-"}</span>
+                        <span>{p.painReliever?.instructions || "-"}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </React.Fragment>
+            ) : null
+          )}
         </Col>
       </Row>
 
