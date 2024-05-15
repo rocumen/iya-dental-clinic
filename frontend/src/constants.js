@@ -3,5 +3,6 @@
 
 export const BASE_URL = "";
 export const PATIENTS_URL = "/api/patients";
+export const OLD_PATIENTS_URL = "/api/oldPatients";
 export const USERS_URL = "/api/users";
 export const UPLOAD_URL = "/api/upload";

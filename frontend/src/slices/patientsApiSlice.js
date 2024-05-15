@@ -1,11 +1,12 @@
-import { PATIENTS_URL, UPLOAD_URL } from "../constants.js";
-import { apiSlice } from "./apiSlice";
+import { PATIENTS_URL, UPLOAD_URL, OLD_PATIENTS_URL } from "../constants.js";
+import { apiSlice } from "./apiSlice.js";
 
 export const patientsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllPatients: builder.query({
       query: ({ pageNumber, keyword }) => ({
         url: `${PATIENTS_URL}/`,
+
         params: { pageNumber, keyword },
       }),
       keepUnusedDataFor: 5,
@@ -160,6 +161,39 @@ export const patientsApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
     }),
+
+    //---------------- OLD PATIENT RECORDS
+    getAllOldPatients: builder.query({
+      query: ({ pageNumber, keyword }) => ({
+        url: `${OLD_PATIENTS_URL}/`,
+
+        params: { pageNumber, keyword },
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ["Patients"],
+    }),
+    sortAllOldPatientsByLastName: builder.query({
+      query: ({ pageNumber, keyword }) => ({
+        url: `${OLD_PATIENTS_URL}/sortPatient`,
+        params: { pageNumber, keyword },
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ["Patients"],
+    }),
+    deleteOldPatient: builder.mutation({
+      query: ({ patientId }) => ({
+        url: `${OLD_PATIENTS_URL}/deletePatient/${patientId}`,
+        method: "DELETE",
+      }),
+    }),
+    createOldPatient: builder.mutation({
+      query: (data) => ({
+        url: `${OLD_PATIENTS_URL}/createPatient`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Patient"],
+    }),
   }),
 });
 
@@ -186,4 +220,9 @@ export const {
   useChangeProcedureStatusMutation,
   useDeletePatientMutation,
   useSortAllPatientsByLastNameQuery,
+  // old patient records
+  useGetAllOldPatientsQuery,
+  useSortAllOldPatientsByLastNameQuery,
+  useDeleteOldPatientMutation,
+  useCreateOldPatientMutation,
 } = patientsApiSlice;

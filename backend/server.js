@@ -12,6 +12,7 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 //Routes
 import patientRoutes from "./routes/patientRoutes.js";
+import oldPatientRoutes from "./routes/oldPatientRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 
@@ -38,6 +39,7 @@ app.use(cookieParser());
 app.use("/api/patients", patientRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/oldPatients", oldPatientRoutes);
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();

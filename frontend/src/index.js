@@ -37,7 +37,7 @@ import UpdateAdultDentalChart from "./screens/UpdateAdultDentalChart.js";
 import ChangePasswordScreen from "./screens/ChangePasswordScreen.js";
 import ResetPasswordScreen from "./screens/ResetPasswordScreen.js";
 
-import OldPatientRecords from "./screens/OldPatientRecords.js";
+import OldPatientRecords from "./screens/oldPatients/OldPatientRecords.js";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -47,7 +47,6 @@ const router = createBrowserRouter(
       <Route path="/resetPassword" element={<ResetPasswordScreen />} />
 
       <Route path="" element={<AdminRoute />}>
-        <Route path="/oldRecords" element={<OldPatientRecords />} />
         <Route path="/changePassword/:id" element={<ChangePasswordScreen />} />
         <Route index={true} path="/" element={<PatientList />} />
         <Route path="/search/:keyword" element={<PatientList />} />
@@ -85,6 +84,9 @@ const router = createBrowserRouter(
           path="/patients/dentalChartAdult/:patientId/update/:dentalChartId"
           element={<UpdateAdultDentalChart />}
         />
+
+        {/* Old Records */}
+        <Route path="/oldRecords" element={<OldPatientRecords />} />
       </Route>
     </Route>
   )

@@ -12,6 +12,7 @@ const IncomingAppointments = () => {
 
   const { data, refetch: incomingAppointmentsRefetch } =
     useGetAllProceduresQuery();
+
   const { refetch } = useGetAllPatientsQuery({
     pageNumber,
     keyword,

@@ -1,42 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Button, Table, Row, Col, Modal, Image, Form } from "react-bootstrap";
 import { FaPlus, FaEdit } from "react-icons/fa";
-import Message from "../components/Message.js";
-import Loader from "../components/Loader.js";
+
+import Message from "../../components/Message.js";
+
+import Loader from "../../components/Loader.js";
 import { toast } from "react-toastify";
-import Paginate from "../components/Paginate.js";
-import IncomingAppointments from "../components/IncomingAppointments.js";
+
+import Paginate from "../../components/Paginate.js";
+
+import IncomingAppointments from "../../components/IncomingAppointments.js";
 
 import {
-  useGetAllPatientsQuery,
-  useCreatePatientMutation,
-  useDeletePatientMutation,
-  useSortAllPatientsByLastNameQuery,
-} from "../slices/patientsApiSlice.js";
+  useGetAllOldPatientsQuery,
+  useSortAllOldPatientsByLastNameQuery,
+  useDeleteOldPatientMutation,
+  useCreateOldPatientMutation,
+} from "../../slices/patientsApiSlice.js";
 
-import ProcedureListModal from "../components/ProcedureListModal.js";
-import SearchBox from "../components/SearchBox.js";
+import ProcedureListModal from "../../components/ProcedureListModal.js";
+import SearchBox from "../../components/SearchBox.js";
 
-import dentalImage from "../assets/dentalimage.jpg";
+import dentalImage from "../../assets/dentalimage.jpg";
 
-const PatientList = () => {
+const OldPatientRecords = () => {
   const navigate = useNavigate();
   const { pageNumber, keyword } = useParams();
 
-  const { data, isLoading, error, refetch } = useGetAllPatientsQuery({
+  const { data, isLoading, error, refetch } = useGetAllOldPatientsQuery({
     pageNumber,
     keyword,
   });
 
-  const { data: sortedByLastName } = useSortAllPatientsByLastNameQuery({
+  const { data: sortedByLastName } = useSortAllOldPatientsByLastNameQuery({
     pageNumber,
     keyword,
   });
 
-  const [deletePatient] = useDeletePatientMutation();
-  const [createPatient] = useCreatePatientMutation();
+  const [deletePatient] = useDeleteOldPatientMutation();
+  const [createPatient] = useCreateOldPatientMutation();
 
   const [showModal, setShowModal] = useState(false);
   const [sortBy, setSortBy] = useState("lastUpdate");
@@ -131,7 +135,7 @@ const PatientList = () => {
       </Row>
       <Row>
         <Col>
-          <h2>Patient Records</h2>
+          <h2>Old Patient Records</h2>
         </Col>
       </Row>
       <Row className="my-2">
@@ -473,4 +477,4 @@ const PatientList = () => {
   );
 };
 
-export default PatientList;
+export default OldPatientRecords;

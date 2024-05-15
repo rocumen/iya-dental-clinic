@@ -49,10 +49,13 @@ const Header = () => {
                     <Nav.Link>Home</Nav.Link>
                   </LinkContainer>
                   <NavDropdown title="Account" id="basic-nav-dropdown">
+                    <LinkContainer to={"/oldRecords"}>
+                      <NavDropdown.Item>Old Records</NavDropdown.Item>
+                    </LinkContainer>
                     <LinkContainer to={`/changePassword/${userInfo._id}`}>
                       <NavDropdown.Item>Change Password</NavDropdown.Item>
                     </LinkContainer>
-                    <NavDropdown.Divider />
+
                     <NavDropdown.Item
                       onClick={() => setShowLogoutConfirmation(true)}
                     >
