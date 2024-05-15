@@ -257,6 +257,51 @@ export const getAllPatients = asyncHandler(async (req, res) => {
   res.json({ patients, page, pages: Math.ceil(count / pageSize) });
 });
 
+//get one patient by id
+export const getPatientById = asyncHandler(async (req, res) => {
+  const patient = await OldPatient.findById(req.params.id);
+
+  if (patient) {
+    return res.json(patient);
+  } else {
+    res.status(404);
+    throw new Error("Resource not found");
+  }
+});
+
+// get all procedures
+export const getAllPatientsProcedure = asyncHandler(async (req, res) => {
+  try {
+    // Find all patients
+    const patients = await OldPatient.find();
+
+    // Extract nextAppointment and patientName from all patients' procedures
+    const appointments = patients.reduce((allAppointments, patient) => {
+      patient.procedure.forEach((procedure) => {
+        allAppointments.push({
+          nextAppointment: procedure.nextAppointment,
+          appointmentTime: procedure.appointmentTime,
+          patientName: `${patient.lastName}, ${patient.firstName}`,
+          status: procedure.status,
+          procedureId: procedure._id,
+          patientId: patient._id,
+        });
+      });
+      return allAppointments;
+    }, []);
+
+    // Sort appointments by descending order of nextAppointment dates
+    appointments.sort(
+      (a, b) => new Date(a.nextAppointment) - new Date(b.nextAppointment)
+    );
+
+    res.json(appointments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
 //sort by last name
 export const getAllPatientsSortedByLastName = asyncHandler(async (req, res) => {
   const pageSize = process.env.PAGINATION_LIMIT;
@@ -290,4 +335,109 @@ export const deletePatient = asyncHandler(async (req, res) => {
   }
 
   res.json({ message: "Patient deleted successfully" });
+});
+
+// create procedure
+export const createProcedure = asyncHandler(async (req, res) => {
+  const {
+    procedureType,
+    procedureDate,
+    procedureArray,
+    dentists,
+    totalAmountCharged,
+    amountPaid,
+    nextAppointment,
+    rx,
+    procedureSignature,
+    previousBalance,
+    appointmentTime,
+    procedureStart,
+    procedureEnd,
+    antibiotic,
+    painReliever,
+  } = req.body;
+
+  console.log(antibiotic);
+
+  const patient = await OldPatient.findById(req.params.id);
+
+  if (patient) {
+    // Calculate balance for the new procedure
+    const balance = previousBalance + totalAmountCharged - amountPaid;
+
+    const newProcedure = {
+      patient: patient._id,
+      patientName: `${patient.lastName}, ${patient.firstName} `,
+      procedureType,
+      procedureDate,
+      procedureArray,
+      dentists,
+      totalAmountCharged,
+      amountPaid,
+      balance,
+      previousBalance,
+      nextAppointment,
+      rx,
+      procedureSignature,
+      appointmentTime,
+      procedureStart,
+      procedureEnd,
+      antibiotic,
+      painReliever,
+    };
+
+    patient.procedure.push(newProcedure);
+
+    await patient.save();
+    res.status(201).json({ message: "Procedure Added" });
+  } else {
+    res.status(404);
+    throw new Error("Resource not found");
+  }
+});
+
+// change procedure status
+export const changeProcedureStatus = asyncHandler(async (req, res) => {
+  const { patientId, procedureId } = req.body;
+
+  try {
+    const patient = await OldPatient.findById(patientId);
+
+    if (!patient) {
+      res.status(404);
+      throw new Error("Patient not Found");
+    }
+
+    const procedureIndexToUpdate = patient.procedure.findIndex(
+      (procedure) => procedure._id.toString() === procedureId
+    );
+
+    if (procedureIndexToUpdate === -1) {
+      res.status(404);
+      throw new Error("Procedure not found for the given ID");
+    }
+
+    // Create a new patient object with updated procedure status
+    // const updatedPatient = await Patient.findByIdAndUpdate(
+    //   patientId,
+    //   { $set: { [`procedure.${procedureIndexToUpdate}.status`]: true } },
+    //   { new: true }
+    // );
+
+    // const updated = patient.procedure[procedureIndexToUpdate].status = !patient.procedure[procedureIndexToUpdate].status;
+    patient.procedure[procedureIndexToUpdate].status =
+      !patient.procedure[procedureIndexToUpdate].status;
+    await patient.save();
+
+    // if (!updatedPatient) {
+    //   res.status(404);
+    //   throw new Error("Failed to update procedure status");
+    // }
+
+    res.json({
+      message: "hi",
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });

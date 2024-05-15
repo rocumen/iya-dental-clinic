@@ -249,8 +249,6 @@ const createProcedure = asyncHandler(async (req, res) => {
     painReliever,
   } = req.body;
 
-  console.log(antibiotic);
-
   const patient = await Patient.findById(req.params.id);
 
   if (patient) {

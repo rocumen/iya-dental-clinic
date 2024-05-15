@@ -7,11 +7,16 @@ import {
 } from "../slices/patientsApiSlice.js";
 import { useParams } from "react-router-dom";
 
-const IncomingAppointments = () => {
+const IncomingAppointments = ({
+  patient,
+  proceduresQuery: data,
+  incomingAppointmentsRefetch,
+  changeProcedureStatus,
+}) => {
   const { pageNumber, keyword } = useParams();
 
-  const { data, refetch: incomingAppointmentsRefetch } =
-    useGetAllProceduresQuery();
+  // const { data, refetch: incomingAppointmentsRefetch } =
+  //   useGetAllProceduresQuery();
 
   const { refetch } = useGetAllPatientsQuery({
     pageNumber,
@@ -51,7 +56,7 @@ const IncomingAppointments = () => {
     pageNumbers.push(i);
   }
 
-  const [changeProcedureStatus] = useChangeProcedureStatusMutation();
+  // const [changeProcedureStatus] = useChangeProcedureStatusMutation();
 
   const handleStatusUpdate = async (procedureId, patientId) => {
     setConfirmationModalOpen(false);
@@ -259,7 +264,7 @@ const IncomingAppointments = () => {
         <Modal.Header closeButton>
           <Modal.Title>Confirm Status Update</Modal.Title>
         </Modal.Header>
-        <Modal.Body backgroundColor="dark">
+        <Modal.Body backgroundcolor="dark">
           Are you sure you want to update the status?
         </Modal.Body>
         <Modal.Footer>

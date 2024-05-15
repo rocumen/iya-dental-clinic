@@ -18,6 +18,8 @@ import {
   useSortAllOldPatientsByLastNameQuery,
   useDeleteOldPatientMutation,
   useCreateOldPatientMutation,
+  useGetAllOldProceduresQuery,
+  useChangeOldProcedureStatusMutation,
 } from "../../slices/patientsApiSlice.js";
 
 import ProcedureListModal from "../../components/ProcedureListModal.js";
@@ -28,6 +30,11 @@ import dentalImage from "../../assets/dentalimage.jpg";
 const OldPatientRecords = () => {
   const navigate = useNavigate();
   const { pageNumber, keyword } = useParams();
+
+  const [changeProcedureStatus] = useChangeOldProcedureStatusMutation();
+
+  const { data: proceduresQuery, refetch: incomingAppointmentsRefetch } =
+    useGetAllOldProceduresQuery();
 
   const { data, isLoading, error, refetch } = useGetAllOldPatientsQuery({
     pageNumber,
@@ -161,7 +168,12 @@ const OldPatientRecords = () => {
 
         <Col className="d-flex justify-content-end gap-1">
           {/* Modal incoming Appointment */}
-          <IncomingAppointments patient={data?.patients} />
+          <IncomingAppointments
+            patient={data?.patients}
+            proceduresQuery={proceduresQuery}
+            incomingAppointmentsRefetch={incomingAppointmentsRefetch}
+            changeProcedureStatus={changeProcedureStatus}
+          />
           <Button variant="primary" onClick={() => setShowModal(true)}>
             <strong>+</strong>New Patient
           </Button>
@@ -253,10 +265,14 @@ const OldPatientRecords = () => {
                               <ProcedureListModal
                                 patient={patient}
                                 refetch={refetch}
+                                changeProcedureStatus={changeProcedureStatus}
+                                incomingAppointmentsRefetch={
+                                  incomingAppointmentsRefetch
+                                }
                               />
                             </div>
                             <LinkContainer
-                              to={`/patients/createProcedure/${patient._id}`}
+                              to={`/createOldProcedure/${patient._id}`}
                             >
                               <div className="mb-1">
                                 <Button variant="primary" size="sm">
@@ -382,6 +398,10 @@ const OldPatientRecords = () => {
                               <ProcedureListModal
                                 patient={patient}
                                 refetch={refetch}
+                                changeProcedureStatus={changeProcedureStatus}
+                                incomingAppointmentsRefetch={
+                                  incomingAppointmentsRefetch
+                                }
                               />
                             </div>
                             <LinkContainer

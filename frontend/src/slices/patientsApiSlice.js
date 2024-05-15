@@ -172,6 +172,12 @@ export const patientsApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
       providesTags: ["Patients"],
     }),
+    getOldPatientById: builder.query({
+      query: (patientId) => ({
+        url: `${OLD_PATIENTS_URL}/onePatient/${patientId}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
     sortAllOldPatientsByLastName: builder.query({
       query: ({ pageNumber, keyword }) => ({
         url: `${OLD_PATIENTS_URL}/sortPatient`,
@@ -193,6 +199,28 @@ export const patientsApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
       invalidatesTags: ["Patient"],
+    }),
+    createOldProcedure: builder.mutation({
+      query: (data) => ({
+        url: `${OLD_PATIENTS_URL}/createProcedure/${data.patientId}`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Patient"],
+    }),
+    getAllOldProcedures: builder.query({
+      query: () => ({
+        url: `${OLD_PATIENTS_URL}/allProcedures`,
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ["Patients"],
+    }),
+    changeOldProcedureStatus: builder.mutation({
+      query: (data) => ({
+        url: `${OLD_PATIENTS_URL}/changeStatus/${data.patientId}/procedure/${data.procedureId}`,
+        method: "PUT",
+        body: data,
+      }),
     }),
   }),
 });
@@ -225,4 +253,8 @@ export const {
   useSortAllOldPatientsByLastNameQuery,
   useDeleteOldPatientMutation,
   useCreateOldPatientMutation,
+  useCreateOldProcedureMutation,
+  useGetOldPatientByIdQuery,
+  useGetAllOldProceduresQuery,
+  useChangeOldProcedureStatusMutation,
 } = patientsApiSlice;

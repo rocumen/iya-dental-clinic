@@ -6,9 +6,14 @@ import {
   useGetAllProceduresQuery,
 } from "../slices/patientsApiSlice.js";
 
-const ProcedureListModal = ({ patient, refetch }) => {
+const ProcedureListModal = ({
+  patient,
+  refetch,
+  changeProcedureStatus,
+  incomingAppointmentsRefetch,
+}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const { refetch: incomingAppointmentsRefetch } = useGetAllProceduresQuery();
+  // const { refetch: incomingAppointmentsRefetch } = useGetAllProceduresQuery();
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -18,8 +23,8 @@ const ProcedureListModal = ({ patient, refetch }) => {
     setModalIsOpen(false);
   };
 
-  const [changeProcedureStatus, { isLoading }] =
-    useChangeProcedureStatusMutation();
+  // const [changeProcedureStatus, { isLoading }] =
+  //   useChangeProcedureStatusMutation();
 
   // const handleStatusUpdate = async (procedureId) => {
   //   const patientId = patient._id;
@@ -77,6 +82,10 @@ const ProcedureListModal = ({ patient, refetch }) => {
       return 0;
     }
   });
+
+  useEffect(() => {
+    refetch();
+  }, [patient]);
 
   return (
     <div>
