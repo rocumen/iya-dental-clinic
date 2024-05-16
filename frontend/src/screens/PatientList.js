@@ -32,10 +32,12 @@ const PatientList = () => {
   const { data: proceduresQuery, refetch: incomingAppointmentsRefetch } =
     useGetAllProceduresQuery();
 
-  const { data, isLoading, error, refetch } = useGetAllPatientsQuery({
-    pageNumber,
-    keyword,
-  });
+  const { data, isLoading, error, refetch, isFetched } = useGetAllPatientsQuery(
+    {
+      pageNumber,
+      keyword,
+    }
+  );
 
   const { data: sortedByLastName } = useSortAllPatientsByLastNameQuery({
     pageNumber,

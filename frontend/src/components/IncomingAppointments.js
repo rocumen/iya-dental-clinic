@@ -15,13 +15,16 @@ const IncomingAppointments = ({
 }) => {
   const { pageNumber, keyword } = useParams();
 
-  // const { data, refetch: incomingAppointmentsRefetch } =
-  //   useGetAllProceduresQuery();
-
-  const { refetch } = useGetAllPatientsQuery({
+  const { refetch, isFetched } = useGetAllPatientsQuery({
     pageNumber,
     keyword,
   });
+
+  useEffect(() => {
+    if (isFetched) {
+      refetch();
+    }
+  }, [isFetched, refetch]);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
@@ -55,8 +58,6 @@ const IncomingAppointments = ({
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
-
-  // const [changeProcedureStatus] = useChangeProcedureStatusMutation();
 
   const handleStatusUpdate = async (procedureId, patientId) => {
     setConfirmationModalOpen(false);

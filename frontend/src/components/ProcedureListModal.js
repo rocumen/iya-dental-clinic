@@ -13,7 +13,6 @@ const ProcedureListModal = ({
   incomingAppointmentsRefetch,
 }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  // const { refetch: incomingAppointmentsRefetch } = useGetAllProceduresQuery();
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -82,10 +81,6 @@ const ProcedureListModal = ({
       return 0;
     }
   });
-
-  useEffect(() => {
-    refetch();
-  }, [patient]);
 
   return (
     <div>
