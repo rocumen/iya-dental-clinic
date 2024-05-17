@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  useGetProcedureQuery,
-  useGetPatientByIdQuery,
-} from "../slices/patientsApiSlice.js";
-import Loader from "../components/Loader.js";
+  useGetOldPatientByIdQuery,
+  //get procedure by ID
+  useGetOldProcedureQuery,
+} from "../../slices/patientsApiSlice.js";
+import Loader from "../../components/Loader.js";
 import { Row, Col, Table, Image, Modal, Button } from "react-bootstrap";
-import Message from "../components/Message.js";
+import Message from "../../components/Message.js";
 import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-import dentalImage from "../assets/dentalimage.jpg";
-import GoBack from "../components/GoBack.js";
+import dentalImage from "../../assets/dentalimage.jpg";
+import GoBack from "../../components/GoBack.js";
 
-const ProcedureDetails = () => {
+const OldProcedureDetails = () => {
   const { patientId, procedureId } = useParams();
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -29,16 +30,20 @@ const ProcedureDetails = () => {
 
   const handleCloseConfirmationModal = () => setShowConfirmationModal(false);
 
-  const { data: patient } = useGetPatientByIdQuery(patientId);
+  const { data: patient } = useGetOldPatientByIdQuery(patientId);
+
+  console.log(patient);
 
   const {
     data: procedure,
     isLoading,
     error,
-  } = useGetProcedureQuery({
+  } = useGetOldProcedureQuery({
     patientId,
     procedureId,
   });
+
+  console.log(procedure);
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
@@ -69,7 +74,6 @@ const ProcedureDetails = () => {
     }
     setShowConfirmationModal(false);
   };
-
   return (
     <>
       {isLoading && <Loader />}
@@ -336,10 +340,10 @@ const ProcedureDetails = () => {
                           Rx
                         </p>
                         {/* <strong>
-                          <h5 className="my-1" style={{ marginBottom: "0" }}>
-                            Antibiotic:
-                          </h5>
-                        </strong> */}
+                            <h5 className="my-1" style={{ marginBottom: "0" }}>
+                              Antibiotic:
+                            </h5>
+                          </strong> */}
                         <span>{p.antibiotic?.name || "-"}</span>
                         <span>{p.antibiotic?.quantity || "-"}</span>
                         <span>{p.antibiotic?.instructions || "-"}</span>
@@ -348,10 +352,10 @@ const ProcedureDetails = () => {
                     <tr>
                       <td className="text-center d-flex flex-column">
                         {/* <strong>
-                          <h5 className="my-1" style={{ marginBottom: "0" }}>
-                            Pain Reliever:
-                          </h5>
-                        </strong> */}
+                            <h5 className="my-1" style={{ marginBottom: "0" }}>
+                              Pain Reliever:
+                            </h5>
+                          </strong> */}
                         <span>{p.painReliever?.name || "-"}</span>
                         <span>{p.painReliever?.quantity || "-"}</span>
                         <span>{p.painReliever?.instructions || "-"}</span>
@@ -435,4 +439,4 @@ const ProcedureDetails = () => {
   );
 };
 
-export default ProcedureDetails;
+export default OldProcedureDetails;

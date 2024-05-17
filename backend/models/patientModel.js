@@ -160,6 +160,7 @@ const procedureSchema = mongoose.Schema({
     quantity: String,
     instructions: String,
   },
+
   rx: [
     {
       url: {
@@ -176,6 +177,10 @@ const procedureSchema = mongoose.Schema({
   },
   procedureStart: String,
   procedureEnd: String,
+  collection: {
+    type: String,
+    default: "New",
+  },
 });
 
 const dentalChartKidSchema = mongoose.Schema({

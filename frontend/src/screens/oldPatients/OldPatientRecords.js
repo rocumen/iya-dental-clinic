@@ -142,7 +142,7 @@ const OldPatientRecords = () => {
       </Row>
       <Row>
         <Col>
-          <h2>Old Patient Records</h2>
+          <h2>Old Patient Record</h2>
         </Col>
       </Row>
       <Row className="my-2">

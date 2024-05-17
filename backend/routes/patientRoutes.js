@@ -6,7 +6,7 @@ import {
   getAllPatients,
   getPatientById,
   createProcedure,
-  getAllProceduresById,
+  getProcedureById,
   getAllPatientsProcedure,
   createCircleKids,
   updateCircleKids,
@@ -34,7 +34,7 @@ router.get(
   "/patientProcedure/:patientId/procedures/:procedureId",
   protect,
   admin,
-  getAllProceduresById
+  getProcedureById
 );
 
 router.get("/allProcedures", protect, admin, getAllPatientsProcedure);

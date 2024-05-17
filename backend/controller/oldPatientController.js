@@ -214,8 +214,6 @@ export const updatePatient = asyncHandler(async (req, res) => {
         type: "upload",
         resource_type: "image",
       });
-      // .then(console.log)
-      // .catch(console.log);
     }
     patient.signatureImage = signatureImage;
 
@@ -357,8 +355,6 @@ export const createProcedure = asyncHandler(async (req, res) => {
     painReliever,
   } = req.body;
 
-  console.log(antibiotic);
-
   const patient = await OldPatient.findById(req.params.id);
 
   if (patient) {
@@ -440,4 +436,31 @@ export const changeProcedureStatus = asyncHandler(async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+export const getProcedureById = asyncHandler(async (req, res) => {
+  const { patientId, procedureId } = req.params;
+
+  const patient = await OldPatient.findById(patientId);
+
+  if (!patient) {
+    res.status(404);
+    throw new Error("Patient not found");
+  }
+
+  // const procedureId = req.query.procedureId; // Assuming you pass the procedure ID as a query parameter
+
+  let procedures;
+
+  if (procedureId) {
+    // If procedureId is provided, filter procedures array to match the specified procedureId
+    procedures = patient.procedure.filter(
+      (procedure) => procedure._id.toString() === procedureId
+    );
+  } else {
+    // If procedureId is not provided, return all procedures
+    procedures = patient.procedure;
+  }
+
+  res.json(procedures);
 });

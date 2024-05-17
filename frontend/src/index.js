@@ -40,6 +40,7 @@ import ResetPasswordScreen from "./screens/ResetPasswordScreen.js";
 ///----- old patient
 import OldPatientRecords from "./screens/oldPatients/OldPatientRecords.js";
 import OldProcedureScreen from "./screens/oldPatients/OldProcedureScreen.js";
+import OldProcedureDetails from "./screens/oldPatients/OldProcedureDetails.js";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,32 +59,23 @@ const router = createBrowserRouter(
           element={<PatientList />}
         />
 
-        <Route path="/patients/onePatient/:id" element={<PatientScreen />} />
-        <Route path="/patients/updatePatient/:id" element={<UpdatePatient />} />
+        <Route path="/onePatient/:id" element={<PatientScreen />} />
+        <Route path="/updatePatient/:id" element={<UpdatePatient />} />
 
-        <Route path="/patients/archived" element={<ArchivedPatients />} />
+        <Route path="/archived" element={<ArchivedPatients />} />
+        <Route path="/createProcedure/:id" element={<ProcedureScreen />} />
         <Route
-          path="/patients/createProcedure/:id"
-          element={<ProcedureScreen />}
-        />
-        <Route
-          path="/patients/procedureDetails/:patientId/procedures/:procedureId"
+          path="/procedureDetails/:patientId/procedures/:procedureId"
           element={<ProcedureDetails />}
         />
+        <Route path="/dentalChartKids/:id" element={<DentalChartScreen />} />
         <Route
-          path="/patients/dentalChartKids/:id"
-          element={<DentalChartScreen />}
-        />
-        <Route
-          path="/patients/dentalChartKids/:patientId/update/:dentalChartId"
+          path="/dentalChartKids/:patientId/update/:dentalChartId"
           element={<UpdateDentalChartKids />}
         />
+        <Route path="/dentalChartAdult/:id" element={<AdultDentalChart />} />
         <Route
-          path="/patients/dentalChartAdult/:id"
-          element={<AdultDentalChart />}
-        />
-        <Route
-          path="/patients/dentalChartAdult/:patientId/update/:dentalChartId"
+          path="/dentalChartAdult/:patientId/update/:dentalChartId"
           element={<UpdateAdultDentalChart />}
         />
 
@@ -94,6 +86,10 @@ const router = createBrowserRouter(
           element={<OldProcedureScreen />}
         />
       </Route>
+      <Route
+        path="/oldProcedureDetails/:patientId/procedures/:procedureId"
+        element={<OldProcedureDetails />}
+      />
     </Route>
   )
 );

@@ -286,7 +286,7 @@ const createProcedure = asyncHandler(async (req, res) => {
   }
 });
 
-const getAllProceduresById = asyncHandler(async (req, res) => {
+const getProcedureById = asyncHandler(async (req, res) => {
   const { patientId, procedureId } = req.params;
 
   const patient = await Patient.findById(patientId);
@@ -815,7 +815,7 @@ export {
   getAllPatients,
   getPatientById,
   createProcedure,
-  getAllProceduresById,
+  getProcedureById,
   getAllPatientsProcedure,
   createCircleKids,
   updateCircleKids,

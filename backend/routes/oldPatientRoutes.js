@@ -1,4 +1,5 @@
 import express from "express";
+import { protect, admin } from "../middleware/authMiddleware.js";
 
 import {
   createPatientInfo,
@@ -10,6 +11,7 @@ import {
   getPatientById,
   getAllPatientsProcedure,
   changeProcedureStatus,
+  getProcedureById,
 } from "../controller/oldPatientController.js";
 
 const router = express.Router();
@@ -29,5 +31,10 @@ router.get("/allProcedures", getAllPatientsProcedure);
 router.put(
   "/changeStatus/:patientId/procedure/:procedureId",
   changeProcedureStatus
+);
+
+router.get(
+  "/patientProcedure/:patientId/procedures/:procedureId",
+  getProcedureById
 );
 export default router;

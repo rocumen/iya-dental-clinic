@@ -70,7 +70,7 @@ const PatientList = () => {
       const { _id } = response.data;
       toast.success("Patient Created");
       setTimeout(() => {
-        navigate(`/patients/updatePatient/${_id}`);
+        navigate(`/updatePatient/${_id}`);
       }, 500);
       refetch();
     } catch (error) {
@@ -111,7 +111,7 @@ const PatientList = () => {
   // }
 
   const updateHandler = (id) => {
-    navigate(`/patients/updatePatient/${id}`);
+    navigate(`/updatePatient/${id}`);
   };
 
   function is60DaysPassed(date) {
@@ -221,9 +221,7 @@ const PatientList = () => {
                     return (
                       <tr key={patient._id}>
                         <td className="justify-content-center align-item-center">
-                          <LinkContainer
-                            to={`/patients/onePatient/${patient._id}`}
-                          >
+                          <LinkContainer to={`/onePatient/${patient._id}`}>
                             <div className="text-center my-3">
                               <Button
                                 variant="light"
@@ -270,7 +268,7 @@ const PatientList = () => {
                               />
                             </div>
                             <LinkContainer
-                              to={`/patients/createProcedure/${patient._id}`}
+                              to={`/createProcedure/${patient._id}`}
                             >
                               <div className="mb-1">
                                 <Button variant="primary" size="sm">
@@ -284,7 +282,7 @@ const PatientList = () => {
                           <div className="d-flex md-flex-row justify-content-center align-items-center my-3 gap-2">
                             {patient?.dentalChartKids?._id ? (
                               <LinkContainer
-                                to={`/patients/dentalChartKids/${patient._id}/update/${patient?.dentalChartKids?._id}`}
+                                to={`/dentalChartKids/${patient._id}/update/${patient?.dentalChartKids?._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <FaEdit />
@@ -293,7 +291,7 @@ const PatientList = () => {
                               </LinkContainer>
                             ) : (
                               <LinkContainer
-                                to={`/patients/dentalChartKids/${patient._id}`}
+                                to={`/dentalChartKids/${patient._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <FaPlus />
@@ -303,7 +301,7 @@ const PatientList = () => {
                             )}
                             {patient?.dentalChartAdult?._id ? (
                               <LinkContainer
-                                to={`/patients/dentalChartAdult/${patient._id}/update/${patient?.dentalChartAdult?._id}`}
+                                to={`/dentalChartAdult/${patient._id}/update/${patient?.dentalChartAdult?._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <FaEdit />
@@ -312,7 +310,7 @@ const PatientList = () => {
                               </LinkContainer>
                             ) : (
                               <LinkContainer
-                                to={`/patients/dentalChartAdult/${patient._id}`}
+                                to={`/dentalChartAdult/${patient._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <FaPlus />
@@ -354,9 +352,7 @@ const PatientList = () => {
                     return (
                       <tr key={patient._id}>
                         <td className="justify-content-center align-item-center">
-                          <LinkContainer
-                            to={`/patients/onePatient/${patient._id}`}
-                          >
+                          <LinkContainer to={`/onePatient/${patient._id}`}>
                             <div className="text-center my-3">
                               <Button
                                 variant="light"
@@ -403,7 +399,7 @@ const PatientList = () => {
                               />
                             </div>
                             <LinkContainer
-                              to={`/patients/createProcedure/${patient._id}`}
+                              to={`/createProcedure/${patient._id}`}
                             >
                               <div className="mb-1">
                                 <Button variant="primary" size="sm">
@@ -417,7 +413,7 @@ const PatientList = () => {
                           <div className="d-flex md-flex-row justify-content-center align-items-center my-3 gap-2">
                             {patient?.dentalChartKids?._id ? (
                               <LinkContainer
-                                to={`/patients/dentalChartKids/${patient._id}/update/${patient?.dentalChartKids?._id}`}
+                                to={`/dentalChartKids/${patient._id}/update/${patient?.dentalChartKids?._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <FaEdit />
@@ -426,7 +422,7 @@ const PatientList = () => {
                               </LinkContainer>
                             ) : (
                               <LinkContainer
-                                to={`/patients/dentalChartKids/${patient._id}`}
+                                to={`/dentalChartKids/${patient._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <FaPlus />
@@ -436,7 +432,7 @@ const PatientList = () => {
                             )}
                             {patient?.dentalChartAdult?._id ? (
                               <LinkContainer
-                                to={`/patients/dentalChartAdult/${patient._id}/update/${patient?.dentalChartAdult?._id}`}
+                                to={`/dentalChartAdult/${patient._id}/update/${patient?.dentalChartAdult?._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <FaEdit />
@@ -445,7 +441,7 @@ const PatientList = () => {
                               </LinkContainer>
                             ) : (
                               <LinkContainer
-                                to={`/patients/dentalChartAdult/${patient._id}`}
+                                to={`/dentalChartAdult/${patient._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <FaPlus />

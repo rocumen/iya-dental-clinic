@@ -444,7 +444,6 @@ const ProcedureScreen = () => {
   }, [procedureType]);
   */
 
-  console.log(JSON.stringify(antibiotic));
   return (
     <>
       <Row>

@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {
-  useChangeProcedureStatusMutation,
-  useGetAllProceduresQuery,
-} from "../slices/patientsApiSlice.js";
 
 const ProcedureListModal = ({
   patient,
@@ -22,23 +18,6 @@ const ProcedureListModal = ({
     setModalIsOpen(false);
   };
 
-  // const [changeProcedureStatus, { isLoading }] =
-  //   useChangeProcedureStatusMutation();
-
-  // const handleStatusUpdate = async (procedureId) => {
-  //   const patientId = patient._id;
-  //   try {
-  //     await changeProcedureStatus({
-  //       patientId,
-  //       procedureId,
-  //     });
-  //     refetch();
-  //     incomingAppointmentsRefetch();
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //   }
-  // };
   const [loadingStates, setLoadingStates] = useState({});
 
   const handleStatusUpdate = async (procedureId) => {
@@ -144,11 +123,24 @@ const ProcedureListModal = ({
                     </Button>
                   </td>
                   <td className="text-center">
-                    <Link
-                      to={`/patients/procedureDetails/${patient._id}/procedures/${procedure._id}`}
-                    >
-                      <Button size="sm">View</Button>
-                    </Link>
+                    {procedure?.collection === "New" ||
+                    procedure?.collection === "" ? (
+                      <>
+                        <Link
+                          to={`/procedureDetails/${patient._id}/procedures/${procedure._id}`}
+                        >
+                          <Button size="sm">View</Button>
+                        </Link>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          to={`/oldProcedureDetails/${patient._id}/procedures/${procedure._id}`}
+                        >
+                          <Button size="sm">View</Button>
+                        </Link>
+                      </>
+                    )}
                   </td>
                 </tr>
               ))}

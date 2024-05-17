@@ -170,7 +170,7 @@ export const patientsApiSlice = apiSlice.injectEndpoints({
         params: { pageNumber, keyword },
       }),
       keepUnusedDataFor: 5,
-      providesTags: ["Patients"],
+      providesTags: ["OldPatients"],
     }),
     getOldPatientById: builder.query({
       query: (patientId) => ({
@@ -184,7 +184,7 @@ export const patientsApiSlice = apiSlice.injectEndpoints({
         params: { pageNumber, keyword },
       }),
       keepUnusedDataFor: 5,
-      providesTags: ["Patients"],
+      providesTags: ["OldPatients"],
     }),
     deleteOldPatient: builder.mutation({
       query: ({ patientId }) => ({
@@ -198,7 +198,7 @@ export const patientsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Patient"],
+      invalidatesTags: ["OldPatient"],
     }),
     createOldProcedure: builder.mutation({
       query: (data) => ({
@@ -206,14 +206,14 @@ export const patientsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Patient"],
+      invalidatesTags: ["OldPatient"],
     }),
     getAllOldProcedures: builder.query({
       query: () => ({
         url: `${OLD_PATIENTS_URL}/allProcedures`,
       }),
       keepUnusedDataFor: 5,
-      providesTags: ["Patients"],
+      providesTags: ["OldPatients"],
     }),
     changeOldProcedureStatus: builder.mutation({
       query: (data) => ({
@@ -221,6 +221,13 @@ export const patientsApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: data,
       }),
+    }),
+    getOldProcedure: builder.query({
+      query: ({ patientId, procedureId }) => ({
+        url: `${OLD_PATIENTS_URL}/patientProcedure/${patientId}/procedures/${procedureId}`,
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ["OldPatient"],
     }),
   }),
 });
@@ -257,4 +264,5 @@ export const {
   useGetOldPatientByIdQuery,
   useGetAllOldProceduresQuery,
   useChangeOldProcedureStatusMutation,
+  useGetOldProcedureQuery,
 } = patientsApiSlice;

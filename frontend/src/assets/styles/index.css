@@ -2,17 +2,24 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: "Poppins", sans-serif;
+}
+
 main {
   min-height: 80vh;
   color: black;
+  font-family: "Poppins", sans-serif;
 }
 
 table th {
   text-align: center;
+  font-family: "Poppins", sans-serif;
 }
 
 table td {
   text-align: left;
+  font-family: "Poppins", sans-serif;
 }
 
 .carousel-caption {
