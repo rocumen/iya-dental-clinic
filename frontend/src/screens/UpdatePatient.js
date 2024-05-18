@@ -275,7 +275,7 @@ const CreatePatient = () => {
       setIsSaving(false);
       toast.success("Patient Updated");
       refetch();
-      navigate(`/patients/onePatient/${patientId}`);
+      navigate(`/onePatient/${patientId}`);
     } catch (error) {
       toast.error(error?.data?.message || error.error);
     }

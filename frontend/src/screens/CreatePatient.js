@@ -119,7 +119,7 @@ const CreatePatient = () => {
       toast.success("Patient Created");
 
       setTimeout(() => {
-        navigate(`/patients/updatePatient/${_id}`);
+        navigate(`/updatePatient/${_id}`);
       }, 2000);
       refetch();
     } catch (error) {

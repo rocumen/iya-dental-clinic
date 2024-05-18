@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 const HomeScreen = () => {
   const navigate = useNavigate();
   const handleNavigateToPatientList = () => {
-    navigate("/patients/patientList");
+    navigate("/");
   };
   const handleNavigateToArchived = () => {
-    navigate("/patients/archived");
+    navigate("/archived");
   };
 
   return (

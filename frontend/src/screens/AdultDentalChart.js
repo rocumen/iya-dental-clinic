@@ -282,9 +282,7 @@ const AdultDentalChart = () => {
 
       const { _id, dentalChartAdult } = response.data;
       toast.success("Chart Saved");
-      navigate(
-        `/patients/dentalChartAdult/${_id}/update/${dentalChartAdult?._id}`
-      );
+      navigate(`/dentalChartAdult/${_id}/update/${dentalChartAdult?._id}`);
     } catch (error) {
       console.log(error);
     }

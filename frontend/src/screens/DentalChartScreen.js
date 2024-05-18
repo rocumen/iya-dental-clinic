@@ -228,9 +228,7 @@ const DentalChartScreen = () => {
       const { _id, dentalChartKids } = response.data;
 
       toast.success("Chart Saved");
-      navigate(
-        `/patients/dentalChartKids/${_id}/update/${dentalChartKids?._id}`
-      );
+      navigate(`/dentalChartKids/${_id}/update/${dentalChartKids?._id}`);
     } catch (error) {
       console.log(error);
     }
