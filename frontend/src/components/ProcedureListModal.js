@@ -8,7 +8,32 @@ const ProcedureListModal = ({
   changeProcedureStatus,
   incomingAppointmentsRefetch,
 }) => {
+  const sortedProcedures = patient.procedure.slice().sort((a, b) => {
+    if (a.nextAppointment && b.nextAppointment) {
+      return new Date(b.nextAppointment) - new Date(a.nextAppointment);
+    } else {
+      return 0;
+    }
+  });
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(
+    Math.ceil(sortedProcedures.length / itemsPerPage)
+  );
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(sortedProcedures.length / itemsPerPage));
+  }, [sortedProcedures, itemsPerPage]);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -53,18 +78,36 @@ const ProcedureListModal = ({
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
-  const sortedProcedures = patient.procedure.slice().sort((a, b) => {
-    if (a.nextAppointment && b.nextAppointment) {
-      return new Date(b.nextAppointment) - new Date(a.nextAppointment);
-    } else {
-      return 0;
-    }
-  });
+  const handleOpenModal = () => {
+    setModalIsOpen(true);
+    setTotalPages(Math.ceil(sortedProcedures.length / itemsPerPage));
+  };
+
+  const renderPagination = () => (
+    <ul className="pagination d-flex justify-content-center">
+      {pageNumbers.map((number) => (
+        <li key={number} className={`page-item`}>
+          <button
+            onClick={() => paginate(number)}
+            className={`page-link ${
+              currentPage === number ? "bg-dark text-light" : "bg-light"
+            }`}
+          >
+            {number}
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+  const displayData = sortedProcedures.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <div>
       <div>
-        <Button variant="primary" className="btn-sm" onClick={openModal}>
+        <Button variant="primary" className="btn-sm" onClick={handleOpenModal}>
           History
         </Button>
       </div>
@@ -81,12 +124,12 @@ const ProcedureListModal = ({
                 <th>PROCEDURE TYPE</th>
                 <th>ATTENDING DENTIST</th>
                 {/* <th className="d-none d-sm-table-cell">NEXT APPOINTMENT</th> */}
-                <th>STATUS</th>
+                <th className="d-none d-sm-table-cell">STATUS</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {sortedProcedures?.map((procedure, index) => (
+              {displayData?.map((procedure, index) => (
                 <tr key={index}>
                   <td className="text-center">
                     {procedure.procedureDate
@@ -106,7 +149,7 @@ const ProcedureListModal = ({
                       : "-"}
                   </td> */}
 
-                  <td className="text-center">
+                  <td className="text-center d-none d-sm-table-cell">
                     <Button
                       size="sm"
                       style={{
@@ -146,6 +189,7 @@ const ProcedureListModal = ({
               ))}
             </tbody>
           </Table>
+          {totalPages > 1 && renderPagination()}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={closeModal}>

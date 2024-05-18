@@ -1,10 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Modal, Row, Col, Button, Table, Form } from "react-bootstrap";
-import {
-  useGetAllProceduresQuery,
-  useChangeProcedureStatusMutation,
-  useGetAllPatientsQuery,
-} from "../slices/patientsApiSlice.js";
+import React, { useState } from "react";
+import { Modal, Button, Table, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 const IncomingAppointments = ({
@@ -14,17 +9,6 @@ const IncomingAppointments = ({
   changeProcedureStatus,
 }) => {
   const { pageNumber, keyword } = useParams();
-
-  const { refetch, isFetched } = useGetAllPatientsQuery({
-    pageNumber,
-    keyword,
-  });
-
-  useEffect(() => {
-    if (isFetched) {
-      refetch();
-    }
-  }, [isFetched, refetch]);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
@@ -43,12 +27,6 @@ const IncomingAppointments = ({
         : data?.length / itemsPerPage
     )
   );
-
-  // const totalPages = Math.ceil(
-  //   filteredData?.length
-  //     ? filteredData?.length / itemsPerPage
-  //     : data?.length / itemsPerPage
-  // );
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -73,7 +51,6 @@ const IncomingAppointments = ({
       });
 
       await incomingAppointmentsRefetch();
-      await refetch();
     } catch (error) {
       console.log(error);
     } finally {

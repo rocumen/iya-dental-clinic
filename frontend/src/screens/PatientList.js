@@ -210,7 +210,7 @@ const PatientList = () => {
                 <th className="col-2 d-none d-sm-table-cell">LAST VISIT</th>
                 <th className="col-2">PROCEDURE HISTORY</th>
                 <th className="col-2"></th>
-                <th className="col-1"></th>
+                <th className="col-1 d-none d-sm-table-cell"></th>
               </tr>
             </thead>
             <tbody>
@@ -320,8 +320,8 @@ const PatientList = () => {
                             )}
                           </div>
                         </td>
-                        <td>
-                          <div className="d-flex md-flex-row justify-content-center align-items-center my-3 gap-2">
+                        <td className="d-none d-sm-table-cell">
+                          <div className="d-flex md-flex-row justify-content-center align-items-center my-3 gap-2 ">
                             {canEdit && (
                               <Button
                                 size="sm"
@@ -335,6 +335,7 @@ const PatientList = () => {
                                 variant="danger"
                                 size="sm"
                                 onClick={() => deleteHandler(patient?._id)}
+                                className="text-white"
                               >
                                 Delete
                               </Button>
@@ -451,8 +452,8 @@ const PatientList = () => {
                             )}
                           </div>
                         </td>
-                        <td>
-                          <div className="d-flex md-flex-row justify-content-center align-items-center my-3 gap-2">
+                        <td className="d-none d-sm-table-cell">
+                          <div className="d-flex md-flex-row justify-content-center align-items-center my-3 gap-2 ">
                             {canEdit && (
                               <Button
                                 size="sm"
@@ -466,6 +467,7 @@ const PatientList = () => {
                                 variant="danger"
                                 size="sm"
                                 onClick={() => deleteHandler(patient?._id)}
+                                className="text-white"
                               >
                                 Delete
                               </Button>
