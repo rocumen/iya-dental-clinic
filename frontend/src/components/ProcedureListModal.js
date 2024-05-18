@@ -8,68 +8,52 @@ const ProcedureListModal = ({
   changeProcedureStatus,
   incomingAppointmentsRefetch,
 }) => {
-  const sortedProcedures = patient.procedure.slice().sort((a, b) => {
-    if (a.nextAppointment && b.nextAppointment) {
-      return new Date(b.nextAppointment) - new Date(a.nextAppointment);
-    } else {
-      return 0;
-    }
-  });
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(
-    Math.ceil(sortedProcedures.length / itemsPerPage)
-  );
-
-  useEffect(() => {
-    setTotalPages(Math.ceil(sortedProcedures.length / itemsPerPage));
-  }, [sortedProcedures, itemsPerPage]);
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
-
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
-
+  const [totalPages, setTotalPages] = useState(1);
+  const [sortOrder, setSortOrder] = useState("desc");
+  const [sortedProcedures, setSortedProcedures] = useState([]);
   const [loadingStates, setLoadingStates] = useState({});
 
+  const sortProcedures = (procedures, order) => {
+    return procedures.slice().sort((a, b) => {
+      const dateA = a.procedureDate ? new Date(a.procedureDate) : null;
+      const dateB = b.procedureDate ? new Date(b.procedureDate) : null;
+      if (dateA && dateB) {
+        return order === "asc" ? dateA - dateB : dateB - dateA;
+      } else if (dateA) {
+        return -1;
+      } else if (dateB) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  };
+
+  useEffect(() => {
+    const sorted = sortProcedures(patient.procedure, sortOrder);
+    setSortedProcedures(sorted);
+    setTotalPages(Math.ceil(sorted.length / itemsPerPage));
+    setCurrentPage(1); // Reset to first page on sort order change
+  }, [patient.procedure, sortOrder, itemsPerPage]);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const openModal = () => setModalIsOpen(true);
+  const closeModal = () => setModalIsOpen(false);
+
   const handleStatusUpdate = async (procedureId) => {
-    // Set loading state for the clicked procedure to true
-    setLoadingStates((prevLoadingStates) => ({
-      ...prevLoadingStates,
-      [procedureId]: true,
-    }));
-
+    setLoadingStates((prev) => ({ ...prev, [procedureId]: true }));
     try {
-      // Perform the status update
-      await changeProcedureStatus({
-        patientId: patient._id,
-        procedureId,
-      });
-
-      // Optionally, you can refetch data here if needed
+      await changeProcedureStatus({ patientId: patient._id, procedureId });
       await refetch();
       await incomingAppointmentsRefetch();
     } catch (error) {
       console.error("Error updating procedure status:", error);
     } finally {
-      // Set loading state for the clicked procedure back to false after update
-      setLoadingStates((prevLoadingStates) => ({
-        ...prevLoadingStates,
-        [procedureId]: false,
-      }));
+      setLoadingStates((prev) => ({ ...prev, [procedureId]: false }));
     }
   };
 
@@ -78,14 +62,18 @@ const ProcedureListModal = ({
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
-  const handleOpenModal = () => {
-    setModalIsOpen(true);
-    setTotalPages(Math.ceil(sortedProcedures.length / itemsPerPage));
+  const toggleSortOrder = () => {
+    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   };
+
+  const displayData = sortedProcedures.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const renderPagination = () => (
     <ul className="pagination d-flex justify-content-center">
-      {pageNumbers.map((number) => (
+      {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
         <li key={number} className={`page-item`}>
           <button
             onClick={() => paginate(number)}
@@ -99,37 +87,39 @@ const ProcedureListModal = ({
       ))}
     </ul>
   );
-  const displayData = sortedProcedures.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
 
   return (
     <div>
-      <div>
-        <Button variant="primary" className="btn-sm" onClick={handleOpenModal}>
-          History
-        </Button>
-      </div>
+      <Button variant="primary" className="btn-sm" onClick={openModal}>
+        History
+      </Button>
 
       <Modal centered show={modalIsOpen} onHide={closeModal} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Procedure History</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <div className="d-flex justify-content-end mb-3">
+            <Button
+              variant="secondary"
+              onClick={toggleSortOrder}
+              size="sm text-white"
+            >
+              Sort by Date {sortOrder === "asc" ? "▲" : "▼"}
+            </Button>
+          </div>
           <Table striped bordered hover responsive className="table-sm">
             <thead>
               <tr>
                 <th>DATE</th>
                 <th>PROCEDURE TYPE</th>
                 <th>ATTENDING DENTIST</th>
-                {/* <th className="d-none d-sm-table-cell">NEXT APPOINTMENT</th> */}
                 <th className="d-none d-sm-table-cell">STATUS</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {displayData?.map((procedure, index) => (
+              {displayData.map((procedure, index) => (
                 <tr key={index}>
                   <td className="text-center">
                     {procedure.procedureDate
@@ -142,13 +132,6 @@ const ProcedureListModal = ({
                   <td className="text-center">
                     {procedure.dentists ? procedure.dentists : "-"}
                   </td>
-
-                  {/* <td className="text-center d-none d-sm-table-cell">
-                    {procedure.nextAppointment
-                      ? formatDate(procedure.nextAppointment)
-                      : "-"}
-                  </td> */}
-
                   <td className="text-center d-none d-sm-table-cell">
                     <Button
                       size="sm"
@@ -168,21 +151,17 @@ const ProcedureListModal = ({
                   <td className="text-center">
                     {procedure?.collection === "New" ||
                     procedure?.collection === "" ? (
-                      <>
-                        <Link
-                          to={`/procedureDetails/${patient._id}/procedures/${procedure._id}`}
-                        >
-                          <Button size="sm">View</Button>
-                        </Link>
-                      </>
+                      <Link
+                        to={`/procedureDetails/${patient._id}/procedures/${procedure._id}`}
+                      >
+                        <Button size="sm">View</Button>
+                      </Link>
                     ) : (
-                      <>
-                        <Link
-                          to={`/oldProcedureDetails/${patient._id}/procedures/${procedure._id}`}
-                        >
-                          <Button size="sm">View</Button>
-                        </Link>
-                      </>
+                      <Link
+                        to={`/oldProcedureDetails/${patient._id}/procedures/${procedure._id}`}
+                      >
+                        <Button size="sm">View</Button>
+                      </Link>
                     )}
                   </td>
                 </tr>
