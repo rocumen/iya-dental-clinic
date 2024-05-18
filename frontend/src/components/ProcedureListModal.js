@@ -144,7 +144,12 @@ const ProcedureListModal = ({
                 </Dropdown.Item>
               ))}
             </DropdownButton>
-            <Button variant="secondary" size="sm" onClick={toggleSortOrder}>
+            <Button
+              className="text-white"
+              variant="secondary"
+              size="sm"
+              onClick={toggleSortOrder}
+            >
               Sort by Date {sortOrder === "asc" ? "▲" : "▼"}
             </Button>
           </div>
