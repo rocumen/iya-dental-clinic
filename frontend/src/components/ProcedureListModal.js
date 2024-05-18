@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, Table } from "react-bootstrap";
+import {
+  Modal,
+  Button,
+  Table,
+  Dropdown,
+  DropdownButton,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const ProcedureListModal = ({
@@ -15,6 +21,24 @@ const ProcedureListModal = ({
   const [sortOrder, setSortOrder] = useState("desc");
   const [sortedProcedures, setSortedProcedures] = useState([]);
   const [loadingStates, setLoadingStates] = useState({});
+  const [selectedProcedureType, setSelectedProcedureType] = useState(null);
+
+  const procedureOptions = [
+    "CONSULTATION",
+    "RESTORATION",
+    "PITS AND FISSURE SEALANTS",
+    "TOOTH EXTRACTION",
+    "ORAL PROPHYLAXIS",
+    "ROOT CANAL TREATMENT",
+    "ORAL SURGERY",
+    "TEETH WHITENING",
+    "PROSTODONTIC TREATMENT",
+    "ORTHODONTICS",
+    "COSMETIC DENTISTRY",
+    "TMJD TREATMENT",
+    "PERIODONTICS",
+    "DENTAL IMPLANT",
+  ];
 
   const sortProcedures = (procedures, order) => {
     return procedures.slice().sort((a, b) => {
@@ -66,10 +90,17 @@ const ProcedureListModal = ({
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   };
 
-  const displayData = sortedProcedures.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const handleFilterChange = (type) => {
+    setSelectedProcedureType(type);
+  };
+
+  const displayData = sortedProcedures
+    .filter((procedure) =>
+      selectedProcedureType
+        ? procedure.procedureType === selectedProcedureType
+        : true
+    )
+    .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const renderPagination = () => (
     <ul className="pagination d-flex justify-content-center">
@@ -99,12 +130,21 @@ const ProcedureListModal = ({
           <Modal.Title>Procedure History</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="d-flex justify-content-end mb-3">
-            <Button
-              variant="secondary"
-              onClick={toggleSortOrder}
-              size="sm text-white"
+          <div className="d-flex gap-3 justify-content-end mb-3">
+            <DropdownButton
+              id="dropdown-basic-button"
+              title={selectedProcedureType || "Filter by Procedure Type"}
+              onSelect={handleFilterChange}
+              size="sm"
             >
+              <Dropdown.Item eventKey={null}>All</Dropdown.Item>
+              {procedureOptions.map((type) => (
+                <Dropdown.Item key={type} eventKey={type}>
+                  {type}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
+            <Button variant="secondary" size="sm" onClick={toggleSortOrder}>
               Sort by Date {sortOrder === "asc" ? "▲" : "▼"}
             </Button>
           </div>
