@@ -147,7 +147,10 @@ export const updatePatient = asyncHandler(async (req, res) => {
     consentDate,
     //
     signatureImage,
+    patientImage,
   } = req.body;
+
+  console.log(patientImage);
 
   const patient = await OldPatient.findById(req.params.id);
 
@@ -203,7 +206,6 @@ export const updatePatient = asyncHandler(async (req, res) => {
         resource_type: "image",
       });
     }
-
     patient.dentistSignature = dentistSignature;
 
     patient.consentDate = consentDate;
@@ -216,6 +218,15 @@ export const updatePatient = asyncHandler(async (req, res) => {
       });
     }
     patient.signatureImage = signatureImage;
+
+    if (patient.patientImage) {
+      cloudinary.api.delete_resources([patient.patientImage.id], {
+        type: "upload",
+        resource_type: "image",
+      });
+    }
+
+    patient.patientImage = patientImage;
 
     const updatedPatient = await patient.save();
     res.json(updatedPatient);

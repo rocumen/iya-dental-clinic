@@ -85,6 +85,13 @@ export const patientsApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    uploadPatientImage: builder.mutation({
+      query: (data) => ({
+        url: `${UPLOAD_URL}/patientImage`,
+        method: "POST",
+        body: data,
+      }),
+    }),
     getProcedure: builder.query({
       query: ({ patientId, procedureId }) => ({
         url: `${PATIENTS_URL}/patientProcedure/${patientId}/procedures/${procedureId}`,
@@ -200,6 +207,14 @@ export const patientsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["OldPatient"],
     }),
+    updateOldPatient: builder.mutation({
+      query: (data) => ({
+        url: `${OLD_PATIENTS_URL}/updatePatient/${data.patientId}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["OldPatient"],
+    }),
     createOldProcedure: builder.mutation({
       query: (data) => ({
         url: `${OLD_PATIENTS_URL}/createProcedure/${data.patientId}`,
@@ -244,6 +259,8 @@ export const {
   useCreateProcedureMutation,
   useGetProcedureQuery,
   useUploadRxMutation,
+  //
+  useUploadPatientImageMutation,
   useUploadProcedureSignatureMutation,
   useCreateDentalChartKidsMutation,
   useGetAllProceduresQuery,
@@ -265,4 +282,5 @@ export const {
   useGetAllOldProceduresQuery,
   useChangeOldProcedureStatusMutation,
   useGetOldProcedureQuery,
+  useUpdateOldPatientMutation,
 } = patientsApiSlice;

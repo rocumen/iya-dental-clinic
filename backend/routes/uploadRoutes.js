@@ -8,6 +8,7 @@ import {
   dataPrivacySignature,
   rx,
   procedureSignature,
+  patientImage,
 } from "../controller/uploadController.js";
 
 const router = express.Router();
@@ -54,6 +55,10 @@ router.post(
 // IMAGE UPLOAD FOR RX
 // @ /upload/rx
 router.post("/rx", upload.array("rx", 10), rx);
+
+// IMAGE UPLOAD FOR PATIENT IMAGE
+// @ /upload/patientImage
+router.post("/patientImage", upload.array("patientImage", 10), patientImage);
 
 // PROCEDURE SIGNATURE
 // @ /upload/procedureSignature

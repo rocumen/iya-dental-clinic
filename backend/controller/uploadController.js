@@ -186,6 +186,39 @@ const rx = async (req, res) => {
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
+
+const patientImage = asyncHandler(async (req, res) => {
+  try {
+    const files = req.files;
+
+    if (!files || files.length === 0) {
+      return res.status(400).send({ message: "No files Chosen" });
+    }
+
+    const patientImages = [];
+
+    for (const file of files) {
+      const image = await cloudinary.v2.uploader.upload(file.path, {
+        resource_type: "image",
+      });
+
+      const patientImage = {
+        url: image.url,
+        id: image.public_id,
+      };
+
+      patientImages.push(patientImage);
+    }
+
+    res.status(200).send({
+      message: "upload successfully!",
+      patientImages: patientImages,
+    });
+  } catch (error) {
+    console.error("Error", error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
 /*
 const rx = async (req, res) => {
   try {
@@ -282,4 +315,5 @@ export {
   dataPrivacySignature,
   rx,
   procedureSignature,
+  patientImage,
 };

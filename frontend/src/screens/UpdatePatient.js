@@ -33,7 +33,7 @@ import InformedConsentAgreement from "../components/InformedConsentAgreement.js"
 import DentistSignature from "../components/DentistSignature.js";
 import InformedConsent from "../components/InformedConsent.js";
 
-const CreatePatient = () => {
+const UpdatePatient = () => {
   const { id: patientId } = useParams();
   const navigate = useNavigate();
 
@@ -488,4 +488,4 @@ const CreatePatient = () => {
   );
 };
 
-export default CreatePatient;
+export default UpdatePatient;

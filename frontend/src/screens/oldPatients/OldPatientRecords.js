@@ -41,6 +41,8 @@ const OldPatientRecords = () => {
     keyword,
   });
 
+  console.log(data);
+
   const { data: sortedByLastName } = useSortAllOldPatientsByLastNameQuery({
     pageNumber,
     keyword,
@@ -72,7 +74,7 @@ const OldPatientRecords = () => {
       const { _id } = response.data;
       toast.success("Patient Created");
       setTimeout(() => {
-        navigate(`/patients/updatePatient/${_id}`);
+        navigate(`/updateOldPatient/${_id}`);
       }, 500);
       refetch();
     } catch (error) {
@@ -113,7 +115,7 @@ const OldPatientRecords = () => {
   // }
 
   const updateHandler = (id) => {
-    navigate(`/patients/updatePatient/${id}`);
+    navigate(`/updateOldPatient/${id}`);
   };
 
   function is60DaysPassed(date) {

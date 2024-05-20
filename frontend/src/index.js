@@ -41,6 +41,7 @@ import ResetPasswordScreen from "./screens/ResetPasswordScreen.js";
 import OldPatientRecords from "./screens/oldPatients/OldPatientRecords.js";
 import OldProcedureScreen from "./screens/oldPatients/OldProcedureScreen.js";
 import OldProcedureDetails from "./screens/oldPatients/OldProcedureDetails.js";
+import UpdateOldPatient from "./screens/oldPatients/UpdateOldPatient.js";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -80,6 +81,7 @@ const router = createBrowserRouter(
         />
 
         {/* Old Records */}
+        <Route path="/updateOldPatient/:id" element={<UpdateOldPatient />} />
         <Route path="/oldRecords" element={<OldPatientRecords />} />
         <Route
           path="/createOldProcedure/:id"

@@ -861,6 +861,17 @@ const oldPatientSchema = new mongoose.Schema(
       type: Date,
     },
 
+    patientImage: [
+      {
+        url: {
+          type: String,
+        },
+        id: {
+          type: String,
+        },
+      },
+    ],
+
     forMinors: [parentGuardianSchema],
 
     dentalHistory: [dentalHistorySchema],
