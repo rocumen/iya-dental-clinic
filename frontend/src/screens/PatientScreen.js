@@ -54,7 +54,7 @@ const PatientScreen = () => {
         <Button
           onClick={navigateHandler}
           variant="dark"
-          className="text-light my-2"
+          className="text-light my-3"
           size="md"
         >
           <FaArrowLeft /> Go Back
@@ -416,7 +416,7 @@ const PatientScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {medicalHistory?.map((allergyObj, index) => (
+              {/* {medicalHistory?.map((allergyObj, index) => (
                 <React.Fragment key={index}>
                   {allergyObj &&
                   (allergyObj.allergies || allergyObj.otherAllergies) ? (
@@ -449,6 +449,56 @@ const PatientScreen = () => {
                   ) : (
                     <tr key={index}>
                       <td className="text-center">Patient has No Allergies</td>
+                    </tr>
+                  )}
+                </React.Fragment>
+              ))} */}
+              {medicalHistory?.map((allergyObj, index) => (
+                <React.Fragment key={index}>
+                  {allergyObj ? (
+                    (allergyObj.allergies && allergyObj.allergies.length > 0) ||
+                    (allergyObj.otherAllergies &&
+                      allergyObj.otherAllergies.length > 0) ? (
+                      <>
+                        {allergyObj.allergies &&
+                          allergyObj.allergies.length > 0 && (
+                            <>
+                              {allergyObj.allergies.map((allergy, subIndex) => (
+                                <tr key={`allergy-${subIndex}`}>
+                                  <td className="text-center col-6">
+                                    {allergy}
+                                  </td>
+                                </tr>
+                              ))}
+                            </>
+                          )}
+                        {allergyObj.otherAllergies &&
+                          allergyObj.otherAllergies.length > 0 && (
+                            <>
+                              {allergyObj.otherAllergies.map(
+                                (otherAllergy, subIndex) => (
+                                  <tr key={`otherAllergy-${subIndex}`}>
+                                    <td className="text-center col-6">
+                                      {otherAllergy}
+                                    </td>
+                                  </tr>
+                                )
+                              )}
+                            </>
+                          )}
+                      </>
+                    ) : (
+                      <tr key={`no-allergies-${index}`}>
+                        <td className="text-center col-6">
+                          Patient has No Allergies
+                        </td>
+                      </tr>
+                    )
+                  ) : (
+                    <tr key={`no-data-${index}`}>
+                      <td className="text-center col-6">
+                        No Medical History Data Available
+                      </td>
                     </tr>
                   )}
                 </React.Fragment>

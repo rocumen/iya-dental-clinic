@@ -125,7 +125,7 @@ const ProcedureListModal = ({
         History
       </Button>
 
-      <Modal centered show={modalIsOpen} onHide={closeModal} size="lg">
+      <Modal show={modalIsOpen} onHide={closeModal} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Procedure History</Modal.Title>
         </Modal.Header>

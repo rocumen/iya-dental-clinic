@@ -126,8 +126,8 @@ const UpdateOldPatient = () => {
       return;
     }
 
-    if (files.length > 3) {
-      toast.error("You can only upload 3 Images per Procedure");
+    if (files.length > 5) {
+      toast.error("You can only upload 5 Images");
       return;
     }
 
@@ -238,7 +238,7 @@ const UpdateOldPatient = () => {
       <Row className="justify-content-start my-2">
         {/* Image Upload */}
         <Col md={3}>
-          <p className="text-danger">Maximum of 3 Images</p>
+          <p className="text-danger">Maximum of 5 Images</p>
           <Form.Group>
             <Form.Control
               id="fileInput"

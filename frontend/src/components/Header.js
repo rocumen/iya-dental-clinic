@@ -52,6 +52,7 @@ const Header = () => {
                     <LinkContainer to={"/oldRecords"}>
                       <NavDropdown.Item>Old Records</NavDropdown.Item>
                     </LinkContainer>
+
                     <LinkContainer to={`/changePassword/${userInfo._id}`}>
                       <NavDropdown.Item>Change Password</NavDropdown.Item>
                     </LinkContainer>
