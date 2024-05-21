@@ -208,13 +208,13 @@ const OldPatientRecords = () => {
           <Table striped bordered hover responsive className="table-sm">
             <thead>
               <tr>
-                <th className="col-1"></th>
-                <th className="col-2">NAME</th>
-                <th className="col-2 d-none d-sm-table-cell">PROCEDURE DONE</th>
-                <th className="col-2 d-none d-sm-table-cell">LAST VISIT</th>
-                <th className="col-2">PROCEDURE HISTORY</th>
-                <th className="col-2"></th>
-                <th className="col-1"></th>
+                <th className=""></th>
+                <th className="">NAME</th>
+                <th className="d-none d-sm-table-cell">PROCEDURE DONE</th>
+                <th className="d-none d-sm-table-cell">LAST VISIT</th>
+                <th className="">PROCEDURE HISTORY</th>
+                <th className="">CHART</th>
+                <th className="d-none d-sm-table-cell"></th>
               </tr>
             </thead>
             <tbody>
@@ -260,7 +260,7 @@ const OldPatientRecords = () => {
                           </div>
                         </td>
                         <td>
-                          <div className="d-block d-sm-flex flex-lg-row flex-md-column flex-sm-column justify-content-center align-items-center my-3 gap-2 text-center">
+                          <div className="d-block d-lg-flex my-3 justify-content-center gap-2 text-center mx-0">
                             <div className="mb-1">
                               <ProcedureListModal
                                 patient={patient}
@@ -283,14 +283,14 @@ const OldPatientRecords = () => {
                           </div>
                         </td>
                         <td className="text-center">
-                          <div className="d-flex md-flex-row justify-content-center align-items-center my-3 gap-2">
+                          <div className="d-flex flex-column flex-lg-row justify-content-center align-items-center my-3 gap-2">
                             {patient?.dentalChartKids?._id ? (
                               <LinkContainer
                                 to={`/dentalChartKids/${patient._id}/update/${patient?.dentalChartKids?._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <FaEdit />
-                                  Child Chart
+                                  Child
                                 </Button>
                               </LinkContainer>
                             ) : (
@@ -298,8 +298,8 @@ const OldPatientRecords = () => {
                                 to={`/dentalChartKids/${patient._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaPlus />
-                                  Child Chart
+                                  <strong>+</strong>
+                                  Child
                                 </Button>
                               </LinkContainer>
                             )}
@@ -309,7 +309,7 @@ const OldPatientRecords = () => {
                               >
                                 <Button size="sm" variant="primary">
                                   <FaEdit />
-                                  Adult Chart
+                                  Adult
                                 </Button>
                               </LinkContainer>
                             ) : (
@@ -317,14 +317,14 @@ const OldPatientRecords = () => {
                                 to={`/dentalChartAdult/${patient._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaPlus />
-                                  Adult Chart
+                                  <strong>+</strong>
+                                  Adult
                                 </Button>
                               </LinkContainer>
                             )}
                           </div>
                         </td>
-                        <td>
+                        <td className="d-none d-sm-table-cell">
                           <div className="d-flex md-flex-row justify-content-center align-items-center my-3 gap-2">
                             {canEdit && (
                               <Button
@@ -391,7 +391,7 @@ const OldPatientRecords = () => {
                           </div>
                         </td>
                         <td>
-                          <div className="d-block d-sm-flex flex-lg-row flex-md-column flex-sm-column justify-content-center align-items-center my-3 gap-2 text-center">
+                          <div className="d-block d-lg-flex my-3 justify-content-center gap-2 text-center">
                             <div className="mb-1">
                               <ProcedureListModal
                                 patient={patient}
@@ -403,7 +403,7 @@ const OldPatientRecords = () => {
                               />
                             </div>
                             <LinkContainer
-                              to={`/createProcedure/${patient._id}`}
+                              to={`/createOldProcedure/${patient._id}`}
                             >
                               <div className="mb-1">
                                 <Button variant="primary" size="sm">
@@ -414,14 +414,14 @@ const OldPatientRecords = () => {
                           </div>
                         </td>
                         <td className="text-center">
-                          <div className="d-flex md-flex-row justify-content-center align-items-center my-3 gap-2">
+                          <div className="d-flex flex-column flex-lg-row justify-content-center align-items-center my-3 gap-2">
                             {patient?.dentalChartKids?._id ? (
                               <LinkContainer
                                 to={`/dentalChartKids/${patient._id}/update/${patient?.dentalChartKids?._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <FaEdit />
-                                  Child Chart
+                                  Child
                                 </Button>
                               </LinkContainer>
                             ) : (
@@ -429,8 +429,8 @@ const OldPatientRecords = () => {
                                 to={`/dentalChartKids/${patient._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaPlus />
-                                  Child Chart
+                                  <strong>+</strong>
+                                  Child
                                 </Button>
                               </LinkContainer>
                             )}
@@ -440,7 +440,7 @@ const OldPatientRecords = () => {
                               >
                                 <Button size="sm" variant="primary">
                                   <FaEdit />
-                                  Adult Chart
+                                  Adult
                                 </Button>
                               </LinkContainer>
                             ) : (
@@ -448,14 +448,14 @@ const OldPatientRecords = () => {
                                 to={`/dentalChartAdult/${patient._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaPlus />
-                                  Adult Chart
+                                  <strong>+</strong>
+                                  Adult
                                 </Button>
                               </LinkContainer>
                             )}
                           </div>
                         </td>
-                        <td>
+                        <td className="d-none d-sm-table-cell">
                           <div className="d-flex md-flex-row justify-content-center align-items-center my-3 gap-2">
                             {canEdit && (
                               <Button

@@ -10,6 +10,7 @@ const Loader = () => {
         height: "100px",
         margin: "auto",
         display: "block",
+        color: "gray",
       }}
     >
       {" "}

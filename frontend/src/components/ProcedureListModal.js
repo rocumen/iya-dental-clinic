@@ -121,7 +121,7 @@ const ProcedureListModal = ({
 
   return (
     <div>
-      <Button variant="primary" className="btn-sm" onClick={openModal}>
+      <Button variant="primary" size="sm" onClick={openModal}>
         History
       </Button>
 

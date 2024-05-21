@@ -169,10 +169,10 @@ const IncomingAppointments = ({
           <Table striped bordered hover responsive className="table-sm">
             <thead>
               <tr>
-                <th className="col-4">Patient Name</th>
-                <th className="col-3">Appointments</th>
-                <th className="col-2">Time</th>
-                <th className="col-3">Status</th>
+                <th>Patient Name</th>
+                <th>Appointments</th>
+                <th>Time</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
