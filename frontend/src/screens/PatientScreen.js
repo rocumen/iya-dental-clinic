@@ -2,11 +2,11 @@ import React from "react";
 import GoBack from "../components/GoBack.js";
 import Loader from "../components/Loader.js";
 import Message from "../components/Message.js";
-import { useParams, Navigate, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
 import { useGetPatientByIdQuery } from "../slices/patientsApiSlice.js";
-import { Link } from "react-router-dom";
+
 import { Table, Row, Col, Image, Button } from "react-bootstrap";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import MyDocument from "../components/PDFFile.js";
@@ -32,8 +32,6 @@ const PatientScreen = () => {
   }
 
   const { forMinors, dentalHistory, medicalHistory } = patient;
-
-  console.log(medicalHistory?.map((i) => i.illnessOrDiseases));
 
   const formatDate = (dateString) => {
     const options = { month: "long", day: "numeric", year: "numeric" };

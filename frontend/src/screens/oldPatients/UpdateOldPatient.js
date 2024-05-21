@@ -59,8 +59,7 @@ const UpdateOldPatient = () => {
   const [dentistSignature, setDentistSignature] = useState("");
   const [consentDate, setConsentDate] = useState("");
 
-  const [updatePatient, { isLoading: loadingUpdate }] =
-    useUpdateOldPatientMutation();
+  const [updatePatient] = useUpdateOldPatientMutation();
 
   useEffect(() => {
     // Set other properties
@@ -83,8 +82,6 @@ const UpdateOldPatient = () => {
   useEffect(() => {
     setPatientImage(patientImage);
   }, [patientImage]);
-
-  console.log(patientImage);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -114,7 +111,7 @@ const UpdateOldPatient = () => {
       setIsSaving(false);
       toast.success("Patient Updated");
       refetch();
-      navigate(`/onePatient/${patientId}`);
+      navigate(`/oldPatient/${patientId}`);
     } catch (error) {
       toast.error(error?.data?.message || error.error);
     }

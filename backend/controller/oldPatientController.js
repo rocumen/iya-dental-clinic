@@ -150,8 +150,6 @@ export const updatePatient = asyncHandler(async (req, res) => {
     patientImage,
   } = req.body;
 
-  console.log(patientImage);
-
   const patient = await OldPatient.findById(req.params.id);
 
   // Capitalize the first letter of each word in the name fields
