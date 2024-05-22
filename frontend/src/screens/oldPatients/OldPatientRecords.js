@@ -286,7 +286,7 @@ const OldPatientRecords = () => {
                           <div className="d-flex flex-column flex-lg-row justify-content-center align-items-center my-3 gap-2">
                             {patient?.dentalChartKids?._id ? (
                               <LinkContainer
-                                to={`/dentalChartKids/${patient._id}/update/${patient?.dentalChartKids?._id}`}
+                                to={`/oldChildChart/${patient._id}/update/${patient?.dentalChartKids?._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <FaEdit />
@@ -295,7 +295,7 @@ const OldPatientRecords = () => {
                               </LinkContainer>
                             ) : (
                               <LinkContainer
-                                to={`/dentalChartKids/${patient._id}`}
+                                to={`/oldChildChart/${patient._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <strong>+</strong>
@@ -305,7 +305,7 @@ const OldPatientRecords = () => {
                             )}
                             {patient?.dentalChartAdult?._id ? (
                               <LinkContainer
-                                to={`/dentalChartAdult/${patient._id}/update/${patient?.dentalChartAdult?._id}`}
+                                to={`/oldAdultChart/${patient._id}/update/${patient?.dentalChartAdult?._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <FaEdit />
@@ -314,7 +314,7 @@ const OldPatientRecords = () => {
                               </LinkContainer>
                             ) : (
                               <LinkContainer
-                                to={`/dentalChartAdult/${patient._id}`}
+                                to={`/oldAdultChart/${patient._id}`}
                               >
                                 <Button size="sm" variant="primary">
                                   <strong>+</strong>

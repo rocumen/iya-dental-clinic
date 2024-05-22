@@ -2,7 +2,7 @@ import { Row, Col } from "react-bootstrap";
 
 import React from "react";
 
-const StatusUpper = ({ register, data }) => {
+const StatusUpper = ({ register }) => {
   return (
     <>
       {/* Left Boxes */}

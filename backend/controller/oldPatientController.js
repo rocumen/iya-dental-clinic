@@ -473,3 +473,345 @@ export const getProcedureById = asyncHandler(async (req, res) => {
 
   res.json(procedures);
 });
+
+export const createCircleKids = asyncHandler(async (req, res) => {
+  const {
+    upperRightCircle,
+    upperLeftCircle,
+    lowerLeftCircle,
+    lowerRightCircle,
+    statusTopRight,
+    statusTopLeft,
+    statusBottomRight,
+    statusBottomLeft,
+    xrayTaken,
+    periodontalScreening,
+    occlusion,
+    appliances,
+    tmd,
+  } = req.body;
+
+  const patient = await OldPatient.findById(req.params.id);
+
+  if (!patient) {
+    res.status(404);
+    throw new Error("Patient not found");
+  }
+
+  // Create a new dental chart object
+  const circleAndStatus = {
+    patient: patient._id,
+    patientName: `${patient.lastName}, ${patient.firstName}`,
+    upperRightCircle,
+    upperLeftCircle,
+    lowerLeftCircle,
+    lowerRightCircle,
+    statusTopRight,
+    statusTopLeft,
+    statusBottomRight,
+    statusBottomLeft,
+    xrayTaken,
+    periodontalScreening,
+    occlusion,
+    appliances,
+    tmd,
+  };
+
+  // Overwrite the existing dental chart data
+  patient.dentalChartKids = circleAndStatus;
+
+  try {
+    // Save the updated patient object
+    await patient.save();
+    //res.status(201).json({ message: "Dental Chart Saved" });
+    res.json(patient);
+  } catch (error) {
+    res.status(500);
+    throw new Error("Failed to save dental chart");
+  }
+});
+
+export const updateCircleKids = asyncHandler(async (req, res) => {
+  const {
+    upperRightCircle,
+    upperLeftCircle,
+    lowerLeftCircle,
+    lowerRightCircle,
+    statusTopRight,
+    statusTopLeft,
+    statusBottomRight,
+    statusBottomLeft,
+    xrayTaken,
+    periodontalScreening,
+    occlusion,
+    appliances,
+    tmd,
+  } = req.body;
+
+  const patient = await OldPatient.findById(req.params.id);
+
+  if (!patient) {
+    res.status(404);
+    throw new Error("Patient not found");
+  }
+
+  const circleProperties = [
+    "upperRightCircle",
+    "upperLeftCircle",
+    "lowerLeftCircle",
+    "lowerRightCircle",
+  ];
+
+  const colors = [
+    "colorTop",
+    "colorBottom",
+    "colorLeft",
+    "colorRight",
+    "donut_hole",
+  ];
+
+  for (const circle of circleProperties) {
+    const circleData = req.body[circle];
+    if (!circleData) continue;
+
+    for (const prop of Object.keys(circleData)) {
+      const colorData = circleData[prop];
+      if (!colorData) continue;
+
+      for (const color of colors) {
+        if (colorData[color]) {
+          patient.dentalChartKids[circle][prop][color] = colorData[color];
+        }
+      }
+    }
+  }
+
+  if (statusTopRight) {
+    patient.dentalChartKids.statusTopRight = statusTopRight;
+  }
+
+  if (statusTopLeft) {
+    patient.dentalChartKids.statusTopLeft = statusTopLeft;
+  }
+
+  if (statusBottomRight) {
+    patient.dentalChartKids.statusBottomRight = statusBottomRight;
+  }
+
+  if (statusBottomLeft) {
+    patient.dentalChartKids.statusBottomLeft = statusBottomLeft;
+  }
+
+  if (xrayTaken) {
+    patient.dentalChartKids.xrayTaken = xrayTaken;
+  }
+
+  if (periodontalScreening) {
+    patient.dentalChartKids.periodontalScreening = periodontalScreening;
+  }
+
+  if (occlusion) {
+    patient.dentalChartKids.occlusion = occlusion;
+  }
+
+  if (appliances) {
+    patient.dentalChartKids.appliances = appliances;
+  }
+
+  if (tmd) {
+    patient.dentalChartKids.tmd = tmd;
+  }
+
+  try {
+    // Save the updated patient object
+    await patient.save();
+    res.json(patient.dentalChartKids); // Return the updated dental chart
+  } catch (error) {
+    res.status(500);
+    throw new Error("Failed to update dental chart");
+  }
+});
+
+export const getCircleKids = asyncHandler(async (req, res) => {
+  const { patientId } = req.params;
+
+  const patient = await OldPatient.findById(patientId);
+
+  if (!patient) {
+    res.status(404);
+    throw new Error("Patient not found");
+  }
+
+  res.json(patient.dentalChartKids);
+});
+
+export const createCircleAdult = asyncHandler(async (req, res) => {
+  const {
+    upperRightCircle,
+    upperLeftCircle,
+    lowerLeftCircle,
+    lowerRightCircle,
+    statusTopRight,
+    statusTopLeft,
+    statusBottomRight,
+    statusBottomLeft,
+    xrayTaken,
+    periodontalScreening,
+    occlusion,
+    appliances,
+    tmd,
+  } = req.body;
+
+  const patient = await OldPatient.findById(req.params.id);
+
+  if (!patient) {
+    res.status(404);
+    throw new Error("Patient not found");
+  }
+
+  // Create a new dental chart object
+  const circleAndStatus = {
+    patient: patient._id,
+    patientName: `${patient.lastName}, ${patient.firstName}`,
+    upperRightCircle,
+    upperLeftCircle,
+    lowerLeftCircle,
+    lowerRightCircle,
+    statusTopRight,
+    statusTopLeft,
+    statusBottomRight,
+    statusBottomLeft,
+    xrayTaken,
+    periodontalScreening,
+    occlusion,
+    appliances,
+    tmd,
+  };
+
+  // Overwrite the existing dental chart data
+  patient.dentalChartAdult = circleAndStatus;
+
+  try {
+    // Save the updated patient object
+    await patient.save();
+    //res.status(201).json({ message: "Dental Chart Saved" });
+    res.json(patient);
+  } catch (error) {
+    res.status(500);
+    throw new Error("Failed to save dental chart");
+  }
+});
+
+export const updateCircleAdult = asyncHandler(async (req, res) => {
+  const {
+    upperRightCircle,
+    upperLeftCircle,
+    lowerLeftCircle,
+    lowerRightCircle,
+    statusTopRight,
+    statusTopLeft,
+    statusBottomRight,
+    statusBottomLeft,
+    xrayTaken,
+    periodontalScreening,
+    occlusion,
+    appliances,
+    tmd,
+  } = req.body;
+
+  const patient = await OldPatient.findById(req.params.id);
+
+  if (!patient) {
+    res.status(404);
+    throw new Error("Patient not found");
+  }
+
+  const circleProperties = [
+    "upperRightCircle",
+    "upperLeftCircle",
+    "lowerLeftCircle",
+    "lowerRightCircle",
+  ];
+
+  const colors = [
+    "colorTop",
+    "colorBottom",
+    "colorLeft",
+    "colorRight",
+    "donut_hole",
+  ];
+
+  for (const circle of circleProperties) {
+    const circleData = req.body[circle];
+    if (!circleData) continue;
+
+    for (const prop of Object.keys(circleData)) {
+      const colorData = circleData[prop];
+      if (!colorData) continue;
+
+      for (const color of colors) {
+        if (colorData[color]) {
+          patient.dentalChartAdult[circle][prop][color] = colorData[color];
+        }
+      }
+    }
+  }
+
+  if (statusTopRight) {
+    patient.dentalChartAdult.statusTopRight = statusTopRight;
+  }
+
+  if (statusTopLeft) {
+    patient.dentalChartAdult.statusTopLeft = statusTopLeft;
+  }
+
+  if (statusBottomRight) {
+    patient.dentalChartAdult.statusBottomRight = statusBottomRight;
+  }
+
+  if (statusBottomLeft) {
+    patient.dentalChartAdult.statusBottomLeft = statusBottomLeft;
+  }
+
+  if (xrayTaken) {
+    patient.dentalChartAdult.xrayTaken = xrayTaken;
+  }
+
+  if (periodontalScreening) {
+    patient.dentalChartAdult.periodontalScreening = periodontalScreening;
+  }
+
+  if (occlusion) {
+    patient.dentalChartAdult.occlusion = occlusion;
+  }
+
+  if (appliances) {
+    patient.dentalChartAdult.appliances = appliances;
+  }
+
+  if (tmd) {
+    patient.dentalChartAdult.tmd = tmd;
+  }
+
+  try {
+    // Save the updated patient object
+    await patient.save();
+    res.json(patient.dentalChartAdult); // Return the updated dental chart
+  } catch (error) {
+    res.status(500);
+    throw new Error("Failed to update dental chart");
+  }
+});
+
+export const getCircleAdult = asyncHandler(async (req, res) => {
+  const { patientId } = req.params;
+
+  const patient = await OldPatient.findById(patientId);
+
+  if (!patient) {
+    res.status(404);
+    throw new Error("Patient not Found");
+  }
+
+  res.json(patient.dentalChartAdult);
+});

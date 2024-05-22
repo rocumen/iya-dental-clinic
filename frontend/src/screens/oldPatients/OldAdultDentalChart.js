@@ -1,69 +1,69 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Button, Image } from "react-bootstrap";
-import Legend from "../components/Dental Chart/Legend.js";
-import { FaArrowLeft } from "react-icons/fa";
-//Upper Right Circles
-import ACircle1 from "../components/AdultCircles/UpperRight/ACircle1.js";
-import ACircle2 from "../components/AdultCircles/UpperRight/ACircle2.js";
-import ACircle3 from "../components/AdultCircles/UpperRight/ACircle3.js";
-import ACircle4 from "../components/AdultCircles/UpperRight/ACircle4.js";
-import ACircle5 from "../components/AdultCircles/UpperRight/ACircle5.js";
-import ACircle6 from "../components/AdultCircles/UpperRight/ACircle6.js";
-import ACircle7 from "../components/AdultCircles/UpperRight/ACircle7.js";
-import ACircle8 from "../components/AdultCircles/UpperRight/ACircle8.js";
-//upper Left Circles
-import ACircle9 from "../components/AdultCircles/UpperLeft/ACircle9.js";
-import ACircle10 from "../components/AdultCircles/UpperLeft/ACircle10.js";
-import ACircle11 from "../components/AdultCircles/UpperLeft/ACircle11.js";
-import ACircle12 from "../components/AdultCircles/UpperLeft/ACircle12.js";
-import ACircle13 from "../components/AdultCircles/UpperLeft/ACircle13.js";
-import ACircle14 from "../components/AdultCircles/UpperLeft/ACircle14.js";
-import ACircle15 from "../components/AdultCircles/UpperLeft/ACircle15.js";
-import ACircle16 from "../components/AdultCircles/UpperLeft/ACircle16.js";
-//Lower Right Circles
-import ACircle17 from "../components/AdultCircles/LowerRight/ACircle17.js";
-import ACircle18 from "../components/AdultCircles/LowerRight/ACircle18.js";
-import ACircle19 from "../components/AdultCircles/LowerRight/ACircle19.js";
-import ACircle20 from "../components/AdultCircles/LowerRight/ACircle20.js";
-import ACircle21 from "../components/AdultCircles/LowerRight/ACircle21.js";
-import ACircle22 from "../components/AdultCircles/LowerRight/ACircle22.js";
-import ACircle23 from "../components/AdultCircles/LowerRight/ACircle23.js";
-import ACircle24 from "../components/AdultCircles/LowerRight/ACircle24.js";
-//Lower Left Circles
-import ACircle25 from "../components/AdultCircles/LowerLeft/ACircle25.js";
-import ACircle26 from "../components/AdultCircles/LowerLeft/ACircle26.js";
-import ACircle27 from "../components/AdultCircles/LowerLeft/ACircle27.js";
-import ACircle28 from "../components/AdultCircles/LowerLeft/ACircle28.js";
-import ACircle29 from "../components/AdultCircles/LowerLeft/ACircle29.js";
-import ACircle30 from "../components/AdultCircles/LowerLeft/ACircle30.js";
-import ACircle31 from "../components/AdultCircles/LowerLeft/ACircle31.js";
-import ACircle32 from "../components/AdultCircles/LowerLeft/ACircle32.js";
-
-import StatusLower from "../components/AdultCircles/status/StatusLower.js";
-
-import StatusUpper from "../components/AdultCircles/status/StatusUpper.js";
-
-import dentalImage from "../assets/dentalimage.jpg";
-
-import {
-  useCreateDentalChartAdultMutation,
-  useGetPatientByIdQuery,
-} from "../slices/patientsApiSlice.js";
-
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Row, Col, Button, Image } from "react-bootstrap";
+import Legend from "../../components/Dental Chart/Legend.js";
+import { FaArrowLeft } from "react-icons/fa";
+//Upper Right Circles
+import ACircle1 from "../../components/AdultCircles/UpperRight/ACircle1.js";
+import ACircle2 from "../../components/AdultCircles/UpperRight/ACircle2.js";
+import ACircle3 from "../../components/AdultCircles/UpperRight/ACircle3.js";
+import ACircle4 from "../../components/AdultCircles/UpperRight/ACircle4.js";
+import ACircle5 from "../../components/AdultCircles/UpperRight/ACircle5.js";
+import ACircle6 from "../../components/AdultCircles/UpperRight/ACircle6.js";
+import ACircle7 from "../../components/AdultCircles/UpperRight/ACircle7.js";
+import ACircle8 from "../../components/AdultCircles/UpperRight/ACircle8.js";
+//upper Left Circles
+import ACircle9 from "../../components/AdultCircles/UpperLeft/ACircle9.js";
+import ACircle10 from "../../components/AdultCircles/UpperLeft/ACircle10.js";
+import ACircle11 from "../../components/AdultCircles/UpperLeft/ACircle11.js";
+import ACircle12 from "../../components/AdultCircles/UpperLeft/ACircle12.js";
+import ACircle13 from "../../components/AdultCircles/UpperLeft/ACircle13.js";
+import ACircle14 from "../../components/AdultCircles/UpperLeft/ACircle14.js";
+import ACircle15 from "../../components/AdultCircles/UpperLeft/ACircle15.js";
+import ACircle16 from "../../components/AdultCircles/UpperLeft/ACircle16.js";
+//Lower Right Circles
+import ACircle17 from "../../components/AdultCircles/LowerRight/ACircle17.js";
+import ACircle18 from "../../components/AdultCircles/LowerRight/ACircle18.js";
+import ACircle19 from "../../components/AdultCircles/LowerRight/ACircle19.js";
+import ACircle20 from "../../components/AdultCircles/LowerRight/ACircle20.js";
+import ACircle21 from "../../components/AdultCircles/LowerRight/ACircle21.js";
+import ACircle22 from "../../components/AdultCircles/LowerRight/ACircle22.js";
+import ACircle23 from "../../components/AdultCircles/LowerRight/ACircle23.js";
+import ACircle24 from "../../components/AdultCircles/LowerRight/ACircle24.js";
+//Lower Left Circles
+import ACircle25 from "../../components/AdultCircles/LowerLeft/ACircle25.js";
+import ACircle26 from "../../components/AdultCircles/LowerLeft/ACircle26.js";
+import ACircle27 from "../../components/AdultCircles/LowerLeft/ACircle27.js";
+import ACircle28 from "../../components/AdultCircles/LowerLeft/ACircle28.js";
+import ACircle29 from "../../components/AdultCircles/LowerLeft/ACircle29.js";
+import ACircle30 from "../../components/AdultCircles/LowerLeft/ACircle30.js";
+import ACircle31 from "../../components/AdultCircles/LowerLeft/ACircle31.js";
+import ACircle32 from "../../components/AdultCircles/LowerLeft/ACircle32.js";
 
-const AdultDentalChart = () => {
+import StatusLower from "../../components/AdultCircles/status/StatusLower.js";
+
+import StatusUpper from "../../components/AdultCircles/status/StatusUpper.js";
+
+import dentalImage from "../../assets/dentalimage.jpg";
+
+import {
+  useCreateOldDentalChartAdultMutation,
+  useGetOldPatientByIdQuery,
+} from "../../slices/patientsApiSlice.js";
+
+const OldAdultDentalChart = () => {
   const { id: patientId } = useParams();
   const navigate = useNavigate();
-  const { data: patient, isLoading } = useGetPatientByIdQuery(patientId);
+  const { data: patient, isLoading } = useGetOldPatientByIdQuery(patientId);
   // const [createDentalChartKids, { isLoading: loadingChar }] =
   //   useCreateDentalChartKidsMutation();
 
-  const [createDentalChartAdult, { isLoading: loadingChar }] =
-    useCreateDentalChartAdultMutation();
+  const [createOldDentalChartAdult, { isLoading: loadingChar }] =
+    useCreateOldDentalChartAdultMutation();
+
   const [color, setColor] = useState("#D3D3D3"); // Default color is gray
 
   const { register, handleSubmit } = useForm();
@@ -264,7 +264,7 @@ const AdultDentalChart = () => {
     };
 
     try {
-      const response = await createDentalChartAdult({
+      const response = await createOldDentalChartAdult({
         patientId,
         upperRightCircle,
         upperLeftCircle,
@@ -282,8 +282,10 @@ const AdultDentalChart = () => {
       }); //.unwrap();
 
       const { _id, dentalChartAdult } = response.data;
+
+      console.log(response);
       toast.success("Chart Saved");
-      navigate(`/dentalChartAdult/${_id}/update/${dentalChartAdult?._id}`);
+      navigate(`/oldAdultChart/${_id}/update/${dentalChartAdult?._id}`);
     } catch (error) {
       console.log(error);
     }
@@ -819,4 +821,4 @@ const AdultDentalChart = () => {
   );
 };
 
-export default AdultDentalChart;
+export default OldAdultDentalChart;

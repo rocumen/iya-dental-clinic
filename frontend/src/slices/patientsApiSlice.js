@@ -244,6 +244,48 @@ export const patientsApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
       providesTags: ["OldPatient"],
     }),
+    createOldDentalChartKids: builder.mutation({
+      query: (data) => ({
+        url: `${OLD_PATIENTS_URL}/dentalChartKids/${data.patientId}`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    updateOldDentalChartKids: builder.mutation({
+      query: (data) => ({
+        url: `${OLD_PATIENTS_URL}/dentalChartKids/update/${data.patientId}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
+    getOldDentalChartKids: builder.query({
+      query: ({ patientId, dentalChartId }) => ({
+        url: `${OLD_PATIENTS_URL}/dentalChartKids/${patientId}/get/${dentalChartId}`,
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ["OldPatient"],
+    }),
+    createOldDentalChartAdult: builder.mutation({
+      query: (data) => ({
+        url: `${OLD_PATIENTS_URL}/dentalChartAdult/${data.patientId}`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    updateOldDentalChartAdult: builder.mutation({
+      query: (data) => ({
+        url: `${OLD_PATIENTS_URL}/dentalChartAdult/update/${data.patientId}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
+    getOldDentalChartAdult: builder.query({
+      query: ({ patientId, dentalChartId }) => ({
+        url: `${OLD_PATIENTS_URL}/dentalChartAdult/${patientId}/get/${dentalChartId}`,
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ["Patient"],
+    }),
   }),
 });
 
@@ -283,4 +325,10 @@ export const {
   useChangeOldProcedureStatusMutation,
   useGetOldProcedureQuery,
   useUpdateOldPatientMutation,
+  useCreateOldDentalChartKidsMutation,
+  useUpdateOldDentalChartKidsMutation,
+  useGetOldDentalChartKidsQuery,
+  useCreateOldDentalChartAdultMutation,
+  useUpdateOldDentalChartAdultMutation,
+  useGetOldDentalChartAdultQuery,
 } = patientsApiSlice;

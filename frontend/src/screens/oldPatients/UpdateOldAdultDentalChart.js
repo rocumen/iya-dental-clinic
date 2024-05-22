@@ -1,37 +1,40 @@
 import React, { useState, useEffect } from "react";
 import {
-  useGetDentalChartAdultQuery,
-  useUpdateDentalChartAdultMutation,
-  useGetPatientByIdQuery,
-} from "../slices/patientsApiSlice.js";
+  useGetOldDentalChartAdultQuery,
+  useUpdateOldDentalChartAdultMutation,
+  useGetOldPatientByIdQuery,
+} from "../../slices/patientsApiSlice.js";
+
 import { useParams } from "react-router-dom";
 import { Row, Col, Button, Image } from "react-bootstrap";
 
-import StatusLower from "../components/AdultCircles/status/StatusLower.js";
-import StatusUpper from "../components/AdultCircles/status/StatusUpper.js";
+import StatusLower from "../../components/AdultCircles/status/StatusLower.js";
+import StatusUpper from "../../components/AdultCircles/status/StatusUpper.js";
 
-import UpperRightCircle from "../components/updateCircleAdult/UpperRightCircle.js";
-import UpperLeftCircle from "../components/updateCircleAdult/UpperLeftCircle.js";
-import LowerRightCircle from "../components/updateCircleAdult/LowerRightCircle.js";
-import LowerLeftCircle from "../components/updateCircleAdult/LowerLeftCircle.js";
+import UpperRightCircle from "../../components/updateCircleAdult/UpperRightCircle.js";
+import UpperLeftCircle from "../../components/updateCircleAdult/UpperLeftCircle.js";
+import LowerRightCircle from "../../components/updateCircleAdult/LowerRightCircle.js";
+import LowerLeftCircle from "../../components/updateCircleAdult/LowerLeftCircle.js";
 
-import Legend from "../components/Dental Chart/Legend.js";
+import Legend from "../../components/Dental Chart/Legend.js";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-import dentalImage from "../assets/dentalimage.jpg";
+import dentalImage from "../../assets/dentalimage.jpg";
 
-import GoBack from "../components/GoBack.js";
+import GoBack from "../../components/GoBack.js";
 
-const UpdateAdultDentalChart = () => {
+const UpdateOldAdultDentalChart = () => {
   const { patientId, dentalChartId } = useParams();
 
-  const { data, isLoading, refetch } = useGetDentalChartAdultQuery({
+  const { data, isLoading, refetch } = useGetOldDentalChartAdultQuery({
     patientId,
     dentalChartId,
   });
 
-  const { data: patient } = useGetPatientByIdQuery(patientId);
+  const { data: patient } = useGetOldPatientByIdQuery(patientId);
+
+  const [updateOldDentalChartAdult] = useUpdateOldDentalChartAdultMutation();
 
   const { register, handleSubmit, setValue } = useForm();
 
@@ -155,8 +158,6 @@ const UpdateAdultDentalChart = () => {
       setValue("muscleSpasm", data?.tmd?.muscleSpasm);
     }
   }, [data, setValue]);
-
-  const [updateDentalChartAdult] = useUpdateDentalChartAdultMutation();
 
   const [color, setColor] = useState("#D3D3D3"); // Default color is gray
 
@@ -558,7 +559,7 @@ const UpdateAdultDentalChart = () => {
     };
 
     try {
-      await updateDentalChartAdult({
+      await updateOldDentalChartAdult({
         patientId,
         upperRightCircle,
         upperLeftCircle,
@@ -574,7 +575,9 @@ const UpdateAdultDentalChart = () => {
         appliances,
         tmd,
       }).unwrap();
+
       refetch();
+
       toast.success("Chart Saved");
     } catch (error) {
       console.log(error);
@@ -692,4 +695,4 @@ const UpdateAdultDentalChart = () => {
   );
 };
 
-export default UpdateAdultDentalChart;
+export default UpdateOldAdultDentalChart;

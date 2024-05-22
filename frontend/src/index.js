@@ -44,6 +44,12 @@ import OldProcedureDetails from "./screens/oldPatients/OldProcedureDetails.js";
 import UpdateOldPatient from "./screens/oldPatients/UpdateOldPatient.js";
 import OldPatientScreen from "./screens/oldPatients/OldPatientScreen.js";
 
+import OldAdultDentalChart from "./screens/oldPatients/OldAdultDentalChart.js";
+import UpdateOldAdultDentalChart from "./screens/oldPatients/UpdateOldAdultDentalChart.js";
+
+import OldChildDentalChart from "./screens/oldPatients/OldChildDentalChart.js";
+import UpdateOldChildDentalChart from "./screens/oldPatients/UpdateOldChildDentalChart.js";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -93,6 +99,20 @@ const router = createBrowserRouter(
       <Route
         path="/oldProcedureDetails/:patientId/procedures/:procedureId"
         element={<OldProcedureDetails />}
+      />
+
+      {/* CHART */}
+
+      <Route path="/oldAdultChart/:id" element={<OldAdultDentalChart />} />
+      <Route
+        path="/oldAdultChart/:patientId/update/:dentalChartId"
+        element={<UpdateOldAdultDentalChart />}
+      />
+
+      <Route path="/oldChildChart/:id" element={<OldChildDentalChart />} />
+      <Route
+        path="/oldChildChart/:patientId/update/:dentalChartId"
+        element={<UpdateOldChildDentalChart />}
       />
     </Route>
   )

@@ -1,54 +1,53 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Button, Image } from "react-bootstrap";
-import GoBack from "../components/GoBack.js";
-import Loader from "../components/Loader.js";
+import GoBack from "../../components/GoBack.js";
+import Loader from "../../components/Loader.js";
 //Upper Right Circles
-import KCircle1 from "../components/circles/upperRight/KCircle1.js";
-import KCircle2 from "../components/circles/upperRight/KCircle2.js";
-import KCircle3 from "../components/circles/upperRight/KCircle3.js";
-import KCircle4 from "../components/circles/upperRight/KCircle4.js";
-import KCircle5 from "../components/circles/upperRight/KCircle5.js";
+import KCircle1 from "../../components/circles/upperRight/KCircle1.js";
+import KCircle2 from "../../components/circles/upperRight/KCircle2.js";
+import KCircle3 from "../../components/circles/upperRight/KCircle3.js";
+import KCircle4 from "../../components/circles/upperRight/KCircle4.js";
+import KCircle5 from "../../components/circles/upperRight/KCircle5.js";
 //upper Left Circles
-import KCircle6 from "../components/circles/upperLeft/KCircle6.js";
-import KCircle7 from "../components/circles/upperLeft/KCircle7.js";
-import KCircle8 from "../components/circles/upperLeft/KCircle8.js";
-import KCircle9 from "../components/circles/upperLeft/KCircle9.js";
-import KCircle10 from "../components/circles/upperLeft/KCircle10.js";
+import KCircle6 from "../../components/circles/upperLeft/KCircle6.js";
+import KCircle7 from "../../components/circles/upperLeft/KCircle7.js";
+import KCircle8 from "../../components/circles/upperLeft/KCircle8.js";
+import KCircle9 from "../../components/circles/upperLeft/KCircle9.js";
+import KCircle10 from "../../components/circles/upperLeft/KCircle10.js";
 //Lower Right Circles
-import KCircle11 from "../components/circles/lowerRight/KCircle11.js";
-import KCircle12 from "../components/circles/lowerRight/KCircle12.js";
-import KCircle13 from "../components/circles/lowerRight/KCircle13.js";
-import KCircle14 from "../components/circles/lowerRight/KCircle14.js";
-import KCircle15 from "../components/circles/lowerRight/KCircle15.js";
+import KCircle11 from "../../components/circles/lowerRight/KCircle11.js";
+import KCircle12 from "../../components/circles/lowerRight/KCircle12.js";
+import KCircle13 from "../../components/circles/lowerRight/KCircle13.js";
+import KCircle14 from "../../components/circles/lowerRight/KCircle14.js";
+import KCircle15 from "../../components/circles/lowerRight/KCircle15.js";
 //Lower Left Circles
-import KCircle16 from "../components/circles/lowerLeft/KCircle16.js";
-import KCircle17 from "../components/circles/lowerLeft/KCircle17.js";
-import KCircle18 from "../components/circles/lowerLeft/KCircle18.js";
-import KCircle19 from "../components/circles/lowerLeft/KCircle19.js";
-import KCircle20 from "../components/circles/lowerLeft/KCircle20.js";
+import KCircle16 from "../../components/circles/lowerLeft/KCircle16.js";
+import KCircle17 from "../../components/circles/lowerLeft/KCircle17.js";
+import KCircle18 from "../../components/circles/lowerLeft/KCircle18.js";
+import KCircle19 from "../../components/circles/lowerLeft/KCircle19.js";
+import KCircle20 from "../../components/circles/lowerLeft/KCircle20.js";
 
-import StatusLower from "../components/Dental Chart/StatusLower.js";
-import StatusUpper from "../components/Dental Chart/StatusUpper.js";
-import Legend from "../components/Dental Chart/Legend.js";
+import StatusLower from "../../components/Dental Chart/StatusLower.js";
+import StatusUpper from "../../components/Dental Chart/StatusUpper.js";
+import Legend from "../../components/Dental Chart/Legend.js";
 
-import dentalImage from "../assets/dentalimage.jpg";
+import dentalImage from "../../assets/dentalimage.jpg";
 
 import {
-  useCreateDentalChartKidsMutation,
-  useGetPatientByIdQuery,
-} from "../slices/patientsApiSlice.js";
+  useCreateOldDentalChartKidsMutation,
+  useGetOldPatientByIdQuery,
+} from "../../slices/patientsApiSlice.js";
 
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-const DentalChartScreen = () => {
+const OldChildDentalChart = () => {
   const navigate = useNavigate();
   const { id: patientId } = useParams();
-  const { data: patient, isLoading } = useGetPatientByIdQuery(patientId);
+  const { data: patient, isLoading } = useGetOldPatientByIdQuery(patientId);
 
-  const [createDentalChartKids, { isLoading: loadingChar }] =
-    useCreateDentalChartKidsMutation();
+  const [createOldDentalChartKids] = useCreateOldDentalChartKidsMutation();
 
   const [color, setColor] = useState("#D3D3D3"); // Default color is gray
 
@@ -210,7 +209,7 @@ const DentalChartScreen = () => {
     };
 
     try {
-      const response = await createDentalChartKids({
+      const response = await createOldDentalChartKids({
         patientId,
         upperRightCircle,
         upperLeftCircle,
@@ -230,7 +229,7 @@ const DentalChartScreen = () => {
       const { _id, dentalChartKids } = response.data;
 
       toast.success("Chart Saved");
-      navigate(`/dentalChartKids/${_id}/update/${dentalChartKids?._id}`);
+      navigate(`/oldChildChart/${_id}/update/${dentalChartKids?._id}`);
     } catch (error) {
       console.log(error);
     }
@@ -628,4 +627,4 @@ const DentalChartScreen = () => {
   );
 };
 
-export default DentalChartScreen;
+export default OldChildDentalChart;

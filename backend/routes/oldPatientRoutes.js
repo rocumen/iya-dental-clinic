@@ -12,6 +12,12 @@ import {
   getAllPatientsProcedure,
   changeProcedureStatus,
   getProcedureById,
+  createCircleKids,
+  updateCircleKids,
+  getCircleKids,
+  createCircleAdult,
+  updateCircleAdult,
+  getCircleAdult,
 } from "../controller/oldPatientController.js";
 
 const router = express.Router();
@@ -37,4 +43,23 @@ router.get(
   "/patientProcedure/:patientId/procedures/:procedureId",
   getProcedureById
 );
+
+router.post("/dentalChartKids/:id", protect, admin, createCircleKids);
+router.put("/dentalChartKids/update/:id", protect, admin, updateCircleKids);
+router.get(
+  "/dentalChartKids/:patientId/get/:dentalChartId",
+  protect,
+  admin,
+  getCircleKids
+);
+
+router.post("/dentalChartAdult/:id", protect, admin, createCircleAdult);
+router.put("/dentalChartAdult/update/:id", protect, admin, updateCircleAdult);
+router.get(
+  "/dentalChartAdult/:patientId/get/:dentalChartId",
+  protect,
+  admin,
+  getCircleAdult
+);
+
 export default router;

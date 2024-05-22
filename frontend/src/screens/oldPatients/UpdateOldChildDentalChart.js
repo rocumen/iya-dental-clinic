@@ -1,37 +1,38 @@
 import React, { useState, useEffect } from "react";
 import {
-  useGetDentalChartAdultQuery,
-  useUpdateDentalChartAdultMutation,
-  useGetPatientByIdQuery,
-} from "../slices/patientsApiSlice.js";
+  useGetOldDentalChartKidsQuery,
+  useUpdateOldDentalChartKidsMutation,
+  //
+  useGetOldPatientByIdQuery,
+} from "../../slices/patientsApiSlice.js";
+
 import { useParams } from "react-router-dom";
 import { Row, Col, Button, Image } from "react-bootstrap";
 
-import StatusLower from "../components/AdultCircles/status/StatusLower.js";
-import StatusUpper from "../components/AdultCircles/status/StatusUpper.js";
+import StatusLower from "../../components/Dental Chart/StatusLower.js";
+import StatusUpper from "../../components/Dental Chart/StatusUpper.js";
 
-import UpperRightCircle from "../components/updateCircleAdult/UpperRightCircle.js";
-import UpperLeftCircle from "../components/updateCircleAdult/UpperLeftCircle.js";
-import LowerRightCircle from "../components/updateCircleAdult/LowerRightCircle.js";
-import LowerLeftCircle from "../components/updateCircleAdult/LowerLeftCircle.js";
-
-import Legend from "../components/Dental Chart/Legend.js";
+import UpperLeftCircle from "../../components/updateCircleKids/UpperLeftCircle.js";
+import UpperRightCircle from "../../components/updateCircleKids/UpperRightCircle.js";
+import LowerRightCircle from "../../components/updateCircleKids/LowerRightCircle.js";
+import LowerLeftCircle from "../../components/updateCircleKids/LowerLeftCircle.js";
+import Legend from "../../components/Dental Chart/Legend.js";
 import { useForm } from "react-hook-form";
+
 import { toast } from "react-toastify";
 
-import dentalImage from "../assets/dentalimage.jpg";
+import dentalImage from "../../assets/dentalimage.jpg";
+import GoBack from "../../components/GoBack.js";
 
-import GoBack from "../components/GoBack.js";
-
-const UpdateAdultDentalChart = () => {
+const UpdateOldChildDentalChart = () => {
   const { patientId, dentalChartId } = useParams();
 
-  const { data, isLoading, refetch } = useGetDentalChartAdultQuery({
+  const { data, isLoading } = useGetOldDentalChartKidsQuery({
     patientId,
     dentalChartId,
   });
 
-  const { data: patient } = useGetPatientByIdQuery(patientId);
+  const { data: patient } = useGetOldPatientByIdQuery(patientId);
 
   const { register, handleSubmit, setValue } = useForm();
 
@@ -49,12 +50,6 @@ const UpdateAdultDentalChart = () => {
       setValue("statusTopRightBox8", data?.statusTopRight?.box8);
       setValue("statusTopRightBox9", data?.statusTopRight?.box9);
       setValue("statusTopRightBox10", data?.statusTopRight?.box10);
-      setValue("statusTopRightBox11", data?.statusTopRight?.box11);
-      setValue("statusTopRightBox12", data?.statusTopRight?.box12);
-      setValue("statusTopRightBox13", data?.statusTopRight?.box13);
-      setValue("statusTopRightBox14", data?.statusTopRight?.box14);
-      setValue("statusTopRightBox15", data?.statusTopRight?.box15);
-      setValue("statusTopRightBox16", data?.statusTopRight?.box16);
       // TOP LEFT
       setValue("statusTopLeftBox1", data?.statusTopLeft?.box1);
       setValue("statusTopLeftBox2", data?.statusTopLeft?.box2);
@@ -66,12 +61,6 @@ const UpdateAdultDentalChart = () => {
       setValue("statusTopLeftBox8", data?.statusTopLeft?.box8);
       setValue("statusTopLeftBox9", data?.statusTopLeft?.box9);
       setValue("statusTopLeftBox10", data?.statusTopLeft?.box10);
-      setValue("statusTopLeftBox11", data?.statusTopLeft?.box11);
-      setValue("statusTopLeftBox12", data?.statusTopLeft?.box12);
-      setValue("statusTopLeftBox13", data?.statusTopLeft?.box13);
-      setValue("statusTopLeftBox14", data?.statusTopLeft?.box14);
-      setValue("statusTopLeftBox15", data?.statusTopLeft?.box15);
-      setValue("statusTopLeftBox16", data?.statusTopLeft?.box16);
       //BOTTOM RIGHT
       setValue("statusBottomRightBox1", data?.statusBottomRight?.box1);
       setValue("statusBottomRightBox2", data?.statusBottomRight?.box2);
@@ -83,12 +72,6 @@ const UpdateAdultDentalChart = () => {
       setValue("statusBottomRightBox8", data?.statusBottomRight?.box8);
       setValue("statusBottomRightBox9", data?.statusBottomRight?.box9);
       setValue("statusBottomRightBox10", data?.statusBottomRight?.box10);
-      setValue("statusBottomRightBox11", data?.statusBottomRight?.box11);
-      setValue("statusBottomRightBox12", data?.statusBottomRight?.box12);
-      setValue("statusBottomRightBox13", data?.statusBottomRight?.box13);
-      setValue("statusBottomRightBox14", data?.statusBottomRight?.box14);
-      setValue("statusBottomRightBox15", data?.statusBottomRight?.box15);
-      setValue("statusBottomRightBox16", data?.statusBottomRight?.box16);
       // BOTTOM LEFT
       setValue("statusBottomLeftBox1", data?.statusBottomLeft?.box1);
       setValue("statusBottomLeftBox2", data?.statusBottomLeft?.box2);
@@ -100,12 +83,6 @@ const UpdateAdultDentalChart = () => {
       setValue("statusBottomLeftBox8", data?.statusBottomLeft?.box8);
       setValue("statusBottomLeftBox9", data?.statusBottomLeft?.box9);
       setValue("statusBottomLeftBox10", data?.statusBottomLeft?.box10);
-      setValue("statusBottomLeftBox11", data?.statusBottomLeft?.box11);
-      setValue("statusBottomLeftBox12", data?.statusBottomLeft?.box12);
-      setValue("statusBottomLeftBox13", data?.statusBottomLeft?.box13);
-      setValue("statusBottomLeftBox14", data?.statusBottomLeft?.box14);
-      setValue("statusBottomLeftBox15", data?.statusBottomLeft?.box15);
-      setValue("statusBottomLeftBox16", data?.statusBottomLeft?.box16);
     }
   }, [data, setValue]);
 
@@ -156,7 +133,7 @@ const UpdateAdultDentalChart = () => {
     }
   }, [data, setValue]);
 
-  const [updateDentalChartAdult] = useUpdateDentalChartAdultMutation();
+  const [updateOldDentalChartKids] = useUpdateOldDentalChartKidsMutation();
 
   const [color, setColor] = useState("#D3D3D3"); // Default color is gray
 
@@ -301,90 +278,6 @@ const UpdateAdultDentalChart = () => {
       colorLeft: data?.lowerLeftCircle?.twenty?.colorLeft || "",
       donut_hole: data?.lowerLeftCircle?.twenty?.donut_hole || "",
     },
-    circle21: {
-      colorTop: data?.lowerLeftCircle?.twentyone?.colorTop || "",
-      colorBottom: data?.lowerLeftCircle?.twentyone?.colorTop || "",
-      colorRight: data?.lowerLeftCircle?.twentyone?.colorRight || "",
-      colorLeft: data?.lowerLeftCircle?.twentyone?.colorLeft || "",
-      donut_hole: data?.lowerLeftCircle?.twentyone?.donut_hole || "",
-    },
-    circle22: {
-      colorTop: data?.lowerLeftCircle?.twentytwo?.colorTop || "",
-      colorBottom: data?.lowerLeftCircle?.twentytwo?.colorTop || "",
-      colorRight: data?.lowerLeftCircle?.twentytwo?.colorRight || "",
-      colorLeft: data?.lowerLeftCircle?.twentytwo?.colorLeft || "",
-      donut_hole: data?.lowerLeftCircle?.twentytwo?.donut_hole || "",
-    },
-    circle23: {
-      colorTop: data?.lowerLeftCircle?.twentythree?.colorTop || "",
-      colorBottom: data?.lowerLeftCircle?.twentythree?.colorTop || "",
-      colorRight: data?.lowerLeftCircle?.twentythree?.colorRight || "",
-      colorLeft: data?.lowerLeftCircle?.twentythree?.colorLeft || "",
-      donut_hole: data?.lowerLeftCircle?.twentythree?.donut_hole || "",
-    },
-    circle24: {
-      colorTop: data?.lowerLeftCircle?.twentyfour?.colorTop || "",
-      colorBottom: data?.lowerLeftCircle?.twentyfour?.colorTop || "",
-      colorRight: data?.lowerLeftCircle?.twentyfour?.colorRight || "",
-      colorLeft: data?.lowerLeftCircle?.twentyfour?.colorLeft || "",
-      donut_hole: data?.lowerLeftCircle?.twentyfour?.donut_hole || "",
-    },
-    circle25: {
-      colorTop: data?.lowerLeftCircle?.twentyfive?.colorTop || "",
-      colorBottom: data?.lowerLeftCircle?.twentyfive?.colorTop || "",
-      colorRight: data?.lowerLeftCircle?.twentyfive?.colorRight || "",
-      colorLeft: data?.lowerLeftCircle?.twentyfive?.colorLeft || "",
-      donut_hole: data?.lowerLeftCircle?.twentyfive?.donut_hole || "",
-    },
-    circle26: {
-      colorTop: data?.lowerLeftCircle?.twentysix?.colorTop || "",
-      colorBottom: data?.lowerLeftCircle?.twentysix?.colorTop || "",
-      colorRight: data?.lowerLeftCircle?.twentysix?.colorRight || "",
-      colorLeft: data?.lowerLeftCircle?.twentysix?.colorLeft || "",
-      donut_hole: data?.lowerLeftCircle?.twentysix?.donut_hole || "",
-    },
-    circle27: {
-      colorTop: data?.lowerLeftCircle?.twentyseven?.colorTop || "",
-      colorBottom: data?.lowerLeftCircle?.twentyseven?.colorTop || "",
-      colorRight: data?.lowerLeftCircle?.twentyseven?.colorRight || "",
-      colorLeft: data?.lowerLeftCircle?.twentyseven?.colorLeft || "",
-      donut_hole: data?.lowerLeftCircle?.twentyseven?.donut_hole || "",
-    },
-    circle28: {
-      colorTop: data?.lowerLeftCircle?.twentyeight?.colorTop || "",
-      colorBottom: data?.lowerLeftCircle?.twentyeight?.colorTop || "",
-      colorRight: data?.lowerLeftCircle?.twentyeight?.colorRight || "",
-      colorLeft: data?.lowerLeftCircle?.twentyeight?.colorLeft || "",
-      donut_hole: data?.lowerLeftCircle?.twentyeight?.donut_hole || "",
-    },
-    circle29: {
-      colorTop: data?.lowerLeftCircle?.twentynine?.colorTop || "",
-      colorBottom: data?.lowerLeftCircle?.twentynine?.colorTop || "",
-      colorRight: data?.lowerLeftCircle?.twentynine?.colorRight || "",
-      colorLeft: data?.lowerLeftCircle?.twentynine?.colorLeft || "",
-      donut_hole: data?.lowerLeftCircle?.twentynine?.donut_hole || "",
-    },
-    circle30: {
-      colorTop: data?.lowerLeftCircle?.thirty?.colorTop || "",
-      colorBottom: data?.lowerLeftCircle?.thirty?.colorTop || "",
-      colorRight: data?.lowerLeftCircle?.thirty?.colorRight || "",
-      colorLeft: data?.lowerLeftCircle?.thirty?.colorLeft || "",
-      donut_hole: data?.lowerLeftCircle?.thirty?.donut_hole || "",
-    },
-    circle31: {
-      colorTop: data?.lowerLeftCircle?.thirtyone?.colorTop || "",
-      colorBottom: data?.lowerLeftCircle?.thirtyone?.colorTop || "",
-      colorRight: data?.lowerLeftCircle?.thirtyone?.colorRight || "",
-      colorLeft: data?.lowerLeftCircle?.thirtyone?.colorLeft || "",
-      donut_hole: data?.lowerLeftCircle?.thirtyone?.donut_hole || "",
-    },
-    circle32: {
-      colorTop: data?.lowerLeftCircle?.thirtytwo?.colorTop || "",
-      colorBottom: data?.lowerLeftCircle?.thirtytwo?.colorTop || "",
-      colorRight: data?.lowerLeftCircle?.thirtytwo?.colorRight || "",
-      colorLeft: data?.lowerLeftCircle?.thirtytwo?.colorLeft || "",
-      donut_hole: data?.lowerLeftCircle?.thirtytwo?.donut_hole || "",
-    },
   });
 
   useEffect(() => {
@@ -408,42 +301,30 @@ const UpdateAdultDentalChart = () => {
       three: fillColor.circle3,
       four: fillColor.circle4,
       five: fillColor.circle5,
-      six: fillColor.circle6,
-      seven: fillColor.circle7,
-      eight: fillColor.circle8,
     };
 
     const upperLeftCircle = {
+      six: fillColor.circle6,
+      seven: fillColor.circle7,
+      eight: fillColor.circle8,
       nine: fillColor.circle9,
       ten: fillColor.circle10,
+    };
+
+    const lowerRightCircle = {
       eleven: fillColor.circle11,
       twelve: fillColor.circle12,
       thirteen: fillColor.circle13,
       fourteen: fillColor.circle14,
       fifteen: fillColor.circle15,
-      sixteen: fillColor.circle16,
     };
 
-    const lowerRightCircle = {
+    const lowerLeftCircle = {
+      sixteen: fillColor.circle16,
       seventeen: fillColor.circle17,
       eighteen: fillColor.circle18,
       nineteen: fillColor.circle19,
       twenty: fillColor.circle20,
-      twentyone: fillColor.circle21,
-      twentytwo: fillColor.circle22,
-      twentythree: fillColor.circle23,
-      twentyfour: fillColor.circle24,
-    };
-
-    const lowerLeftCircle = {
-      twentyfive: fillColor.circle25,
-      twentysix: fillColor.circle26,
-      twentyseven: fillColor.circle27,
-      twentyeight: fillColor.circle28,
-      twentynine: fillColor.circle29,
-      thirty: fillColor.circle30,
-      thirtyone: fillColor.circle31,
-      thirtytwo: fillColor.circle32,
     };
 
     const statusTopRight = {
@@ -457,68 +338,44 @@ const UpdateAdultDentalChart = () => {
       box8: values.statusTopRightBox8,
       box9: values.statusTopRightBox9,
       box10: values.statusTopRightBox10,
-      box11: values.statusTopRightBox11,
-      box12: values.statusTopRightBox12,
-      box13: values.statusTopRightBox13,
-      box14: values.statusTopRightBox14,
-      box15: values.statusTopRightBox15,
-      box16: values.statusTopRightBox16,
     };
     const statusTopLeft = {
-      box1: values.statusTopRightBox1,
-      box2: values.statusTopRightBox2,
-      box3: values.statusTopRightBox3,
-      box4: values.statusTopRightBox4,
-      box5: values.statusTopRightBox5,
-      box6: values.statusTopRightBox6,
-      box7: values.statusTopRightBox7,
-      box8: values.statusTopRightBox8,
-      box9: values.statusTopRightBox9,
+      box1: values.statusTopLeftBox1,
+      box2: values.statusTopLeftBox2,
+      box3: values.statusTopLeftBox3,
+      box4: values.statusTopLeftBox4,
+      box5: values.statusTopLeftBox5,
+      box6: values.statusTopLeftBox6,
+      box7: values.statusTopLeftBox7,
+      box8: values.statusTopLeftBox8,
+      box9: values.statusTopLeftBox9,
       box10: values.statusTopRightBox10,
-      box11: values.statusTopRightBox11,
-      box12: values.statusTopRightBox12,
-      box13: values.statusTopRightBox13,
-      box14: values.statusTopRightBox14,
-      box15: values.statusTopRightBox15,
-      box16: values.statusTopRightBox16,
     };
 
     const statusBottomRight = {
-      box1: values.statusTopRightBox1,
-      box2: values.statusTopRightBox2,
-      box3: values.statusTopRightBox3,
-      box4: values.statusTopRightBox4,
-      box5: values.statusTopRightBox5,
-      box6: values.statusTopRightBox6,
-      box7: values.statusTopRightBox7,
-      box8: values.statusTopRightBox8,
-      box9: values.statusTopRightBox9,
-      box10: values.statusTopRightBox10,
-      box11: values.statusTopRightBox11,
-      box12: values.statusTopRightBox12,
-      box13: values.statusTopRightBox13,
-      box14: values.statusTopRightBox14,
-      box15: values.statusTopRightBox15,
-      box16: values.statusTopRightBox16,
+      box1: values.statusBottomRightBox1,
+      box2: values.statusBottomRightBox2,
+      box3: values.statusBottomRightBox3,
+      box4: values.statusBottomRightBox4,
+      box5: values.statusBottomRightBox5,
+      box6: values.statusBottomRightBox6,
+      box7: values.statusBottomRightBox7,
+      box8: values.statusBottomRightBox8,
+      box9: values.statusBottomRightBox9,
+      box10: values.statusBottomRightBox10,
     };
 
     const statusBottomLeft = {
-      box1: values.statusTopRightBox1,
-      box2: values.statusTopRightBox2,
-      box3: values.statusTopRightBox3,
-      box4: values.statusTopRightBox4,
-      box5: values.statusTopRightBox5,
-      box6: values.statusTopRightBox6,
-      box7: values.statusTopRightBox7,
-      box8: values.statusTopRightBox8,
-      box9: values.statusTopRightBox9,
-      box10: values.statusTopRightBox10,
-      box11: values.statusTopRightBox11,
-      box12: values.statusTopRightBox12,
-      box13: values.statusTopRightBox13,
-      box14: values.statusTopRightBox14,
-      box15: values.statusTopRightBox15,
-      box16: values.statusTopRightBox16,
+      box1: values.statusBottomLeftBox1,
+      box2: values.statusBottomLeftBox2,
+      box3: values.statusBottomLeftBox3,
+      box4: values.statusBottomLeftBox4,
+      box5: values.statusBottomLeftBox5,
+      box6: values.statusBottomLeftBox6,
+      box7: values.statusBottomLeftBox7,
+      box8: values.statusBottomLeftBox8,
+      box9: values.statusBottomLeftBox9,
+      box10: values.statusBottomRightBox10,
     };
 
     const xrayTaken = {
@@ -526,7 +383,7 @@ const UpdateAdultDentalChart = () => {
       panoramic: values.panoramic,
       cephalometric: values.cephalometric,
       occlusal: values.occlusal,
-      others: values.others,
+      othersXray: values.othersXray,
     };
 
     const periodontalScreening = {
@@ -558,7 +415,7 @@ const UpdateAdultDentalChart = () => {
     };
 
     try {
-      await updateDentalChartAdult({
+      await updateOldDentalChartKids({
         patientId,
         upperRightCircle,
         upperLeftCircle,
@@ -574,7 +431,7 @@ const UpdateAdultDentalChart = () => {
         appliances,
         tmd,
       }).unwrap();
-      refetch();
+
       toast.success("Chart Saved");
     } catch (error) {
       console.log(error);
@@ -584,6 +441,7 @@ const UpdateAdultDentalChart = () => {
     <>
       <form onSubmit={handleSubmit(submitHandler)}>
         {isLoading && <h5>Loading</h5>}
+
         <Row>
           <Col className="mb-2 d-flex justify-content-center">
             <Image
@@ -601,7 +459,7 @@ const UpdateAdultDentalChart = () => {
         </Row>
         <Row className="my-3">
           <Col>
-            <h1 className="text-center">Update Adult Dental Record Chart</h1>
+            <h1 className="text-center">Update Child Dental Record Chart</h1>
           </Col>
         </Row>
         <Row className="my-3">
@@ -692,4 +550,4 @@ const UpdateAdultDentalChart = () => {
   );
 };
 
-export default UpdateAdultDentalChart;
+export default UpdateOldChildDentalChart;
