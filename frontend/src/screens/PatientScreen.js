@@ -20,10 +20,6 @@ const PatientScreen = () => {
 
   const { data: patient, isLoading, error } = useGetPatientByIdQuery(patientId);
 
-  // if (isLoading) {
-  //   return <p>Loading...</p>;
-  // }
-
   if (error) {
     return <p>Error: {error.message}</p>;
   }
@@ -109,12 +105,33 @@ const PatientScreen = () => {
               <tr>
                 <td>Contact Number</td>
                 <td className="col-8 text-center">
-                  {patient.contactNumber || "-"}
+                  {patient.contactNumber ? (
+                    <a
+                      href={`tel:${patient.contactNumber}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      {patient.contactNumber}
+                    </a>
+                  ) : (
+                    "-"
+                  )}
                 </td>
               </tr>
+
               <tr>
                 <td>Email</td>
-                <td className="col-8 text-center">{patient.email || "-"}</td>
+                <td className="col-8 text-center">
+                  {patient.email ? (
+                    <a
+                      href={`mailto:${patient.email}`}
+                      className="no-underline"
+                    >
+                      {patient.email}
+                    </a>
+                  ) : (
+                    "-"
+                  )}
+                </td>
               </tr>
             </tbody>
           </Table>

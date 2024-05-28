@@ -841,7 +841,7 @@ const patientSchema = new mongoose.Schema(
     },
 
     contactNumber: {
-      type: Number,
+      type: String,
     },
 
     email: {

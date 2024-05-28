@@ -171,7 +171,7 @@ const PatientInfo = (props) => {
           <Form.Group controlId="contactNumber" className="my-2">
             <Form.Label>Contact Number</Form.Label>
             <Form.Control
-              type="number"
+              type="text"
               value={contactNumber || ""}
               placeholder="Enter Contact Number"
               onChange={(e) => setContactNumber(e.target.value)}

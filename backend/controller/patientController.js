@@ -151,6 +151,11 @@ const updatePatient = asyncHandler(async (req, res) => {
 
   const patient = await Patient.findById(req.params.id);
 
+  // Function to remove spaces from strings
+  const removeSpaces = (str) => {
+    return str ? str.replace(/\s/g, "") : str;
+  };
+
   // Capitalize the first letter of each word in the name fields
   const capitalizeFirstLetter = (str) => {
     if (!str) return str; // Return the string as is if it's undefined or null
@@ -158,13 +163,13 @@ const updatePatient = asyncHandler(async (req, res) => {
   };
 
   if (patient) {
-    patient.firstName = capitalizeFirstLetter(firstName);
-    patient.middleName = capitalizeFirstLetter(middleName);
-    patient.lastName = capitalizeFirstLetter(lastName);
-    patient.nickName = capitalizeFirstLetter(nickName);
+    patient.firstName = capitalizeFirstLetter(removeSpaces(firstName));
+    patient.middleName = capitalizeFirstLetter(removeSpaces(middleName));
+    patient.lastName = capitalizeFirstLetter(removeSpaces(lastName));
+    patient.nickName = capitalizeFirstLetter(removeSpaces(nickName));
     patient.gender = capitalizeFirstLetter(gender);
     patient.contactNumber = contactNumber;
-    patient.email = capitalizeFirstLetter(email);
+    patient.email = email;
     patient.birthday = birthday;
     patient.age = age;
     patient.religion = capitalizeFirstLetter(religion);
@@ -177,7 +182,6 @@ const updatePatient = asyncHandler(async (req, res) => {
     patient.forMinors = forMinors;
     patient.dentalHistory = dentalHistory;
     patient.medicalHistory = medicalHistory;
-    // patient.informedConsent = informedConsent;
 
     if (patient.dataPrivacySignature) {
       cloudinary.api.delete_resources([patient.dataPrivacySignature.id], {
@@ -214,8 +218,6 @@ const updatePatient = asyncHandler(async (req, res) => {
         type: "upload",
         resource_type: "image",
       });
-      // .then(console.log)
-      // .catch(console.log);
     }
     patient.signatureImage = signatureImage;
 
