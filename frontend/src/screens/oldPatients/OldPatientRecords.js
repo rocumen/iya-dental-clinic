@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Button, Table, Row, Col, Modal, Image, Form } from "react-bootstrap";
-import { FaPlus, FaEdit } from "react-icons/fa";
 
 import Message from "../../components/Message.js";
 
@@ -289,7 +288,7 @@ const OldPatientRecords = () => {
                                 to={`/oldChildChart/${patient._id}/update/${patient?.dentalChartKids?._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaEdit />
+                                  <strong>+</strong>
                                   Child
                                 </Button>
                               </LinkContainer>
@@ -308,7 +307,7 @@ const OldPatientRecords = () => {
                                 to={`/oldAdultChart/${patient._id}/update/${patient?.dentalChartAdult?._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaEdit />
+                                  <strong>+</strong>
                                   Adult
                                 </Button>
                               </LinkContainer>
@@ -420,7 +419,7 @@ const OldPatientRecords = () => {
                                 to={`/dentalChartKids/${patient._id}/update/${patient?.dentalChartKids?._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaEdit />
+                                  <strong>+</strong>
                                   Child
                                 </Button>
                               </LinkContainer>
@@ -439,7 +438,7 @@ const OldPatientRecords = () => {
                                 to={`/dentalChartAdult/${patient._id}/update/${patient?.dentalChartAdult?._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaEdit />
+                                  <strong>+</strong>
                                   Adult
                                 </Button>
                               </LinkContainer>

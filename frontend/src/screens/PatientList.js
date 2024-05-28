@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Button, Table, Row, Col, Modal, Image, Form } from "react-bootstrap";
-import { FaPlus, FaEdit } from "react-icons/fa";
+
 import Message from "../components/Message.js";
 import Loader from "../components/Loader.js";
 import { toast } from "react-toastify";
@@ -285,7 +285,7 @@ const PatientList = () => {
                                 to={`/dentalChartKids/${patient._id}/update/${patient?.dentalChartKids?._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaEdit />
+                                  <strong>+</strong>
                                   Child
                                 </Button>
                               </LinkContainer>
@@ -304,7 +304,7 @@ const PatientList = () => {
                                 to={`/dentalChartAdult/${patient._id}/update/${patient?.dentalChartAdult?._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaEdit />
+                                  <strong>+</strong>
                                   Adult
                                 </Button>
                               </LinkContainer>
@@ -417,7 +417,7 @@ const PatientList = () => {
                                 to={`/dentalChartKids/${patient._id}/update/${patient?.dentalChartKids?._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaEdit />
+                                  <strong>+</strong>
                                   Child
                                 </Button>
                               </LinkContainer>
@@ -426,7 +426,7 @@ const PatientList = () => {
                                 to={`/dentalChartKids/${patient._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaPlus />
+                                  <strong>+</strong>
                                   Child
                                 </Button>
                               </LinkContainer>
@@ -436,7 +436,7 @@ const PatientList = () => {
                                 to={`/dentalChartAdult/${patient._id}/update/${patient?.dentalChartAdult?._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaEdit />
+                                  <strong>+</strong>
                                   Adult
                                 </Button>
                               </LinkContainer>
@@ -445,7 +445,7 @@ const PatientList = () => {
                                 to={`/dentalChartAdult/${patient._id}`}
                               >
                                 <Button size="sm" variant="primary">
-                                  <FaPlus />
+                                  <strong>+</strong>
                                   Adult
                                 </Button>
                               </LinkContainer>
